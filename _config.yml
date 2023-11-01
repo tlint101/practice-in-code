@@ -11,7 +11,7 @@ website:
     right:
       - 2023-11-01.md
       - icon: github
-        href: https://github.com/tlint101/practice-cheminformatics-blog
+        href: https://github.com/tlint101/practice-blog/
 format:
   html:
     theme:
