@@ -6,7 +6,6 @@ website:
   title: "Practice Cheminformatics"
   site-url: https://tlint101.github.io/practice-blog/
   description: "Practice Code"
-  favicon:
   navbar:
     right:
       - about.qmd
