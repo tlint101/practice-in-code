@@ -1,14 +1,14 @@
 ---
 title: "Cheminformatic Practice"
 comments: false
-about:
-id: blog-heading
-template: jolla
-image:
-links:
-- icon: github
-text: Github
-href: https://tlint101.github.io/practice-blog/
+  about:
+  id: blog-heading
+  template: jolla
+  image:
+  links:
+    - icon: github
+    text: Github
+    href: https://tlint101.github.io/practice-blog/
 
 ---
 
