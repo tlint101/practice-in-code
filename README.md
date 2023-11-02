@@ -1,3 +1,0 @@
-# practice-blog
-
-Hello World!
