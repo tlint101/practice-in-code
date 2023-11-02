@@ -14,7 +14,7 @@ about:
 
 :::{#blog-heading}
 
-The primary author of this blog is [T Ling](https://github.com/tlint101).
+The primary author of this blog is [T Lint](https://github.com/tlint101).
 
 A repo with the original Jupyter notebooks and data for this blog [is here](https://github.com/tlint101/Cheminformatic-Practice)
 
