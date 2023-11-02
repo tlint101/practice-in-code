@@ -1,0 +1,24 @@
+---
+title: "Cheminformatic Practice"
+comments: false
+about:
+id: blog-heading
+template: jolla
+image:
+links:
+- icon: github
+text: Github
+href: https://tlint101.github.io/practice-blog/
+
+---
+
+
+:::{#blog-heading}
+
+The primary author of this blog is [T Lint](https://github.com/tlint101).
+
+A repo with Jupyter notebooks and data [is here](https://tlint101.github.io/practice-blog/)
+
+The hub for information about the RDKit is [rdkit.org](https://www.rdkit.org)
+
+

@@ -1,0 +1,29 @@
+project:
+  type: website
+  output-dir: output-dir
+
+website:
+  title: "Cheminformatic Practice"
+  site-url: https://tlint101.github.io/practice-blog/
+  description: "Practicing code"
+  favicon:
+  navbar:
+    right:
+      - about.qmd
+      - icon: github
+        href: https://github.com/tlint101/Cheminformatic-Practice
+      - icon: rss
+        href: index.xml
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+    css: styles.css
+
+comments:
+  utterances:
+    repo: tlint101/practice-blog
+
+execute:
+  freeze: auto
