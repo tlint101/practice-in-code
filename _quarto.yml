@@ -3,9 +3,9 @@ project:
   output-dir: docs
 
 website:
-  title: "Cheminformatic Practice"
+  title: "Practice Cheminformatics"
   site-url: https://tlint101.github.io/practice-blog/
-  description: "Practicing code"
+  description: "Practice Code"
   favicon:
   navbar:
     right:
@@ -16,14 +16,15 @@ website:
         href: index.xml
 format:
   html:
-    theme:
+    theme: 
       light: flatly
       dark: darkly
     css: styles.css
 
 comments:
   utterances:
-    repo: tlint101/practice-blog
+    repo: https://github.com/tlint101/practice-blog/tree/main
 
 execute:
   freeze: auto
+  
