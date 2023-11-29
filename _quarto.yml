@@ -3,14 +3,15 @@ project:
   output-dir: docs
 
 website:
-  title: "Practice Cheminformatics"
-  site-url: https://tlint101.github.io/practice-blog/
-  description: "Practice Code"
+  title: "Home"
+  site-url: https://tlint101.github.io/practice-in-code/
+  description: "Practice in Code"
+  page-footer: "Website made with [Quarto](https://quarto.org/) by Tony E. Lin© 2023 - 2024"
   navbar:
     right:
       - about.qmd
       - icon: github
-        href: https://github.com/tlint101/Cheminformatic-Practice
+        href: https://github.com/tlint101/practice-in-code/
       - icon: rss
         href: index.xml
 format:
@@ -22,7 +23,7 @@ format:
 
 comments:
   utterances:
-    repo: https://github.com/tlint101/practice-blog/tree/main
+    repo: https://github.com/tlint101/practice-in-code/tree/main
 
 execute:
   freeze: auto
