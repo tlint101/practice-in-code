@@ -1,12 +1,2 @@
 /.quarto/
-/docs/notes
-/docs/posts
-/docs/site_libs
-/docs/about.html
-/docs/index.html
-/docs/index.xml
-/docs/listings.json
-/docs/robots.txt
-/docs/search.json
-/docs/sitemap.xml
 /notes/

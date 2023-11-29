@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "notes/notes.html",
+    "href": "notes/notes.html",
+    "title": "Home",
+    "section": "",
+    "text": "Create html files for inspection on computer with:\n\nquarto render\n\nPush to GitHub Repository."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Practice in Code",
+    "section": "",
+    "text": "🫣 Welcome to a blog on coding, cheminformatics, or other thoughts swimming in my head.💭\n\n\n\n\n\n\n\n\n\n\n\nHello World!\n\n\n\n\n\n\n\n\n\nNov 28, 2023\n\n\nTony E. Lin\n\n\n1 min\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/1-hello-world.html",
+    "href": "posts/1-hello-world.html",
+    "title": "Hello World!",
+    "section": "",
+    "text": "Hello World!"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "The primary author of this blog is Tony E. Lin.\nA report containing posts and Jupyter Notebooks for anything discussed in this blog can be found here\n \n  \n   \n  \n    \n     Github"
+  }
+]

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Home</title>
+<link>https://tlint101.github.io/practice-in-code/index.html</link>
+<atom:link href="https://tlint101.github.io/practice-in-code/index.xml" rel="self" type="application/rss+xml"/>
+<description>Practice in Code</description>
+<generator>quarto-1.3.450</generator>
+<lastBuildDate>Mon, 27 Nov 2023 16:00:00 GMT</lastBuildDate>
+<item>
+  <title>Hello World!</title>
+  <dc:creator>Tony E. Lin</dc:creator>
+  <link>https://tlint101.github.io/practice-in-code/posts/1-hello-world.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="hello-world" class="level1">
+<h1>Hello World!</h1>
+
+
+</section>
+
+ ]]></description>
+  <category>Thoughts</category>
+  <guid>https://tlint101.github.io/practice-in-code/posts/1-hello-world.html</guid>
+  <pubDate>Mon, 27 Nov 2023 16:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>
