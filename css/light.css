@@ -1,0 +1,23 @@
+/* css styles */
+/*-- scss:defaults --*/
+
+// nav bar
+$navbar-bg: #89C0AE;
+$navbar-fg: black;
+$navbar-hl: #375a7f; //color for dark mode
+
+// Body color scheme
+// $body-bg: #181818; // come up with a background color. sepia?
+$body-bg: #f8f9fa;
+$body-color: black;
+$link-color: #89C0AE; // link color should be blue
+
+// Table of contents
+$toc-color: #56a78c;
+
+// Code blocks
+$code-block-bg: #ced4da;
+$code-block-border-left: #89C0AE;
+
+// look up code block schemes:
+// https://quarto.org/docs/output-formats/html-themes.html

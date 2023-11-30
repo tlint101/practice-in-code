@@ -1,0 +1,23 @@
+/* css styles */
+/*-- scss:defaults --*/
+
+// nav bar
+$navbar-bg: #375a7f;
+$navbar-fg: white;
+$navbar-hl: #89C0AE; //color for light mode
+
+// Body color scheme
+// $body-bg: black;
+$body-bg: black;
+$body-color: #ced4da;
+$link-color: #375a7f;
+
+// Table of contents
+$toc-color: #375a7f;
+
+// Code blocks
+$code-block-bg: #303030;
+$code-block-border-left: #375a7f;
+
+// look up code block schemes:
+// https://quarto.org/docs/output-formats/html-themes.html
