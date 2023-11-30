@@ -2,16 +2,16 @@
   {
     "objectID": "notes/notes.html",
     "href": "notes/notes.html",
-    "title": "Home",
+    "title": "Practice in Code",
     "section": "",
-    "text": "Create html files for inspection on computer with:\n\nquarto render\n\nPush to GitHub Repository."
+    "text": "Create html files for inspection on computer with:\n\nquarto render\nThis will render files in the /docs/ folder. The index.html can be used to demo the website on your own web browser locally. Use this to test and make sure the posts look good.\n\nPush to GitHub Repository."
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Practice in Code",
     "section": "",
-    "text": "🫣 Welcome to a blog on coding, cheminformatics, or other thoughts swimming in my head.💭\n\n\n\n\n\n\n\n\n\n\n\nHello World!\n\n\n\n\n\n\n\n\n\nNov 28, 2023\n\n\nTony E. Lin\n\n\n1 min\n\n\n\n\n\n\nNo matching items"
+    "text": "🫣 Welcome to a blog on coding, cheminformatics, or other thoughts swimming in my head.💭\n\n\n\n\n\n\n\n\n\n\n\nHello World!\n\n\n\n\n\n\n\n\n\nNov 29, 2023\n\n\nTony E. Lin\n\n\n1 min\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/1-hello-world.html",
@@ -25,6 +25,6 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "The primary author of this blog is Tony E. Lin.\nA report containing posts and Jupyter Notebooks for anything discussed in this blog can be found here\n \n  \n   \n  \n    \n     Github"
+    "text": "Github\n  \n\n      \nHi! 👋\nMy name is Tony and I write this blog. I am currently in a Ph.D. program for drug discovery in Taiwan. Why Taiwan? Well, a series of life choices fresh from university led me there, but I did not start the program until late. I am, what you would call, a late bloomer. And still learning!\nThat brings me to this blog. I will use it as a place to practice coding, my thinking and thought processes, what I am interested in, and hopefully, as a way to share with others.\nYou can find my GitHub account here for things that I will try in the future.\nAny posts with code here will be in a Jupyter Notebook format and can be found here"
   }
 ]

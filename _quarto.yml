@@ -3,10 +3,10 @@ project:
   output-dir: docs
 
 website:
-  title: "Home"
+  title: 'Practice in Code'
   site-url: https://tlint101.github.io/practice-in-code/
-  description: "Practice in Code"
-  page-footer: "Website made with [Quarto](https://quarto.org/) by Tony E. Lin© 2023 - 2024"
+  description: 'Practice in Code'
+  page-footer: 'Website made with [Quarto](https://quarto.org/) by Tony E. Lin© 2023 - 2024'
   navbar:
     right:
       - about.qmd
@@ -16,10 +16,9 @@ website:
         href: index.xml
 format:
   html:
-    theme: 
-      light: flatly
-      dark: darkly
-    css: styles.css
+    theme:
+      light: [flatly, css/light.css]
+      dark: [darkly, css/dark.css]
 
 comments:
   utterances:

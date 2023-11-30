@@ -1,9 +1,10 @@
 ---
-title: "Practice Cheminformatics"
+title: "Practice in Code"
 listing:
   contents: posts
   sort: "date desc"
   type: default
+  fields: [date, title, author, reading-time]
   categories: true
   sort-ui: false
   filter-ui: false
@@ -11,5 +12,6 @@ listing:
 page-layout: full
 title-block-banner: true
 ---
+**🫣 Welcome to a blog on coding, cheminformatics, or other thoughts swimming in my head.💭**
 
-
+<br>
