@@ -11,4 +11,4 @@ am currently testing or packages that I find interesting.
 
 Any code that I use can be found in this repository under the 'notebooks/' directory. 
 
-As always, thanks for visitng! 
+As always, thanks for visiting! 
