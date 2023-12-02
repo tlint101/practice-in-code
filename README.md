@@ -10,3 +10,4 @@ I would like it to serve as a place to also teach others interested in cheminfor
 
 Let's do it! 
 
+# todo update readme

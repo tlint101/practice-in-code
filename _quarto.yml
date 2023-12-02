@@ -14,8 +14,7 @@ website:
         href: https://github.com/tlint101/practice-in-code/
       - icon: rss
         href: index.xml
-  website:
-    google-analytics: "G-DKY2WMQ374"
+  google-analytics: "G-DKY2WMQ374"
 format:
   html:
     theme:
