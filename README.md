@@ -5,9 +5,10 @@
 ## Introduction
 Hello there! 
 
-This will serve as a place where I share code that I am currently testing or find interesting. 
-I would like it to serve as a place to also teach others interested in cheminformatics and python. 
+My name is Tony and you have stumbled across my blog. There are a ton of blogs online that has taught me how do things 
+in python. And I would like to pay it forward! This will serve as a place where I share what interests me, code that I 
+am currently testing or packages that I find interesting. 
 
-Let's do it! 
+Any code that I use can be found in this repository under the 'notebooks/' directory. 
 
-# todo update readme
+As always, thanks for visitng! 
