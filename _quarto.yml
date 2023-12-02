@@ -1,6 +1,11 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - '*.qmd'
+    - 'posts/'
+    - '!notebooks/'
+    - '!notes/'
 
 website:
   title: 'Practice in Code'
