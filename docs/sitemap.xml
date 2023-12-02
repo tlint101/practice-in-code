@@ -2,18 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://tlint101.github.io/practice-in-code/notes/notes.html</loc>
-    <lastmod>2023-11-30T10:07:31.313Z</lastmod>
+    <lastmod>2023-12-02T02:16:19.226Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/index.html</loc>
-    <lastmod>2023-11-30T10:07:30.840Z</lastmod>
+    <lastmod>2023-12-02T02:16:18.744Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/posts/1-hello-world.html</loc>
-    <lastmod>2023-11-30T10:07:29.760Z</lastmod>
+    <lastmod>2023-12-02T02:16:17.611Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tlint101.github.io/practice-in-code/posts/2-hello-world-goals.html</loc>
+    <lastmod>2023-12-02T02:16:18.423Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/about.html</loc>
-    <lastmod>2023-11-30T10:07:31.091Z</lastmod>
+    <lastmod>2023-12-02T02:16:18.998Z</lastmod>
   </url>
 </urlset>

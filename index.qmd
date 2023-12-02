@@ -4,10 +4,10 @@ listing:
   contents: posts
   sort: "date desc"
   type: default
-  fields: [date, title, author, reading-time]
+  fields: [date, title, author, reading-time, image, image-height]
   categories: true
-  sort-ui: false
-  filter-ui: false
+  sort-ui: [title, date]
+  filter-ui: [title, date]
   feed: true
 page-layout: full
 title-block-banner: true
