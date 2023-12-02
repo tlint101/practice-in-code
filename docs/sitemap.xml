@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://tlint101.github.io/practice-in-code/notes/notes.html</loc>
-    <lastmod>2023-12-02T06:40:51.572Z</lastmod>
-  </url>
-  <url>
-    <loc>https://tlint101.github.io/practice-in-code/index.html</loc>
-    <lastmod>2023-12-02T06:40:51.109Z</lastmod>
-  </url>
-  <url>
-    <loc>https://tlint101.github.io/practice-in-code/posts/1-hello-world.html</loc>
-    <lastmod>2023-12-02T06:40:50.013Z</lastmod>
-  </url>
-  <url>
     <loc>https://tlint101.github.io/practice-in-code/posts/2-hello-world-goals.html</loc>
-    <lastmod>2023-12-02T06:40:50.810Z</lastmod>
+    <lastmod>2023-12-02T08:21:16.409Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/about.html</loc>
-    <lastmod>2023-12-02T06:40:51.351Z</lastmod>
+    <lastmod>2023-12-02T08:21:14.508Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tlint101.github.io/practice-in-code/index.html</loc>
+    <lastmod>2023-12-02T08:21:14.866Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tlint101.github.io/practice-in-code/posts/1-hello-world.html</loc>
+    <lastmod>2023-12-02T08:21:15.566Z</lastmod>
   </url>
 </urlset>
