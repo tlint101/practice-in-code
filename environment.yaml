@@ -1,0 +1,15 @@
+name: blog
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python=3.10
+  - rdkit=2023.09.2
+  -
+  - pip:
+    - py50==0.1.0
+    - notebook==7.0.6
+    - scikit-learn
+    - pingoin
+    - scikit-posthocs
