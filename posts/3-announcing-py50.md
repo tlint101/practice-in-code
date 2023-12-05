@@ -4,7 +4,6 @@ author: 'Tony E. Lin'
 date: '2023-12-05'
 categories: [Python, Streamlit, Coding, Informatics, Plotting]
 image: 'img/py50_logo_only.png'
-draft: true
 ---
 
 ### py50: Generate Dose-Response Curves

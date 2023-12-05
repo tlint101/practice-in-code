@@ -6,6 +6,7 @@ project:
     - 'posts/'
     - '!notebooks/'
     - '!notes/'
+    - '!tests/'
 
 website:
   title: 'Practice in Code'
