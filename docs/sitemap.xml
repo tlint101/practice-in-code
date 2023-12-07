@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tlint101.github.io/practice-in-code/posts/5-absolute-ic50.html</loc>
+    <lastmod>2023-12-07T08:11:56.071Z</lastmod>
+  </url>
+  <url>
     <loc>https://tlint101.github.io/practice-in-code/posts/2-hello-world-goals.html</loc>
-    <lastmod>2023-12-07T02:38:52.661Z</lastmod>
+    <lastmod>2023-12-07T08:11:55.075Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/posts/1-hello-world.html</loc>
-    <lastmod>2023-12-07T02:38:52.065Z</lastmod>
-  </url>
-  <url>
-    <loc>https://tlint101.github.io/practice-in-code/index.html</loc>
-    <lastmod>2023-12-07T02:38:51.224Z</lastmod>
-  </url>
-  <url>
-    <loc>https://tlint101.github.io/practice-in-code/about.html</loc>
-    <lastmod>2023-12-07T02:38:50.798Z</lastmod>
+    <lastmod>2023-12-07T08:11:54.430Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/posts/4-py50-single-plot.html</loc>
-    <lastmod>2023-12-07T02:38:51.817Z</lastmod>
+    <lastmod>2023-12-07T08:11:53.844Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tlint101.github.io/practice-in-code/about.html</loc>
+    <lastmod>2023-12-07T08:11:52.779Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tlint101.github.io/practice-in-code/index.html</loc>
+    <lastmod>2023-12-07T08:11:53.254Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/posts/3-announcing-py50.html</loc>
-    <lastmod>2023-12-07T02:38:52.362Z</lastmod>
+    <lastmod>2023-12-07T08:11:54.768Z</lastmod>
   </url>
 </urlset>

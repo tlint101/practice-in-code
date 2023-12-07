@@ -222,12 +222,12 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
 <section id="example-start" class="level3">
 <h3 class="anchored" data-anchor-id="example-start">Example start</h3>
 <p>First import the modules and the dataset.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:43.673730Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:43.671319Z&quot;}" data-execution_count="1">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T08:06:18.499956Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T08:06:18.000402Z&quot;}" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> py50.calculate <span class="im">import</span> Calculate</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> py50.plotcurve <span class="im">import</span> PlotCurve</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:43.682941Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:43.674458Z&quot;}" data-execution_count="2">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T08:06:18.509637Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T08:06:18.501209Z&quot;}" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'datasets/py50/single_example.csv'</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
@@ -296,7 +296,7 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
 <section id="calculate-ic50" class="level3">
 <h3 class="anchored" data-anchor-id="calculate-ic50">Calculate IC50</h3>
 <p>The example dataframe will need to be converted into an instance of the Calculate class. Once converted, the table can also be printed for viewing and checking.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:43.687850Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:43.685331Z&quot;}" data-execution_count="3">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T08:06:18.512918Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T08:06:18.510667Z&quot;}" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> Calculate(df)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data.show().head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
@@ -364,7 +364,7 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
 <p>Currently, the py50 program requires the at least 3 columns as input. The rest of the columns will be ignored. py50 requires a column containing the following: - Drug Name - Concentration - Average Response</p>
 <p>Note that py50 requires the average response. Though if you would like to calculate IC50 for one trial of a drug, that is possible.</p>
 <p>The names for the corresponding columns can be passed in the “calculate_ic50()” function as follows:</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:43.740428Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:43.707443Z&quot;}" data-execution_count="4">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T08:06:18.567218Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T08:06:18.530900Z&quot;}" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ic50 <span class="op">=</span> data.calculate_ic50(name_col<span class="op">=</span><span class="st">'Compound Name'</span>, concentration_col<span class="op">=</span><span class="st">'Compound Conc'</span>, response_col<span class="op">=</span><span class="st">'% Inhibition Avg'</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>ic50</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
@@ -403,7 +403,7 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
 <section id="plotting" class="level3">
 <h3 class="anchored" data-anchor-id="plotting">Plotting</h3>
 <p>py50 contains functions that will allow plotting. Let’s generate a sigmoidal curve from the dataset. This time the dataframe will need to be instantiated into the PlotCurve class. From there, the dataset will be calculated and the resulting information will be ploted on a graph.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:43.748944Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:43.711955Z&quot;}" data-execution_count="5">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T08:06:18.569770Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T08:06:18.538321Z&quot;}" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plot_data <span class="op">=</span> PlotCurve(df)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The input dataset can be inspected as follows:</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>data.show().head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -472,7 +472,7 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
 <p>For this example, plotting the dose-response curve uses the single_curve_plot() function. By default, py50 will assume drug concentrations are in nanomolar (nM) concentration and will convert them into micromolar (µM) concentrations. This will also mean that the final scale on the x-axis will be in µM. As the dosages for a typical test vary greatly in concentrations, the scale of the concentration will be in log format by default. However, depending on user needs, these can be changed.</p>
 <p>Additional parameters and their explanation can be found <a href="https://github.com/tlint101/py50">here</a>.</p>
 <p>First. Here we will call the “single_curve_plot” method with the associated parameters:</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:44.113962Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:43.720328Z&quot;}" data-execution_count="6">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T08:06:18.800718Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T08:06:18.541159Z&quot;}" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>figure <span class="op">=</span> plot_data.single_curve_plot(concentration_col<span class="op">=</span><span class="st">'Compound Conc'</span>,</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                                     response_col<span class="op">=</span><span class="st">'% Inhibition Avg'</span>,</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                                     plot_title<span class="op">=</span><span class="st">'Default Plot'</span>,</span>
@@ -492,7 +492,7 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
 <section id="customize-figure" class="level3">
 <h3 class="anchored" data-anchor-id="customize-figure">Customize figure</h3>
 <p>The above figure looks great! But what if I do not like black for the line color? I would much prefer Teal (#008080). Good news! There are several ways to adjust the graph to highlight the information you want to convey. For colors, we will start with the “line_color=” parameter. The line color can be a specific color name (i.e.&nbsp;red, blue, green, etc) or a hex code. Here is an example of a colored line in “teal” (#008080)</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:44.416611Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:44.118610Z&quot;}" data-execution_count="7">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T08:06:19.017252Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T08:06:18.809320Z&quot;}" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>figure <span class="op">=</span> plot_data.single_curve_plot(concentration_col<span class="op">=</span><span class="st">'Compound Conc'</span>,</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                                     response_col<span class="op">=</span><span class="st">'% Inhibition Avg'</span>,</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                                     plot_title<span class="op">=</span><span class="st">'Plot with Colored Lines'</span>,</span>
@@ -510,7 +510,7 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
 </div>
 </div>
 <p>That doesn’t look half bad! But what if you want to highlight the IC50 value? That would give people a quick way to identify where the IC50 lies on the curve. That can be achieved using the “box=” parameter. The box argument is a boolean argument and by default it will draw a box at the 50% response with respect to the curve.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:44.717998Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:44.423366Z&quot;}" data-execution_count="8">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T08:06:19.210509Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T08:06:19.024251Z&quot;}" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>figure <span class="op">=</span> plot_data.single_curve_plot(concentration_col<span class="op">=</span><span class="st">'Compound Conc'</span>,</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                                     response_col<span class="op">=</span><span class="st">'% Inhibition Avg'</span>,</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                                     plot_title<span class="op">=</span><span class="st">'Plot with Colored Lines'</span>,</span>
@@ -529,7 +529,7 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
 </div>
 </div>
 <p>The box highlight can be further modified for color and specific response position you may be interested in. For example, what if you want the box to be red and also highlight IC<span class="math inline">\(_{60}\)</span> or IC<span class="math inline">\(_{90}\)</span>? This can be achieved by using the “box_intercept=” and “box_color=” parameters</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:45.015447Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:44.724721Z&quot;}" data-execution_count="9">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T08:06:19.409826Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T08:06:19.209766Z&quot;}" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>figure <span class="op">=</span> plot_data.single_curve_plot(concentration_col<span class="op">=</span><span class="st">'Compound Conc'</span>,</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                                     response_col<span class="op">=</span><span class="st">'% Inhibition Avg'</span>,</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                                     plot_title<span class="op">=</span><span class="st">'Plot with More Colors!'</span>,</span>
@@ -551,7 +551,7 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
 </div>
 <p>Finally, the x-axis can be further adjusted.</p>
 <p>The scale can be changed from log to linear using the “xscale=” argument, changing the shape of the curve from sigmoid to a normal curve. The units of the scale can be changed to nM using the “xscale_unit=” argument. Currently only µM and nM is used.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:45.125531Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:45.015754Z&quot;}" data-execution_count="10">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T08:06:19.508858Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T08:06:19.410633Z&quot;}" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>figure <span class="op">=</span> plot_data.single_curve_plot(concentration_col<span class="op">=</span><span class="st">'Compound Conc'</span>,</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                                     response_col<span class="op">=</span><span class="st">'% Inhibition Avg'</span>,</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                                     plot_title<span class="op">=</span><span class="st">'A Linear Plot'</span>,</span>
@@ -575,7 +575,7 @@ nM with ticks constraints!</code></pre>
 </div>
 <p>For this dataset, the “xscale=‘linear’” does not look as good.</p>
 <p>Also notice how on the linear plot the xscale_ticks was also adjusted to fit the concentration in nM scale. This was achieved using the “xscale_ticks=” argument. Note that the xscale_ticks will affect how the line curve is drawn and should be adjusted to fit the dataset on the plot. Notice how the plot below has the xscale_ticks ranging from 0 to 2 and how it would affect the resulting curve line.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:45.446608Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:45.194680Z&quot;}" data-execution_count="11">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T08:06:19.748811Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T08:06:19.527319Z&quot;}" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>figure <span class="op">=</span> plot_data.single_curve_plot(concentration_col<span class="op">=</span><span class="st">'Compound Conc'</span>,</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                                     response_col<span class="op">=</span><span class="st">'% Inhibition Avg'</span>,</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                                     plot_title<span class="op">=</span><span class="st">'X-Axis is Set to nM'</span>,</span>
@@ -602,7 +602,7 @@ nM with ticks constraints!</code></pre>
 <section id="saving-the-figure" class="level3">
 <h3 class="anchored" data-anchor-id="saving-the-figure">Saving the figure</h3>
 <p>Finally, the figure can be saved using the “output_filename=” argument. Change “None” to file path of choice. Images should be saved in .png format.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:45.698629Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:45.451586Z&quot;}" data-execution_count="12">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T08:06:19.918777Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T08:06:19.756292Z&quot;}" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>figure <span class="op">=</span> plot_data.single_curve_plot(concentration_col<span class="op">=</span><span class="st">'Compound Conc'</span>,</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                                     response_col<span class="op">=</span><span class="st">'% Inhibition Avg'</span>,</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                                     plot_title<span class="op">=</span><span class="st">'X-Axis is Set to nM'</span>,</span>
@@ -626,7 +626,7 @@ nM with ticks constraints!</code></pre>
 </div>
 </div>
 <p>Additionally, the figure can also be saved as follows:</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:45.757832Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:45.700715Z&quot;}" data-execution_count="13">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T08:06:19.966572Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T08:06:19.921198Z&quot;}" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>figure.savefig(<span class="st">'tutorial_figure_001.png'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>And that should be it!</p>
