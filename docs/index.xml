@@ -10,7 +10,829 @@
 <atom:link href="https://tlint101.github.io/practice-in-code/index.xml" rel="self" type="application/rss+xml"/>
 <description>Practice in Code</description>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Mon, 04 Dec 2023 16:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 06 Dec 2023 16:00:00 GMT</lastBuildDate>
+<item>
+  <title>py50: Single Curve Plot</title>
+  <dc:creator>Tony E. Lin</dc:creator>
+  <link>https://tlint101.github.io/practice-in-code/posts/4-py50-single-plot.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="generate-single-dose-response-curve" class="level1">
+<h1>Generate Single Dose-Response Curve</h1>
+<p>The following will demo how to calculate the IC50 for a given drug response and generate single dose-response curve.</p>
+<p>This tutorial will use dummy data found under the ‘../dataset’ folder. The calculation requires inputs from a DataFrame. As shown, only specific information is needed to run the calculations. Finally, the information will be plotted on a sigmoidal curve.</p>
+<p>For those interested, this notebook can be found <a href="https://github.com/tlint101/practice-in-code/blob/main/notebooks/4-py50-single-plot.ipynb">here</a></p>
+<p>And if you are not well versed in python code, good news! I have converted this python app into a web application. You can access it <a href="https://py50-app.streamlit.app">here</a></p>
+<section id="example-start" class="level3">
+<h3 class="anchored" data-anchor-id="example-start">Example start</h3>
+<p>First import the modules and the dataset.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:43.673730Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:43.671319Z&quot;}" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> py50.calculate <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Calculate</span>
+<span id="cb1-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> py50.plotcurve <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> PlotCurve</span></code></pre></div>
+</div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:43.682941Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:43.674458Z&quot;}" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.read_csv(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'datasets/py50/single_example.csv'</span>)</span>
+<span id="cb2-2">df.head()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Compound Name</th>
+<th data-quarto-table-cell-role="th">Compound Conc</th>
+<th data-quarto-table-cell-role="th">% Inhibition 1</th>
+<th data-quarto-table-cell-role="th">% Inhibition 2</th>
+<th data-quarto-table-cell-role="th">% Inhibition Avg</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Drug 1</td>
+<td>100000.0</td>
+<td>90</td>
+<td>94</td>
+<td>92</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Drug 1</td>
+<td>33300.0</td>
+<td>97</td>
+<td>89</td>
+<td>93</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Drug 1</td>
+<td>11100.0</td>
+<td>86</td>
+<td>89</td>
+<td>88</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Drug 1</td>
+<td>3700.0</td>
+<td>81</td>
+<td>88</td>
+<td>84</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Drug 1</td>
+<td>1240.0</td>
+<td>63</td>
+<td>70</td>
+<td>67</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="calculate-ic50" class="level3">
+<h3 class="anchored" data-anchor-id="calculate-ic50">Calculate IC50</h3>
+<p>The example dataframe will need to be converted into an instance of the Calculate class. Once converted, the table can also be printed for viewing and checking.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:43.687850Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:43.685331Z&quot;}" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Calculate(df)</span>
+<span id="cb3-2">data.show().head()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Compound Name</th>
+<th data-quarto-table-cell-role="th">Compound Conc</th>
+<th data-quarto-table-cell-role="th">% Inhibition 1</th>
+<th data-quarto-table-cell-role="th">% Inhibition 2</th>
+<th data-quarto-table-cell-role="th">% Inhibition Avg</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Drug 1</td>
+<td>100000.0</td>
+<td>90</td>
+<td>94</td>
+<td>92</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Drug 1</td>
+<td>33300.0</td>
+<td>97</td>
+<td>89</td>
+<td>93</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Drug 1</td>
+<td>11100.0</td>
+<td>86</td>
+<td>89</td>
+<td>88</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Drug 1</td>
+<td>3700.0</td>
+<td>81</td>
+<td>88</td>
+<td>84</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Drug 1</td>
+<td>1240.0</td>
+<td>63</td>
+<td>70</td>
+<td>67</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Currently, the py50 program requires the at least 3 columns as input. The rest of the columns will be ignored. py50 requires a column containing the following: - Drug Name - Concentration - Average Response</p>
+<p>Note that py50 requires the average response. Though if you would like to calculate IC50 for one trial of a drug, that is possible.</p>
+<p>The names for the corresponding columns can be passed in the “calculate_ic50()” function as follows:</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:43.740428Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:43.707443Z&quot;}" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">ic50 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> data.calculate_ic50(name_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Name'</span>, concentration_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>, response_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>)</span>
+<span id="cb4-2">ic50</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">compound_name</th>
+<th data-quarto-table-cell-role="th">maximum</th>
+<th data-quarto-table-cell-role="th">minimum</th>
+<th data-quarto-table-cell-role="th">ic50 (nM)</th>
+<th data-quarto-table-cell-role="th">hill_slope</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Drug 1</td>
+<td>92.854428</td>
+<td>-7.640263</td>
+<td>439.823988</td>
+<td>1.040875</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Where the maximum and minimum corresponds to the maximum and minimum response. The Hill slope is the hill coefficient. This table can be output as a separate .csv file. For this tutorial, we will output the final table as a markdown table.</p>
+<p><strong>NOTE</strong>: The calculation in this table is the Relative IC50 value. A future post will tackle Relative vs Absolute IC50.</p>
+</section>
+<section id="plotting" class="level3">
+<h3 class="anchored" data-anchor-id="plotting">Plotting</h3>
+<p>py50 contains functions that will allow plotting. Let’s generate a sigmoidal curve from the dataset. This time the dataframe will need to be instantiated into the PlotCurve class. From there, the dataset will be calculated and the resulting information will be ploted on a graph.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:43.748944Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:43.711955Z&quot;}" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">plot_data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> PlotCurve(df)</span>
+<span id="cb5-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># The input dataset can be inspected as follows:</span></span>
+<span id="cb5-3">data.show().head()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Compound Name</th>
+<th data-quarto-table-cell-role="th">Compound Conc</th>
+<th data-quarto-table-cell-role="th">% Inhibition 1</th>
+<th data-quarto-table-cell-role="th">% Inhibition 2</th>
+<th data-quarto-table-cell-role="th">% Inhibition Avg</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Drug 1</td>
+<td>100000.0</td>
+<td>90</td>
+<td>94</td>
+<td>92</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Drug 1</td>
+<td>33300.0</td>
+<td>97</td>
+<td>89</td>
+<td>93</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Drug 1</td>
+<td>11100.0</td>
+<td>86</td>
+<td>89</td>
+<td>88</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Drug 1</td>
+<td>3700.0</td>
+<td>81</td>
+<td>88</td>
+<td>84</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Drug 1</td>
+<td>1240.0</td>
+<td>63</td>
+<td>70</td>
+<td>67</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>For this example, plotting the dose-response curve uses the single_curve_plot() function. By default, py50 will assume drug concentrations are in nanomolar (nM) concentration and will convert them into micromolar (µM) concentrations. This will also mean that the final scale on the x-axis will be in µM. As the dosages for a typical test vary greatly in concentrations, the scale of the concentration will be in log format by default. However, depending on user needs, these can be changed.</p>
+<p>Additional parameters and their explanation can be found <a href="https://github.com/tlint101/py50">here</a>.</p>
+<p>First. Here we will call the “single_curve_plot” method with the associated parameters:</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:44.113962Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:43.720328Z&quot;}" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">figure <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot_data.single_curve_plot(concentration_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>,</span>
+<span id="cb6-2">                                     response_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>,</span>
+<span id="cb6-3">                                     plot_title<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Default Plot'</span>,</span>
+<span id="cb6-4">                                     drug_name<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Drug 1'</span>,</span>
+<span id="cb6-5">                                     xlabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Logarithmic Concentration (µM)'</span>,</span>
+<span id="cb6-6">                                     ylabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Inhibition %'</span>,</span>
+<span id="cb6-7">                                     legend<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb6-8">                                     output_filename<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Concentration on X-axis converted to µM</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/4-py50-single-plot_files/figure-html/cell-7-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="customize-figure" class="level3">
+<h3 class="anchored" data-anchor-id="customize-figure">Customize figure</h3>
+<p>The above figure looks great! But what if I do not like black for the line color? I would much prefer Teal (#008080). Good news! There are several ways to adjust the graph to highlight the information you want to convey. For colors, we will start with the “line_color=” parameter. The line color can be a specific color name (i.e.&nbsp;red, blue, green, etc) or a hex code. Here is an example of a colored line in “teal” (#008080)</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:44.416611Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:44.118610Z&quot;}" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">figure <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot_data.single_curve_plot(concentration_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>,</span>
+<span id="cb8-2">                                     response_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>,</span>
+<span id="cb8-3">                                     plot_title<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Plot with Colored Lines'</span>,</span>
+<span id="cb8-4">                                     drug_name<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Drug 1'</span>,</span>
+<span id="cb8-5">                                     xlabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Logarithmic Concentration (µM)'</span>,</span>
+<span id="cb8-6">                                     ylabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Inhibition %'</span>,</span>
+<span id="cb8-7">                                     line_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#008080'</span>,</span>
+<span id="cb8-8">                                     legend<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb8-9">                                     output_filename<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Concentration on X-axis converted to µM</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/4-py50-single-plot_files/figure-html/cell-8-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>That doesn’t look half bad! But what if you want to highlight the IC50 value? That would give people a quick way to identify where the IC50 lies on the curve. That can be achieved using the “box=” parameter. The box argument is a boolean argument and by default it will draw a box at the 50% response with respect to the curve.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:44.717998Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:44.423366Z&quot;}" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1">figure <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot_data.single_curve_plot(concentration_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>,</span>
+<span id="cb10-2">                                     response_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>,</span>
+<span id="cb10-3">                                     plot_title<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Plot with Colored Lines'</span>,</span>
+<span id="cb10-4">                                     drug_name<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Drug 1'</span>,</span>
+<span id="cb10-5">                                     xlabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Logarithmic Concentration (µM)'</span>,</span>
+<span id="cb10-6">                                     ylabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Inhibition %'</span>,</span>
+<span id="cb10-7">                                     line_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#008080'</span>,</span>
+<span id="cb10-8">                                     box<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb10-9">                                     legend<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb10-10">                                     output_filename<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Concentration on X-axis converted to µM</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/4-py50-single-plot_files/figure-html/cell-9-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The box highlight can be further modified for color and specific response position you may be interested in. For example, what if you want the box to be red and also highlight IC<img src="https://latex.codecogs.com/png.latex?_%7B60%7D"> or IC<img src="https://latex.codecogs.com/png.latex?_%7B90%7D">? This can be achieved by using the “box_intercept=” and “box_color=” parameters</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:45.015447Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:44.724721Z&quot;}" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1">figure <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot_data.single_curve_plot(concentration_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>,</span>
+<span id="cb12-2">                                     response_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>,</span>
+<span id="cb12-3">                                     plot_title<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Plot with More Colors!'</span>,</span>
+<span id="cb12-4">                                     drug_name<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Drug 1'</span>,</span>
+<span id="cb12-5">                                     xlabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Logarithmic Concentration (µM)'</span>,</span>
+<span id="cb12-6">                                     ylabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Inhibition %'</span>,</span>
+<span id="cb12-7">                                     line_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#008080'</span>,</span>
+<span id="cb12-8">                                     box<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb12-9">                                     box_intercept<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">60</span>,</span>
+<span id="cb12-10">                                     box_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'red'</span>,</span>
+<span id="cb12-11">                                     legend<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb12-12">                                     output_filename<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Concentration on X-axis converted to µM</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/4-py50-single-plot_files/figure-html/cell-10-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Finally, the x-axis can be further adjusted.</p>
+<p>The scale can be changed from log to linear using the “xscale=” argument, changing the shape of the curve from sigmoid to a normal curve. The units of the scale can be changed to nM using the “xscale_unit=” argument. Currently only µM and nM is used.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:45.125531Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:45.015754Z&quot;}" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1">figure <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot_data.single_curve_plot(concentration_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>,</span>
+<span id="cb14-2">                                     response_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>,</span>
+<span id="cb14-3">                                     plot_title<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'A Linear Plot'</span>,</span>
+<span id="cb14-4">                                     drug_name<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Drug 1'</span>,</span>
+<span id="cb14-5">                                     xlabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Logarithmic Concentration (nM)'</span>,</span>
+<span id="cb14-6">                                     ylabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Inhibition %'</span>,</span>
+<span id="cb14-7">                                     line_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#008080'</span>,</span>
+<span id="cb14-8">                                     box<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>,</span>
+<span id="cb14-9">                                     legend<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb14-10">                                     xscale<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'linear'</span>,</span>
+<span id="cb14-11">                                     xscale_unit<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'nM'</span>,</span>
+<span id="cb14-12">                                     xscale_ticks<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>),</span>
+<span id="cb14-13">                                     output_filename<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Concentration on X-axis is in nM
+nM with ticks constraints!</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/4-py50-single-plot_files/figure-html/cell-11-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>For this dataset, the “xscale=‘linear’” does not look as good.</p>
+<p>Also notice how on the linear plot the xscale_ticks was also adjusted to fit the concentration in nM scale. This was achieved using the “xscale_ticks=” argument. Note that the xscale_ticks will affect how the line curve is drawn and should be adjusted to fit the dataset on the plot. Notice how the plot below has the xscale_ticks ranging from 0 to 2 and how it would affect the resulting curve line.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:45.446608Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:45.194680Z&quot;}" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1">figure <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot_data.single_curve_plot(concentration_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>,</span>
+<span id="cb16-2">                                     response_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>,</span>
+<span id="cb16-3">                                     plot_title<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'X-Axis is Set to nM'</span>,</span>
+<span id="cb16-4">                                     drug_name<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Drug 1'</span>,</span>
+<span id="cb16-5">                                     xlabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Logarithmic Concentration (nM)'</span>,</span>
+<span id="cb16-6">                                     ylabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Inhibition %'</span>,</span>
+<span id="cb16-7">                                     line_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#008080'</span>,</span>
+<span id="cb16-8">                                     box<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb16-9">                                     box_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'orange'</span>,</span>
+<span id="cb16-10">                                     legend<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb16-11">                                     xscale<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'log'</span>,</span>
+<span id="cb16-12">                                     xscale_unit<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'nM'</span>,</span>
+<span id="cb16-13">                                     xscale_ticks<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>),</span>
+<span id="cb16-14">                                     output_filename<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Concentration on X-axis is in nM
+nM with ticks constraints!</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/4-py50-single-plot_files/figure-html/cell-12-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="saving-the-figure" class="level3">
+<h3 class="anchored" data-anchor-id="saving-the-figure">Saving the figure</h3>
+<p>Finally, the figure can be saved using the “output_filename=” argument. Change “None” to file path of choice. Images should be saved in .png format.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:45.698629Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:45.451586Z&quot;}" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1">figure <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> plot_data.single_curve_plot(concentration_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>,</span>
+<span id="cb18-2">                                     response_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>,</span>
+<span id="cb18-3">                                     plot_title<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'X-Axis is Set to nM'</span>,</span>
+<span id="cb18-4">                                     drug_name<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Drug 1'</span>,</span>
+<span id="cb18-5">                                     xlabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Logarithmic Concentration (nM)'</span>,</span>
+<span id="cb18-6">                                     ylabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Inhibition %'</span>,</span>
+<span id="cb18-7">                                     line_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#008080'</span>,</span>
+<span id="cb18-8">                                     box<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb18-9">                                     box_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'orange'</span>,</span>
+<span id="cb18-10">                                     legend<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb18-11">                                     xscale<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'log'</span>,</span>
+<span id="cb18-12">                                     xscale_unit<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'µM'</span>,</span>
+<span id="cb18-13">                                     xscale_ticks<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>),</span>
+<span id="cb18-14">                                     output_filename<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Concentration on X-axis converted to µM
+µM with ticks constraints!</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/4-py50-single-plot_files/figure-html/cell-13-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Additionally, the figure can also be saved as follows:</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-12-07T02:36:45.757832Z&quot;,&quot;start_time&quot;:&quot;2023-12-07T02:36:45.700715Z&quot;}" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1">figure.savefig(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'tutorial_figure_001.png'</span>)</span></code></pre></div>
+</div>
+<p>And that should be it!</p>
+<p>This is my first “big” python project and I learned a lot from it. I know I should clean up the code in the future, but for now, I’m glad to have it up and running! I plan on maintaining this for the foreseeable future. I hope it helps others as much as it has helped me!</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>Python</category>
+  <category>Streamlit</category>
+  <category>Coding</category>
+  <category>Informatics</category>
+  <category>Plotting</category>
+  <guid>https://tlint101.github.io/practice-in-code/posts/4-py50-single-plot.html</guid>
+  <pubDate>Wed, 06 Dec 2023 16:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Announcing py50!</title>
   <dc:creator>Tony E. Lin</dc:creator>
