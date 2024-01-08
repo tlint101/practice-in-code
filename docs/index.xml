@@ -10,7 +10,412 @@
 <atom:link href="https://tlint101.github.io/practice-in-code/index.xml" rel="self" type="application/rss+xml"/>
 <description>Practice in Code</description>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Mon, 08 Jan 2024 16:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 10 Jan 2024 16:00:00 GMT</lastBuildDate>
+<item>
+  <title>py50 - Showing off Color Features</title>
+  <dc:creator>Tony E. Lin</dc:creator>
+  <link>https://tlint101.github.io/practice-in-code/posts/7-py50-additional-features.html</link>
+  <description><![CDATA[ 
+
+
+
+<p>Last post I gave a quick rundown of py50. Here I would like to explain additional features, mainly color and highlighting options.</p>
+<p>When it comes to figures, I think they are one of the more difficult aspects of writing a paper. A good figure must be many things. It must not only convey to the audience what was done, but also the outcome and our own interpretation said results. The figures are also a chance to add a bit of pizazz to the manuscript or presentation. There is nothing wrong with the classic black and white figures, but they can come across as stilted and boring, especially now in 2024 were many manuscripts are downloaded and read as PDFs. Adding additional flourishes to highlight our points with a dash of color will allow our personality, and by extension the research we are trying to convey, to shine.</p>
+<p>py50 offers some of these functions that will, hopefully, allow the figures and results to pop. While py50 offers three different plotting styles, the colors and highlighting options stay the same across the functions. I will show a few examples across all three plot styles.</p>
+<p>For those who want to get their hands dirty immediately, the functions are explained in more detail at the <a href="https://py50.readthedocs.io/en/latest/plotcurve.html#plotcurve.PlotCurve.single_curve_plot">documentation page</a></p>
+<section id="example-with-single-plot" class="level2">
+<h2 class="anchored" data-anchor-id="example-with-single-plot">Example with Single Plot</h2>
+<p>In addition to the typical configurations for a plot shown here - Plot Title and axis labels - the curve color can be adjusted. This takes the standard name of the color names (red, green, blue, etc) or hex codes. Further, users can highlight IC50 values on the curve using the ‘box=True’ argument. By default, the box will be gray. Again, the box color can be adjusted using the color names or hex codes. Importantly, the box does not need to correspond with the IC50. If you wanted to highlight a different area, say IC60, the box can be adjusted accordingly using the ‘box_intercept’ argument.</p>
+<p>All information associated with the plots can be generated using the verbose=True argument. This will print out information related to the plot, consisting of what drug concentration py50 assumes the data is in, what concentration the X-axis will be in (default is in nM), and the concentration and response for the box.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-08T06:47:19.140611Z&quot;,&quot;start_time&quot;:&quot;2024-01-08T06:47:19.137772Z&quot;}" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> py50.plotcurve <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> PlotCurve</span></code></pre></div>
+</div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-08T06:47:19.408241Z&quot;,&quot;start_time&quot;:&quot;2024-01-08T06:47:19.141742Z&quot;}" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.read_csv(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'datasets/py50/single_example.csv'</span>)</span>
+<span id="cb2-2">data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> PlotCurve(df)</span>
+<span id="cb2-3"></span>
+<span id="cb2-4">figure <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> data.single_curve_plot(drug_name<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Drug 1'</span>,</span>
+<span id="cb2-5">                                concentration_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>,</span>
+<span id="cb2-6">                                response_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>,</span>
+<span id="cb2-7">                                plot_title<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Modified Single Curve'</span>,</span>
+<span id="cb2-8">                                xlabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Concentration in nM'</span>,</span>
+<span id="cb2-9">                                ylabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Response %'</span>,</span>
+<span id="cb2-10">                                line_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'teal'</span>,</span>
+<span id="cb2-11">                                box<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb2-12">                                box_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#E0115F'</span>,</span>
+<span id="cb2-13">                                box_intercept<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">60</span>,</span>
+<span id="cb2-14">                                verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Drug 1 concentration will be in nM!
+Concentration on X-axis will be in nM
+Box X intersection:  880.204 nM
+Box Y intersection:  60 %</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/7-py50-additional-features_files/figure-html/cell-3-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>For those who do not like the box but still want to highlight a particular value on the curve, there are ‘vline’ or ‘hline’ arguments. This will draw a dash line across the length of the plot. It is valid for both vertical and horizontal directions.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-08T06:47:19.584633Z&quot;,&quot;start_time&quot;:&quot;2024-01-08T06:47:19.411139Z&quot;}" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">figure <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> data.single_curve_plot(drug_name<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Drug 1'</span>,</span>
+<span id="cb4-2">                                concentration_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>,</span>
+<span id="cb4-3">                                response_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>,</span>
+<span id="cb4-4">                                plot_title<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Modified Single Curve in Hulk Colors'</span>,</span>
+<span id="cb4-5">                                xlabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Concentration in nM'</span>,</span>
+<span id="cb4-6">                                ylabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Response %'</span>,</span>
+<span id="cb4-7">                                line_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'green'</span>,</span>
+<span id="cb4-8">                                hline<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>,</span>
+<span id="cb4-9">                                hline_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'purple'</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/7-py50-additional-features_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="example-with-multiple-curves" class="level2">
+<h2 class="anchored" data-anchor-id="example-with-multiple-curves">Example with Multiple Curves</h2>
+<p>Depending on the situation, it may be more prudent to show multiple curves in a single plot. That can be done using the multi_curve_plot() function. Again, the options shown here are available in all three plots. By default, the multi_curve_plot() uses a colorblind color and marker palette, but custom colors and markers can be passed as a list.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-08T06:47:19.848656Z&quot;,&quot;start_time&quot;:&quot;2024-01-08T06:47:19.585007Z&quot;}" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.read_csv(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'datasets/py50/multiple_example.csv'</span>)</span>
+<span id="cb5-2">data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> PlotCurve(df)</span>
+<span id="cb5-3"></span>
+<span id="cb5-4">rainbow <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#ff0000'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#ffa500'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#008000'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#ee82ee'</span>]</span>
+<span id="cb5-5"></span>
+<span id="cb5-6">figure <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> data.multi_curve_plot(name_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Name'</span>,</span>
+<span id="cb5-7">                               concentration_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>,</span>
+<span id="cb5-8">                               response_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>,</span>
+<span id="cb5-9">                               plot_title<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Multi-Curves in Rainbow'</span>,</span>
+<span id="cb5-10">                               xlabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Concentration (nM)'</span>,</span>
+<span id="cb5-11">                               ylabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Response'</span>,</span>
+<span id="cb5-12">                               legend<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb5-13">                               line_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>rainbow)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/7-py50-additional-features_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Notice that some points above are below the 0% response. Depending on your dataset, these may be outliers. These can be shown by adjusting the Y axis using either the ymax or ymin arguments.</p>
+<p>With multiple lines in the plot, it may be more prudent to highlight the response. The box can be drawn, but can only be drawn for a specific drug. In this case, the vline or hline arguments would serve better. Here a specific concentration is highlighted instead. The units for the vline must correspond to the plot units. In this case, the vline will be in nanomolar (nM) concentration. Colors can also be specified using the vline_color or hline_color, repsectively.</p>
+<p>This example uses the vline at 880.2 nM, which roughly translates to the IC50 value for Drug 3.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-08T06:47:20.110037Z&quot;,&quot;start_time&quot;:&quot;2024-01-08T06:47:19.871494Z&quot;}" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">figure <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> data.multi_curve_plot(name_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Name'</span>,</span>
+<span id="cb6-2">                               concentration_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>,</span>
+<span id="cb6-3">                               response_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>,</span>
+<span id="cb6-4">                               plot_title<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Multi-Curves in Rainbow'</span>,</span>
+<span id="cb6-5">                               xlabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Concentration (nM)'</span>,</span>
+<span id="cb6-6">                               ylabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Response'</span>,</span>
+<span id="cb6-7">                               legend<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb6-8">                               line_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>rainbow,</span>
+<span id="cb6-9">                               ymin<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>,</span>
+<span id="cb6-10">                               vline<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">880.2</span>,</span>
+<span id="cb6-11">                               vline_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'blue'</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/7-py50-additional-features_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="example-with-grid-plots" class="level2">
+<h2 class="anchored" data-anchor-id="example-with-grid-plots">Example with Grid Plots</h2>
+<p>Finally, multiple curves can be plotted and arrayed in a grid. Importantly, the grid_curve_plot() function contains an additional argument - column_num. This argument will format the curves accordingly. <strong>Note</strong> the number of curves must be even if you want to array the curves in a grid format. For now, the example will utilize four graphs.</p>
+<p>By default, the grid curves are arrayed in a color-blind palette. They can be changed by inputting a color in a list format.</p>
+<p>We can reposition how the plots are laid out using the “column_num=” argument. Note that if this argument is called, the figures will be “distroted”. The subplots can be adjusted by including the “figsize=” argument and adjusting the size accordingly.</p>
+<p>By default, the grid_curve_plot() was figure size is adjusted for two cures. As a result, the figsize is adjusted manually in these examples.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-08T06:47:20.805099Z&quot;,&quot;start_time&quot;:&quot;2024-01-08T06:47:20.113280Z&quot;}" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1">figure <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> data.grid_curve_plot(name_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Name'</span>,</span>
+<span id="cb7-2">                              concentration_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>,</span>
+<span id="cb7-3">                              response_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>,</span>
+<span id="cb7-4">                              plot_title<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'1 Row Example'</span>,</span>
+<span id="cb7-5">                              column_num<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>,</span>
+<span id="cb7-6">                              figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>))</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/7-py50-additional-features_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Finally, A specific point on the curve can be highlighted using the box or the hline/vline arguments. The box will be plotted for each curve. The figures can be further modified to add a title, adjust the line colors similarly to the examples seen above.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-08T06:47:21.509166Z&quot;,&quot;start_time&quot;:&quot;2024-01-08T06:47:20.808829Z&quot;}" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">figure <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> data.grid_curve_plot(name_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Name'</span>,</span>
+<span id="cb8-2">                              concentration_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>,</span>
+<span id="cb8-3">                              response_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>,</span>
+<span id="cb8-4">                              plot_title<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Grid Example'</span>,</span>
+<span id="cb8-5">                              line_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>rainbow,</span>
+<span id="cb8-6">                              box<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb8-7">                              box_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#E0115F'</span>,</span>
+<span id="cb8-8">                              figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>))</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/7-py50-additional-features_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>These are some of the features with the plots generated from py50.</p>
+<p>This is a great project for me personally and I learned a lot of making py50. I plan to maintain py50 for the foreseeable future. There are a couple of feature ideas swimming in my head that I would love to include in future releases.</p>
+<p>Finally, for anyone who is not as well versed in code, there is a web application version of py50 (<a href="https://py50-app.streamlit.app">click here</a>). The updates for the program takes a little more time, as I tend to tinker a bit more with UI stuff. But overall, it works fairly well and will get you the calculations and plots needed.</p>
+<p>If you find any issues with py50, feel free to leave a comment on the GitHub repository.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Python</category>
+  <category>Streamlit</category>
+  <category>Coding</category>
+  <category>Informatics</category>
+  <category>Plotting</category>
+  <guid>https://tlint101.github.io/practice-in-code/posts/7-py50-additional-features.html</guid>
+  <pubDate>Wed, 10 Jan 2024 16:00:00 GMT</pubDate>
+</item>
 <item>
   <title>py50 - Now with Updates!</title>
   <dc:creator>Tony E. Lin</dc:creator>
