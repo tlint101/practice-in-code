@@ -213,25 +213,21 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
 <h2 class="anchored" data-anchor-id="example-with-single-plot">Example with Single Plot</h2>
 <p>In addition to the typical configurations for a plot shown here - Plot Title and axis labels - the curve color can be adjusted. This takes the standard name of the color names (red, green, blue, etc) or hex codes. Further, users can highlight IC50 values on the curve using the ‘box=True’ argument. By default, the box will be gray. Again, the box color can be adjusted using the color names or hex codes. Importantly, the box does not need to correspond with the IC50. If you wanted to highlight a different area, say IC60, the box can be adjusted accordingly using the ‘box_intercept’ argument.</p>
 <p>All information associated with the plots can be generated using the verbose=True argument. This will print out information related to the plot, consisting of what drug concentration py50 assumes the data is in, what concentration the X-axis will be in (default is in nM), and the concentration and response for the box.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-08T06:47:19.140611Z&quot;,&quot;start_time&quot;:&quot;2024-01-08T06:47:19.137772Z&quot;}" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> py50.plotcurve <span class="im">import</span> PlotCurve</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-08T06:47:19.408241Z&quot;,&quot;start_time&quot;:&quot;2024-01-08T06:47:19.141742Z&quot;}" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'datasets/py50/single_example.csv'</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> PlotCurve(df)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>figure <span class="op">=</span> data.single_curve_plot(drug_name<span class="op">=</span><span class="st">'Drug 1'</span>,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                                concentration_col<span class="op">=</span><span class="st">'Compound Conc'</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                                response_col<span class="op">=</span><span class="st">'% Inhibition Avg'</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                                plot_title<span class="op">=</span><span class="st">'Modified Single Curve'</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                                xlabel<span class="op">=</span><span class="st">'Concentration in nM'</span>,</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                                ylabel<span class="op">=</span><span class="st">'Response %'</span>,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                                line_color<span class="op">=</span><span class="st">'teal'</span>,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                                box<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                                box_color<span class="op">=</span><span class="st">'#E0115F'</span>,</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                                box_intercept<span class="op">=</span><span class="dv">60</span>,</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                                verbose<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-11T02:44:21.460465Z&quot;,&quot;start_time&quot;:&quot;2024-01-11T02:44:21.168084Z&quot;}" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'datasets/py50/single_example.csv'</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> PlotCurve(df)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>figure <span class="op">=</span> data.single_curve_plot(drug_name<span class="op">=</span><span class="st">'Drug 1'</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                                concentration_col<span class="op">=</span><span class="st">'Compound Conc'</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                                response_col<span class="op">=</span><span class="st">'% Inhibition Avg'</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                                plot_title<span class="op">=</span><span class="st">'Modified Single Curve'</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                                xlabel<span class="op">=</span><span class="st">'Concentration in nM'</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                                ylabel<span class="op">=</span><span class="st">'Response %'</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                                line_color<span class="op">=</span><span class="st">'teal'</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                                box<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                                box_color<span class="op">=</span><span class="st">'#E0115F'</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                                box_intercept<span class="op">=</span><span class="dv">60</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                                verbose<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Drug 1 concentration will be in nM!
 Concentration on X-axis will be in nM
@@ -239,63 +235,63 @@ Box X intersection:  880.204 nM
 Box Y intersection:  60 %</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="7-py50-additional-features_files/figure-html/cell-3-output-2.png" class="img-fluid"></p>
+<p><img src="7-py50-additional-features_files/figure-html/cell-2-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 <p>For those who do not like the box but still want to highlight a particular value on the curve, there are ‘vline’ or ‘hline’ arguments. This will draw a dash line across the length of the plot. It is valid for both vertical and horizontal directions.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-08T06:47:19.584633Z&quot;,&quot;start_time&quot;:&quot;2024-01-08T06:47:19.411139Z&quot;}" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>figure <span class="op">=</span> data.single_curve_plot(drug_name<span class="op">=</span><span class="st">'Drug 1'</span>,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                                concentration_col<span class="op">=</span><span class="st">'Compound Conc'</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                                response_col<span class="op">=</span><span class="st">'% Inhibition Avg'</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                                plot_title<span class="op">=</span><span class="st">'Modified Single Curve in Hulk Colors'</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                                xlabel<span class="op">=</span><span class="st">'Concentration in nM'</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                                ylabel<span class="op">=</span><span class="st">'Response %'</span>,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                                line_color<span class="op">=</span><span class="st">'green'</span>,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                                hline<span class="op">=</span><span class="dv">50</span>,</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                                hline_color<span class="op">=</span><span class="st">'purple'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-11T02:44:21.645438Z&quot;,&quot;start_time&quot;:&quot;2024-01-11T02:44:21.479110Z&quot;}" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>figure <span class="op">=</span> data.single_curve_plot(drug_name<span class="op">=</span><span class="st">'Drug 1'</span>,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                                concentration_col<span class="op">=</span><span class="st">'Compound Conc'</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                                response_col<span class="op">=</span><span class="st">'% Inhibition Avg'</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                                plot_title<span class="op">=</span><span class="st">'Modified Single Curve in Hulk Colors'</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                                xlabel<span class="op">=</span><span class="st">'Concentration in nM'</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                                ylabel<span class="op">=</span><span class="st">'Response %'</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                                line_color<span class="op">=</span><span class="st">'green'</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                                hline<span class="op">=</span><span class="dv">50</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                                hline_color<span class="op">=</span><span class="st">'purple'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="7-py50-additional-features_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
+<p><img src="7-py50-additional-features_files/figure-html/cell-3-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
 <section id="example-with-multiple-curves" class="level2">
 <h2 class="anchored" data-anchor-id="example-with-multiple-curves">Example with Multiple Curves</h2>
 <p>Depending on the situation, it may be more prudent to show multiple curves in a single plot. That can be done using the multi_curve_plot() function. Again, the options shown here are available in all three plots. By default, the multi_curve_plot() uses a colorblind color and marker palette, but custom colors and markers can be passed as a list.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-08T06:47:19.848656Z&quot;,&quot;start_time&quot;:&quot;2024-01-08T06:47:19.585007Z&quot;}" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'datasets/py50/multiple_example.csv'</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> PlotCurve(df)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>rainbow <span class="op">=</span> [<span class="st">'#ff0000'</span>, <span class="st">'#ffa500'</span>, <span class="st">'#008000'</span>, <span class="st">'#ee82ee'</span>]</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>figure <span class="op">=</span> data.multi_curve_plot(name_col<span class="op">=</span><span class="st">'Compound Name'</span>,</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                               concentration_col<span class="op">=</span><span class="st">'Compound Conc'</span>,</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                               response_col<span class="op">=</span><span class="st">'% Inhibition Avg'</span>,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                               plot_title<span class="op">=</span><span class="st">'Multi-Curves in Rainbow'</span>,</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                               xlabel<span class="op">=</span><span class="st">'Concentration (nM)'</span>,</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                               ylabel<span class="op">=</span><span class="st">'Response'</span>,</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                               legend<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                               line_color<span class="op">=</span>rainbow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-11T02:44:21.923493Z&quot;,&quot;start_time&quot;:&quot;2024-01-11T02:44:21.643766Z&quot;}" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'datasets/py50/multiple_example.csv'</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> PlotCurve(df)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>rainbow <span class="op">=</span> [<span class="st">'#ff0000'</span>, <span class="st">'#ffa500'</span>, <span class="st">'#008000'</span>, <span class="st">'#ee82ee'</span>]</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>figure <span class="op">=</span> data.multi_curve_plot(name_col<span class="op">=</span><span class="st">'Compound Name'</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                               concentration_col<span class="op">=</span><span class="st">'Compound Conc'</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                               response_col<span class="op">=</span><span class="st">'% Inhibition Avg'</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                               plot_title<span class="op">=</span><span class="st">'Multi-Curves in Rainbow'</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                               xlabel<span class="op">=</span><span class="st">'Concentration (nM)'</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>                               ylabel<span class="op">=</span><span class="st">'Response'</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                               legend<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                               line_color<span class="op">=</span>rainbow)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="7-py50-additional-features_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
+<p><img src="7-py50-additional-features_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>Notice that some points above are below the 0% response. Depending on your dataset, these may be outliers. These can be shown by adjusting the Y axis using either the ymax or ymin arguments.</p>
 <p>With multiple lines in the plot, it may be more prudent to highlight the response. The box can be drawn, but can only be drawn for a specific drug. In this case, the vline or hline arguments would serve better. Here a specific concentration is highlighted instead. The units for the vline must correspond to the plot units. In this case, the vline will be in nanomolar (nM) concentration. Colors can also be specified using the vline_color or hline_color, repsectively.</p>
 <p>This example uses the vline at 880.2 nM, which roughly translates to the IC50 value for Drug 3.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-08T06:47:20.110037Z&quot;,&quot;start_time&quot;:&quot;2024-01-08T06:47:19.871494Z&quot;}" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>figure <span class="op">=</span> data.multi_curve_plot(name_col<span class="op">=</span><span class="st">'Compound Name'</span>,</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                               concentration_col<span class="op">=</span><span class="st">'Compound Conc'</span>,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                               response_col<span class="op">=</span><span class="st">'% Inhibition Avg'</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                               plot_title<span class="op">=</span><span class="st">'Multi-Curves in Rainbow'</span>,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                               xlabel<span class="op">=</span><span class="st">'Concentration (nM)'</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                               ylabel<span class="op">=</span><span class="st">'Response'</span>,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                               legend<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                               line_color<span class="op">=</span>rainbow,</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                               ymin<span class="op">=-</span><span class="dv">10</span>,</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                               vline<span class="op">=</span><span class="fl">880.2</span>,</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                               vline_color<span class="op">=</span><span class="st">'blue'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-11T02:44:22.204861Z&quot;,&quot;start_time&quot;:&quot;2024-01-11T02:44:21.933694Z&quot;}" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>figure <span class="op">=</span> data.multi_curve_plot(name_col<span class="op">=</span><span class="st">'Compound Name'</span>,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                               concentration_col<span class="op">=</span><span class="st">'Compound Conc'</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                               response_col<span class="op">=</span><span class="st">'% Inhibition Avg'</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                               plot_title<span class="op">=</span><span class="st">'Multi-Curves in Rainbow'</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                               xlabel<span class="op">=</span><span class="st">'Concentration (nM)'</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                               ylabel<span class="op">=</span><span class="st">'Response'</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                               legend<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                               line_color<span class="op">=</span>rainbow,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                               ymin<span class="op">=-</span><span class="dv">10</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                               vline<span class="op">=</span><span class="fl">880.2</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                               vline_color<span class="op">=</span><span class="st">'blue'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="7-py50-additional-features_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
+<p><img src="7-py50-additional-features_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
@@ -305,29 +301,29 @@ Box Y intersection:  60 %</code></pre>
 <p>By default, the grid curves are arrayed in a color-blind palette. They can be changed by inputting a color in a list format.</p>
 <p>We can reposition how the plots are laid out using the “column_num=” argument. Note that if this argument is called, the figures will be “distroted”. The subplots can be adjusted by including the “figsize=” argument and adjusting the size accordingly.</p>
 <p>By default, the grid_curve_plot() was figure size is adjusted for two cures. As a result, the figsize is adjusted manually in these examples.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-08T06:47:20.805099Z&quot;,&quot;start_time&quot;:&quot;2024-01-08T06:47:20.113280Z&quot;}" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>figure <span class="op">=</span> data.grid_curve_plot(name_col<span class="op">=</span><span class="st">'Compound Name'</span>,</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                              concentration_col<span class="op">=</span><span class="st">'Compound Conc'</span>,</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                              response_col<span class="op">=</span><span class="st">'% Inhibition Avg'</span>,</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                              plot_title<span class="op">=</span><span class="st">'1 Row Example'</span>,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                              column_num<span class="op">=</span><span class="dv">4</span>,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                              figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-11T02:44:22.952921Z&quot;,&quot;start_time&quot;:&quot;2024-01-11T02:44:22.226019Z&quot;}" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>figure <span class="op">=</span> data.grid_curve_plot(name_col<span class="op">=</span><span class="st">'Compound Name'</span>,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                              concentration_col<span class="op">=</span><span class="st">'Compound Conc'</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                              response_col<span class="op">=</span><span class="st">'% Inhibition Avg'</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                              plot_title<span class="op">=</span><span class="st">'1 Row Example'</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                              column_num<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                              figsize<span class="op">=</span>(<span class="dv">15</span>,<span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="7-py50-additional-features_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
+<p><img src="7-py50-additional-features_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>Finally, A specific point on the curve can be highlighted using the box or the hline/vline arguments. The box will be plotted for each curve. The figures can be further modified to add a title, adjust the line colors similarly to the examples seen above.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-08T06:47:21.509166Z&quot;,&quot;start_time&quot;:&quot;2024-01-08T06:47:20.808829Z&quot;}" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>figure <span class="op">=</span> data.grid_curve_plot(name_col<span class="op">=</span><span class="st">'Compound Name'</span>,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                              concentration_col<span class="op">=</span><span class="st">'Compound Conc'</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                              response_col<span class="op">=</span><span class="st">'% Inhibition Avg'</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                              plot_title<span class="op">=</span><span class="st">'Grid Example'</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                              line_color<span class="op">=</span>rainbow,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                              box<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                              box_color<span class="op">=</span><span class="st">'#E0115F'</span>,</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                              figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-11T02:44:23.708586Z&quot;,&quot;start_time&quot;:&quot;2024-01-11T02:44:22.966001Z&quot;}" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>figure <span class="op">=</span> data.grid_curve_plot(name_col<span class="op">=</span><span class="st">'Compound Name'</span>,</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                              concentration_col<span class="op">=</span><span class="st">'Compound Conc'</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                              response_col<span class="op">=</span><span class="st">'% Inhibition Avg'</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                              plot_title<span class="op">=</span><span class="st">'Grid Example'</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                              line_color<span class="op">=</span>rainbow,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                              box<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                              box_color<span class="op">=</span><span class="st">'#E0115F'</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                              figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="7-py50-additional-features_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
+<p><img src="7-py50-additional-features_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
