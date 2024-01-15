@@ -2,38 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://tlint101.github.io/practice-in-code/posts/3-announcing-py50.html</loc>
-    <lastmod>2024-01-11T02:45:22.074Z</lastmod>
+    <lastmod>2024-01-15T04:46:25.928Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/posts/6-py50-QuickStart.html</loc>
-    <lastmod>2024-01-11T02:45:20.916Z</lastmod>
+    <lastmod>2024-01-15T04:46:25.001Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/posts/1-hello-world.html</loc>
-    <lastmod>2024-01-11T02:45:20.136Z</lastmod>
+    <lastmod>2024-01-15T04:46:24.280Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/posts/4-py50-single-plot.html</loc>
-    <lastmod>2024-01-11T02:45:19.498Z</lastmod>
+    <lastmod>2024-01-15T04:46:23.604Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/about.html</loc>
-    <lastmod>2024-01-11T02:45:18.370Z</lastmod>
+    <lastmod>2024-01-15T04:46:22.445Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/index.html</loc>
-    <lastmod>2024-01-11T02:45:18.899Z</lastmod>
+    <lastmod>2024-01-15T04:46:23.000Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/posts/7-py50-additional-features.html</loc>
-    <lastmod>2024-01-11T02:45:19.895Z</lastmod>
+    <lastmod>2024-01-15T04:46:24.042Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/posts/5-egg-on-my-face.html</loc>
-    <lastmod>2024-01-11T02:45:20.405Z</lastmod>
+    <lastmod>2024-01-15T04:46:24.542Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tlint101.github.io/practice-in-code/posts/8-absolute-ic50.html</loc>
+    <lastmod>2024-01-15T04:46:25.653Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/posts/2-hello-world-goals.html</loc>
-    <lastmod>2024-01-11T02:45:22.373Z</lastmod>
+    <lastmod>2024-01-15T04:46:26.217Z</lastmod>
   </url>
 </urlset>

@@ -10,7 +10,948 @@
 <atom:link href="https://tlint101.github.io/practice-in-code/index.xml" rel="self" type="application/rss+xml"/>
 <description>Practice in Code</description>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Wed, 10 Jan 2024 16:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 15 Jan 2024 16:00:00 GMT</lastBuildDate>
+<item>
+  <title>py50: Relative or Absolute IC50? 🤔</title>
+  <dc:creator>Tony E. Lin</dc:creator>
+  <link>https://tlint101.github.io/practice-in-code/posts/8-absolute-ic50.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="absolute-ic50" class="level2">
+<h2 class="anchored" data-anchor-id="absolute-ic50">Absolute IC50</h2>
+<p>I do not know others, but when I first tried calculating IC50, I wanted to pull my teeth out. There is a lot more to know about IC50 than just the calculations and anyone can dive into an endless blackhole of information and never crawl out. Here I will try my best to explain what I know. Plus, it will be good to show off py50 plots. For anyone interested, the main code for this post can be found <a href="https://github.com/tlint101/practice-in-code/blob/main/notebooks/8-absolute-ic50.ipynb">here</a>.</p>
+<p><strong>TL;DR</strong> IC50 can be confusing and the final result will depend on the data you have on hand. Use your best judgement!</p>
+<section id="so-what-is-an-ic50-value" class="level3">
+<h3 class="anchored" data-anchor-id="so-what-is-an-ic50-value">So what is an IC50 value?</h3>
+<p>On the surface, IC50 is an easy and fundamental pharmacological concept for researchers to quickly gauge the potency of a drug. It essentially asks - 🤔 <strong>How much of my drug is needed to inhibit my target protein activity by 50%.</strong> 💭 A given drug is tested at different concentrations to achieve this result.</p>
+<p>A good introduction has been written up by Dr.&nbsp;Keith Hornberger (<a href="https://krhornberger.substack.com/p/tweetorial-ic50-vs-ki">Tweetorial: IC50 vs.&nbsp;Ki</a>). In the article, there are reasons given for why <strong>IC50 depends on many factors</strong> - the drug being tested, the conditions, which cell, etc. These can all have an influence on the final result.</p>
+<p>Graphically, it will look like a sigmoidal plot (<a href="https://tlint101.github.io/practice-in-code/posts/6-py50-QuickStart.html">see here</a>), where the Y-axis are the drug responses and the X-axis is the concentration. The concentrations on the X-axis are typically, but not always, logarithmic in order to assess the wide variations in the tested drug concentration. We will see that the final <strong>calculated IC50 can be just as ambiguous</strong> as the experiment itself. That brings us to <strong>Relative vs.&nbsp;Absolute</strong> values.</p>
+<p>What does <strong>Relative vs.&nbsp;Absolute</strong> mean? GraphPad has a post explaining this problem: <a href="https://www.graphpad.com/support/faq/relative-vs-absolute-ic50/">Relative vs.&nbsp;Absolute IC50</a> and <a href="https://www.graphpad.com/support/faqid/1356/">50% of what? How exactly are Ic50 and EC50 defined?</a></p>
+<p><img src="https://tlint101.github.io/practice-in-code/posts/img/graphpad_absolute.png" class="img-fluid" alt="graphpad_absolute.png"><br>
+Image from GraphPad KNOWLEDGEBASE - ARTICLE #1566 (<a href="https://www.graphpad.com/support/faq/relative-vs-absolute-ic50/">here</a>)</p>
+<p>In short, <strong>Relative IC50 is the concentration that brings the curve down to the point halfway between the top and the bottom plateaus of the curve</strong>. This is the most common definition for IC50. When anyone says my drug has an IC50 of X value, it is safe to assume that they mean relative IC50. The problem is that the relative IC50 may not correlate to exactly 50% response (Figure above).</p>
+<p>In contrast, <strong>Absolute IC50 is the value at the exact point where the target response is 50%</strong>. The figure above details this point with the horizontal lines. Keep in mind that depending on the dataset and results, the 50% mark can also be ambiguous. It may be best to use absolute IC50 values if the response can be properly converted to a percentage (0% - 100%). However, how this is done can differ between methods and assays.</p>
+<p>In this tutorial, we will not be too concerted with these aspects. Instead, we will focus on “weird” results that may result from the Relative vs Absolute IC50 calculation. Sometimes these results are due to limited datapoints (i.e.&nbsp;more concentrations should be tested). This will be explained further below.</p>
+</section>
+<section id="example-start" class="level3">
+<h3 class="anchored" data-anchor-id="example-start">Example start</h3>
+<p>First we will look at a “good example”. By this I mean there are enough points that can give a good representation of the plateau at both ends of the response. This is necessary to determine the general curve.</p>
+<p>Here a .csv file will be read as a Pandas DataFrame. The current version of py50 requires a column with the drug name, drug concentration, and response average for the calculations. As seen in the <a href="https://tlint101.github.io/practice-in-code/posts/6-py50-QuickStart.html">Quickstart tutorial</a>, the “calculate_IC50” will output a table with the final calculations. By default, the IC50 value is the <strong>Relative IC50 value</strong>.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-15T04:38:39.699202Z&quot;,&quot;start_time&quot;:&quot;2024-01-15T04:38:39.660606Z&quot;}" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Calculate IC50</span></span>
+<span id="cb1-2">relative_ic50 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> good_example.calculate_ic50(name_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Name'</span>, concentration_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>, response_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>)</span>
+<span id="cb1-3">relative_ic50</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">compound_name</th>
+<th data-quarto-table-cell-role="th">maximum</th>
+<th data-quarto-table-cell-role="th">minimum</th>
+<th data-quarto-table-cell-role="th">ic50 (nM)</th>
+<th data-quarto-table-cell-role="th">hill_slope</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Drug 1</td>
+<td>92.854428</td>
+<td>-7.640263</td>
+<td>439.823988</td>
+<td>1.040875</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>We can double check the calculations if we like. There are two online IC50 calculators, <a href="https://www.aatbio.com/tools/ic50-calculator">AATBioquest IC50 Calculator</a> and the <a href="http://ic50.org/index.html">Very Simple IC50 Tool Kit</a>, both of which also give a relative IC50 value of 439.82 nM.</p>
+<p>What does that mean graphically? Here, a graph of the dataset will be plotted with a box to highlight the Relative IC50 value. For this we can use the “conc_target” parameter, which will take in the input concentration of interest and draw a box between the X and Y axis with the curve at the intersection. In this case, we will see where the Relative IC50 value (439.82 nM) lands on the curve. This can also be checked using the “verbose=True” argument.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-15T04:38:39.968166Z&quot;,&quot;start_time&quot;:&quot;2024-01-15T04:38:39.682038Z&quot;}" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Instantiate table into PlotCurve class</span></span>
+<span id="cb2-2">absolute <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> PlotCurve(good_example_df)</span>
+<span id="cb2-3">figure <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> absolute.single_curve_plot(concentration_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>,</span>
+<span id="cb2-4">                                    response_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>,</span>
+<span id="cb2-5">                                    plot_title<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Relative IC50 Value'</span>,</span>
+<span id="cb2-6">                                    drug_name<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Drug 1'</span>,</span>
+<span id="cb2-7">                                    xlabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Logarithmic Concentration (µM)'</span>,</span>
+<span id="cb2-8">                                    ylabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Inhibition %'</span>,</span>
+<span id="cb2-9">                                    conc_unit<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'µM'</span>, <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Plot the concentration in µM</span></span>
+<span id="cb2-10">                                    box<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb2-11">                                    box_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'red'</span>,</span>
+<span id="cb2-12">                                    conc_target<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.43982</span>, <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># the IC50 value must be in same units as label</span></span>
+<span id="cb2-13">                                    xscale_ticks<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>), <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># To extend the tail at both ends of the curve</span></span>
+<span id="cb2-14">                                    figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6.4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.8</span>),</span>
+<span id="cb2-15">                                    verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Drug 1 concentration will be in µM!
+Concentration on X-axis will be in µM
+Box X intersection:  0.44 µM
+Box Y intersection:  42.607 %</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/8-absolute-ic50_files/figure-html/cell-3-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Notice that the box is not at the 50% mark on the Y-Axis. Actually it is roughly 42.61% according to the output. Again, we can check this using the AATBioquest IC50 calculator, which also gives an inhibition response of 42.61% for the relative IC50 value. The calculations are consistent with each other. The final result si an IC50 value not exactly at the 50% response mark. Essentially, what is shown is the <strong>Relative IC50 value</strong>.</p>
+</section>
+<section id="comparison-to-absolute-ic50" class="level3">
+<h3 class="anchored" data-anchor-id="comparison-to-absolute-ic50">Comparison to Absolute IC50</h3>
+<p>What if we are interested to know the concentration at exactly 50% response? This number will be the <strong>Absolute IC50</strong> value. We can calculate that easily with the “calculate_absolute_ic50” function. The exact Absolute IC50 value can also be highlighted using the ‘Box=True’ parameter and removing the ‘conc_target=’ parameter. By default, the box will be drawn at 50% response.</p>
+<p>Bear in mind - Absolute IC50 in this case is relative to the input dataset. Like the relative IC50 value, it can change depending on a number of factors.</p>
+<p>When calculating the Absolute IC50 with py50, by default it will output both the Relative and Absolute IC50 values.</p>
+<p>The Absolute IC50 for this dataset can be calculated and plotted as follows:</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-15T04:38:39.993533Z&quot;,&quot;start_time&quot;:&quot;2024-01-15T04:38:39.983965Z&quot;}" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Calculate Absolute IC50</span></span>
+<span id="cb4-2">absolute_ic50 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> good_example.calculate_absolute_ic50(name_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Name'</span>, concentration_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>, response_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>)</span>
+<span id="cb4-3">absolute_ic50</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">compound_name</th>
+<th data-quarto-table-cell-role="th">maximum</th>
+<th data-quarto-table-cell-role="th">minimum</th>
+<th data-quarto-table-cell-role="th">relative ic50 (nM)</th>
+<th data-quarto-table-cell-role="th">absolute ic50 (nM)</th>
+<th data-quarto-table-cell-role="th">hill_slope</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Drug 1</td>
+<td>92.854428</td>
+<td>-7.640263</td>
+<td>439.823988</td>
+<td>584.734114</td>
+<td>1.040875</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-15T04:38:40.177099Z&quot;,&quot;start_time&quot;:&quot;2024-01-15T04:38:39.991638Z&quot;}" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Plot Figure</span></span>
+<span id="cb5-2">absolute <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> PlotCurve(good_example_df)</span>
+<span id="cb5-3">figure <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> absolute.single_curve_plot(concentration_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>,</span>
+<span id="cb5-4">                                    response_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>,</span>
+<span id="cb5-5">                                    plot_title<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Absolute IC50 Value'</span>,</span>
+<span id="cb5-6">                                    drug_name<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Drug 1'</span>,</span>
+<span id="cb5-7">                                    xlabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Logarithmic Concentration (nM)'</span>,</span>
+<span id="cb5-8">                                    ylabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Inhibition %'</span>,</span>
+<span id="cb5-9">                                    box<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb5-10">                                    box_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'red'</span>,</span>
+<span id="cb5-11">                                    conc_unit<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'µM'</span>,</span>
+<span id="cb5-12">                                    box_intercept<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>,</span>
+<span id="cb5-13">                                    xscale_ticks<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>),</span>
+<span id="cb5-14">                                    figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6.4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.8</span>),</span>
+<span id="cb5-15">                                    verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Drug 1 concentration will be in µM!
+Concentration on X-axis will be in µM
+Box X intersection:  0.585 µM
+Box Y intersection:  50 %</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/8-absolute-ic50_files/figure-html/cell-5-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The concentration for the Absolute IC50 will be 585.47 nM for this dataset. Again, it can be double checked using the AATBioquest IC50 calculator. When comparing the results on the AATBioquest calculator, the concentration at 50% response on the Y-axis also outputs an X-axis value of 584.72, similar to our calculated Absolute IC50 table.</p>
+</section>
+<section id="why-go-through-all-of-this" class="level3">
+<h3 class="anchored" data-anchor-id="why-go-through-all-of-this">Why go through all of this?</h3>
+<p>There are a lot of factors that can influence the IC50 calculation. It can also be impacted by the experimental design. The minimum number of concentrations needed to calculate IC50 is two, however there are varying methods that can result in varying numbers. py50, for example, requires at least 4 datapoints to calculate the IC50. And it is always advisable to test at more concentrations than 2 (I personally would be more suspicious if there was only 2 points!). Typically, the more concentrations tested the better and more accurate the calculated IC50 will be.</p>
+<p>Here is another example. In this case, the dummy drug was only tested at five different concentrations.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-15T04:38:40.183291Z&quot;,&quot;start_time&quot;:&quot;2024-01-15T04:38:40.176737Z&quot;}" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1">confusing_example_df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.read_csv(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'datasets/py50/absolute_example.csv'</span>)</span>
+<span id="cb7-2">confusing_example <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Calculator(confusing_example_df)</span>
+<span id="cb7-3">confusing_example.show()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Compound Name</th>
+<th data-quarto-table-cell-role="th">Compound Conc</th>
+<th data-quarto-table-cell-role="th">% Inhibition 1</th>
+<th data-quarto-table-cell-role="th">% Inhibition 2</th>
+<th data-quarto-table-cell-role="th">% Inhibition Avg</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Say Wha?</td>
+<td>10000</td>
+<td>70</td>
+<td>71</td>
+<td>70</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Say Wha?</td>
+<td>3000</td>
+<td>61</td>
+<td>59</td>
+<td>60</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Say Wha?</td>
+<td>1000</td>
+<td>42</td>
+<td>44</td>
+<td>43</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Say Wha?</td>
+<td>300</td>
+<td>25</td>
+<td>24</td>
+<td>24</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Say Wha?</td>
+<td>100</td>
+<td>9</td>
+<td>10</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-15T04:38:40.228121Z&quot;,&quot;start_time&quot;:&quot;2024-01-15T04:38:40.182606Z&quot;}" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">confusing_absolute <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> confusing_example.calculate_absolute_ic50(name_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Name'</span>, concentration_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>, response_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>) </span>
+<span id="cb8-2">confusing_absolute</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">compound_name</th>
+<th data-quarto-table-cell-role="th">maximum</th>
+<th data-quarto-table-cell-role="th">minimum</th>
+<th data-quarto-table-cell-role="th">relative ic50 (nM)</th>
+<th data-quarto-table-cell-role="th">absolute ic50 (nM)</th>
+<th data-quarto-table-cell-role="th">hill_slope</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Say Wha?</td>
+<td>78.113654</td>
+<td>-3.368611</td>
+<td>694.869229</td>
+<td>1498.098675</td>
+<td>0.834368</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Notice that with this example, <strong>the Relative IC50 and the Absolute IC50 values vary greatly</strong>, with the Relative being in the nM and Absolute being in the µM range. A huge difference! Again, similar calculations are seen when using the AATBioquest IC50 calculator. When plotting the results, disheartening results are also shown.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-15T04:38:40.400358Z&quot;,&quot;start_time&quot;:&quot;2024-01-15T04:38:40.223316Z&quot;}" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">test <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> PlotCurve(confusing_example_df)</span>
+<span id="cb9-2">figure <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> test.single_curve_plot(concentration_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>,</span>
+<span id="cb9-3">                                response_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>,</span>
+<span id="cb9-4">                                plot_title<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Confusing Drug'</span>,</span>
+<span id="cb9-5">                                drug_name<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Say Wha?'</span>,</span>
+<span id="cb9-6">                                xlabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Logarithmic Concentration (µM)'</span>,</span>
+<span id="cb9-7">                                ylabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Inhibition %'</span>,</span>
+<span id="cb9-8">                                legend<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb9-9">                                conc_unit<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'µM'</span>,</span>
+<span id="cb9-10">                                xscale_ticks<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>),</span>
+<span id="cb9-11">                                line_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'black'</span>,</span>
+<span id="cb9-12">                                box<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb9-13">                                box_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'red'</span>,</span>
+<span id="cb9-14">                                conc_target<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.69487</span>, <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Relative IC50 results</span></span>
+<span id="cb9-15">                                figsize <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6.4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.8</span>),</span>
+<span id="cb9-16">                                verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Say Wha? concentration will be in µM!
+Concentration on X-axis will be in µM
+Box X intersection:  0.695 µM
+Box Y intersection:  37.372 %</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/8-absolute-ic50_files/figure-html/cell-8-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>More specifically, the <strong>Relative IC50</strong> for the Say Wha? is closer to 37.3%. As personal preference, I do not think this is indicative of the meaning for “IC50”. It is further from the 50% than the first example above! When the plot is adjusted for the <strong>Absolute IC50</strong> below, we see a more reasonable graph representation. More specifically, the <strong>Absolute IC50</strong> would make more sense in relation to the data as the concentration for 50% inhibition response would be located somewhere between 3000 and 1000 nM (See Table above).</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-15T04:38:40.579997Z&quot;,&quot;start_time&quot;:&quot;2024-01-15T04:38:40.403256Z&quot;}" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1">figure <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> test.single_curve_plot(concentration_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>,</span>
+<span id="cb11-2">                                response_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>,</span>
+<span id="cb11-3">                                plot_title<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Confusing Drug'</span>,</span>
+<span id="cb11-4">                                drug_name<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Say Wha?'</span>,</span>
+<span id="cb11-5">                                xlabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Logarithmic Concentration (µM)'</span>,</span>
+<span id="cb11-6">                                ylabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Inhibition %'</span>,</span>
+<span id="cb11-7">                                legend<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb11-8">                                conc_unit<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'µM'</span>,</span>
+<span id="cb11-9">                                xscale_ticks<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.5</span>),</span>
+<span id="cb11-10">                                line_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'black'</span>,</span>
+<span id="cb11-11">                                box<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb11-12">                                box_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'red'</span>,</span>
+<span id="cb11-13">                                x_concentration<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.49940</span>,</span>
+<span id="cb11-14">                                figsize <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6.4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.8</span>),</span>
+<span id="cb11-15">                                verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Say Wha? concentration will be in µM!
+Concentration on X-axis will be in µM
+Box X intersection:  1.498 µM
+Box Y intersection:  50 %</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/8-absolute-ic50_files/figure-html/cell-9-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>In this case, the Absolute IC50 more precisely puts the 50 in IC50. Keep in mind that this only works with the data on hand and for this case, it appears to be a more accurate representation of the dataset.</p>
+</section>
+<section id="how-to-get-more-precise" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-get-more-precise">How to get more precise?</h3>
+<p>One way to get more precise IC50 calculations is to increase the number of concentrations tested for a given drug. More points, especially at the end of the plateau, would help give a better indication of the drug potency. Here we will add 2 additional concentration points to our test and calculate the <strong>Relative</strong> and <strong>Absolute IC50 Values</strong></p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-15T04:38:40.585829Z&quot;,&quot;start_time&quot;:&quot;2024-01-15T04:38:40.582617Z&quot;}" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1">new_conc <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [{<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Name'</span>:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Say Wha?'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>},</span>
+<span id="cb13-2">            {<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Name'</span>:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Say Wha?'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100000</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">90</span>}]</span>
+<span id="cb13-3"></span>
+<span id="cb13-4">confusing_example_df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.concat([confusing_example_df, pd.DataFrame(new_conc)], ignore_index<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span>
+<span id="cb13-5">confusing_example_df</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Compound Name</th>
+<th data-quarto-table-cell-role="th">Compound Conc</th>
+<th data-quarto-table-cell-role="th">% Inhibition 1</th>
+<th data-quarto-table-cell-role="th">% Inhibition 2</th>
+<th data-quarto-table-cell-role="th">% Inhibition Avg</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Say Wha?</td>
+<td>10000</td>
+<td>70.0</td>
+<td>71.0</td>
+<td>70</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Say Wha?</td>
+<td>3000</td>
+<td>61.0</td>
+<td>59.0</td>
+<td>60</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Say Wha?</td>
+<td>1000</td>
+<td>42.0</td>
+<td>44.0</td>
+<td>43</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Say Wha?</td>
+<td>300</td>
+<td>25.0</td>
+<td>24.0</td>
+<td>24</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Say Wha?</td>
+<td>100</td>
+<td>9.0</td>
+<td>10.0</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Say Wha?</td>
+<td>10</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>8</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>Say Wha?</td>
+<td>100000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>90</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-15T04:38:40.646378Z&quot;,&quot;start_time&quot;:&quot;2024-01-15T04:38:40.642099Z&quot;}" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1">example <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Calculator(confusing_example_df)</span>
+<span id="cb14-2">example_ic50 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> example.calculate_absolute_ic50(name_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Name'</span>, concentration_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>, response_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>)</span>
+<span id="cb14-3">example_ic50</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">compound_name</th>
+<th data-quarto-table-cell-role="th">maximum</th>
+<th data-quarto-table-cell-role="th">minimum</th>
+<th data-quarto-table-cell-role="th">relative ic50 (nM)</th>
+<th data-quarto-table-cell-role="th">absolute ic50 (nM)</th>
+<th data-quarto-table-cell-role="th">hill_slope</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Say Wha?</td>
+<td>92.497681</td>
+<td>3.325575</td>
+<td>1563.735262</td>
+<td>1779.972212</td>
+<td>0.723894</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>From the new table, you can see that adding more points will adjust both the <strong>Relative</strong> and <strong>Absolute IC50</strong> values. Both values will begin to move closer to each other. Again, this appears to be reasonable due to the Inhibition average of the dataset, where 50% inhibition should fall somewhere between the 1000 and 3000 nM concentration. This will also change the way the graph looks as follows:</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-15T04:38:40.873702Z&quot;,&quot;start_time&quot;:&quot;2024-01-15T04:38:40.649040Z&quot;}" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1">example_plot <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> PlotCurve(confusing_example_df)</span>
+<span id="cb15-2">figure <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> example_plot.single_curve_plot(concentration_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Compound Conc'</span>,</span>
+<span id="cb15-3">                                        response_col<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'% Inhibition Avg'</span>,</span>
+<span id="cb15-4">                                        plot_title<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Confusing Drug with More Data Points'</span>,</span>
+<span id="cb15-5">                                        drug_name<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Say Wha?'</span>,</span>
+<span id="cb15-6">                                        xlabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Logarithmic Concentration (µM)'</span>,</span>
+<span id="cb15-7">                                        ylabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Inhibition %'</span>,</span>
+<span id="cb15-8">                                        legend<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>,</span>
+<span id="cb15-9">                                        conc_unit<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'µM'</span>,</span>
+<span id="cb15-10">                                        xscale_ticks<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>),</span>
+<span id="cb15-11">                                        line_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'black'</span>,</span>
+<span id="cb15-12">                                        box<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>,</span>
+<span id="cb15-13">                                        x_concentration<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.563735262</span>, <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Highlight Relative IC50 </span></span>
+<span id="cb15-14">                                        box_color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'red'</span>,</span>
+<span id="cb15-15">                                        figsize<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6.4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.8</span>),</span>
+<span id="cb15-16">                                        verbose<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Say Wha? concentration will be in µM!
+Concentration on X-axis will be in µM
+Box X intersection:  1.78 µM
+Box Y intersection:  50 %</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/8-absolute-ic50_files/figure-html/cell-12-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Using the AATBioquest IC50 calculator, if you are feeling adventurous, can be used ot double check the above results. Both the <strong>Relative</strong> (1563.74 nM) and <strong>Absolute IC50</strong> (1782.84 nM) values are closer to the 50% response, with the Relative IC50 increasing to 47.89% response for this example. These results are also reasonable due to the dataset on hand. It may be subjected, but the curve can be smother, and additional testing would be needed to achieve this. Consulting an appropriate protocol would be advisable.</p>
+</section>
+</section>
+<section id="takeaway" class="level1">
+<h1>Takeaway</h1>
+<p>IC50 values can be confusing. Here I try to explain a bit about Relative and Absolute IC50. I think Absolute IC50, especially in the examples here and in py50, may be a misnomer. It is not the “absolute” result for a drug. The results will always vary depending on a number of factors. Nevertheless, I use it in this case because it is absolute to the data on hand.</p>
+<p>In general, the more concentration points to obtain the plateau for 0% and 100% responses, the better. The best thing to do is to remember to take stock of your final dataset. Know where the 50% response should lay within your dataset and you can doublecheck the results by eyeballing the calculated (Relative or Absolute) IC50 value. But always remember - the calculated value is representative of the dataset <strong>on hand</strong> and may not represent the definite (Absolute) result.</p>
+<p>🍾<strong>Remember: Use your best judgement.</strong>🎉</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Python</category>
+  <category>Coding</category>
+  <category>Informatics</category>
+  <category>Plotting</category>
+  <guid>https://tlint101.github.io/practice-in-code/posts/8-absolute-ic50.html</guid>
+  <pubDate>Mon, 15 Jan 2024 16:00:00 GMT</pubDate>
+</item>
 <item>
   <title>py50 - Showing off Color Features</title>
   <dc:creator>Tony E. Lin</dc:creator>
