@@ -179,8 +179,8 @@ font-style: inherit;">2</span>)</span>
 </div>
 <p>Now that makes the drugs in the table make more sense! The drugs may vary wildly by units, but as pIC50s they are scaled in a manner that can make more intuitive sense. Using the pIC50 of 6.0 (or IC50 of 1,000 nM) as a cutoff, Drug 4, Drug 5, and Drug 6 are the only ones that appear potent. On the pI50 scale, Drug 1 and Drug 2 do not look as appealing.</p>
 </section>
-<section id="a-real-world-example" class="level1">
-<h1>A Real-World Example</h1>
+<section id="a-real-world-example" class="level2">
+<h2 class="anchored" data-anchor-id="a-real-world-example">A Real-World Example</h2>
 <p>Another example of how pIC50 can be used is demoed here through the development of Capivasertib (AZD5363). Capivasertib is an AKT kinase inhibitor recently approved in 2023. It is the 7th approved <a href="http://practicalfragments.blogspot.com/2023/11/capivasertib-seventh-approved-fragment.html">fragment-derived drug</a>. It was built around a 7-azaindole core and originally started with an IC50 &gt; 100 µM for AKT. That high IC50 is typical starting point for fragment-based drug design. Looking at the first report of Capivasertib, <a href="https://pubs.acs.org/doi/full/10.1021/jm301762v">published in 2013</a>, we can list the intermediate compound’s and their reported IC50. From there we can scale the results to pIC50 and get a better idea of the compounds potency as it moved through the drug optimization stages.</p>
 <p><strong>NOTE</strong> I did not follow the optimization linearly - the IC50 varied between compounds, with some more or less potent depending on the moiety substituted and explored. From the paper, we see that the chemists were able to generate many molecules with very high potency, however issues of selectivity were of great concern, leading to a lot of tweaking. A lot of work was put into the development of Capivasertib (not just potency but selectivity!) and should not be dismissed by my simple demo.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-15T08:48:41.494340Z&quot;,&quot;start_time&quot;:&quot;2024-01-15T08:48:41.487708Z&quot;}" data-execution_count="4">
@@ -236,6 +236,7 @@ font-style: inherit;">2</span>)</span>
 </div>
 </div>
 <p>The IC50 (µM) of the reported intermediates in the published article are, objectively, not good to look at. Especially in Table 3 as the IC50 jumped from 9 nM to almost 2,800 nM depending on the substituent. The above table shows how scaling the IC50 to pIC50 can make the information more intuitive. As the molecule becomes more potent, it will have a higher pIC50 number. Thus, there is a need to forever improve the compound to “achieve” a higher ranking on the pIC50 scale. For Capivarsertib’s case, it has a pIC50 of 8.52 for AKT1.</p>
+</section>
 <section id="plugs-py50-can-scale-to-pic50" class="level2">
 <h2 class="anchored" data-anchor-id="plugs-py50-can-scale-to-pic50">🔌Plugs: py50 Can Scale to pIC50!</h2>
 <p>To aid in data representation, py50 comes equipped with a function to scale the IC50 into pIC50. This is performed using the calculate_pic50() function. It is built on top of the calculate_absolute_ic50() function. Thus both the relative and absolute pIC50 will be reported. Again, what you report depends on your dataset. <strong>Use your best judgement!</strong></p>
@@ -336,7 +337,6 @@ font-style: inherit;">2</span>)</span></code></pre></div>
 <p>For anyone wanting to look further, the full notebook for this post can be found <a href="https://github.com/tlint101/practice-in-code/tree/main/notebooks">here</a>. A good post was has been written up by CDD Vault <a href="https://www.collaborativedrug.com/cdd-blog/why-using-pic50-instead-of-ic50-will-change-your-life">here</a></p>
 
 
-</section>
 </section>
 
  ]]></description>
