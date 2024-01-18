@@ -110,6 +110,8 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -161,7 +163,12 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#ic50-or-pic50" id="toc-ic50-or-pic50" class="nav-link active" data-scroll-target="#ic50-or-pic50">IC50 or pIC50?</a></li>
+  <li><a href="#is-ic50-the-only-way" id="toc-is-ic50-the-only-way" class="nav-link active" data-scroll-target="#is-ic50-the-only-way">Is IC50 the Only Way?</a></li>
+  <li><a href="#pic50---a-scale-that-makes-sense" id="toc-pic50---a-scale-that-makes-sense" class="nav-link" data-scroll-target="#pic50---a-scale-that-makes-sense">pIC50 - A scale That Makes Sense</a></li>
+  <li><a href="#a-real-world-example" id="toc-a-real-world-example" class="nav-link" data-scroll-target="#a-real-world-example">A Real-World Example</a>
+  <ul>
+  <li><a href="#plugs-py50-can-scale-to-pic50" id="toc-plugs-py50-can-scale-to-pic50" class="nav-link" data-scroll-target="#plugs-py50-can-scale-to-pic50">🔌Plugs: py50 Can Scale to pIC50!</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -171,11 +178,13 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">IC50 or pIC50?</h1>
-<p class="subtitle lead">Where we look at scales</p>
+<p class="subtitle lead">Where we talk about scaling</p>
   <div class="quarto-categories">
     <div class="quarto-category">small-molecules</div>
     <div class="quarto-category">drug discovery</div>
     <div class="quarto-category">Informatics</div>
+    <div class="quarto-category">Python</div>
+    <div class="quarto-category">py50</div>
   </div>
   </div>
 
@@ -203,20 +212,14 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
 
 </header>
 
-<section id="ic50-or-pic50" class="level1">
-<h1>IC50 or pIC50?</h1>
-<p>One of the hardest things in the lab is not the experiments itself, but the representation of the results. There are multitudes of ways to represent information. One of the most difficult is IC50.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-10T04:51:56.004357Z&quot;,&quot;start_time&quot;:&quot;2024-01-10T04:51:56.001770Z&quot;}" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import packages</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> py50.calculator <span class="im">import</span> Calculator</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> py50.plotcurve <span class="im">import</span> PlotCurve</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-10T04:51:56.013692Z&quot;,&quot;start_time&quot;:&quot;2024-01-10T04:51:56.005140Z&quot;}" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import Dataset</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'datasets/pic50/pic50_scale.csv'</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="is-ic50-the-only-way" class="level2">
+<h2 class="anchored" data-anchor-id="is-ic50-the-only-way">Is IC50 the Only Way?</h2>
+<p>Sometimes it can feel like science is spoken in an unknowable language. Reading figures you see symbols like Å or unit scales for the metric system that make no sense (Does “Kangaroos Hop Down Mountains Drinking Chocolate Milk” even work?!?!?!), especially when starting out. For communicating your work, how the data and the units are represented matters.</p>
+<p>That brings me back to IC50. I know, I have mentioned it a lot (see <a href="https://tlint101.github.io/practice-in-code/posts/6-py50-QuickStart.html">here</a> and <a href="https://tlint101.github.io/practice-in-code/posts/8-absolute-ic50.html">here</a>). In short, IC50 value indicates if a drug can inhibit a protein activity by 50%. It is an important indicator of how potent a drug may be. However, obtaining the IC50 value can vary in so many ways. The drug potency can also be an indication of what stage the drug is in during development pipeline. The end result makes reporting a given drug’s potency muddy, especially when trying to compare potency between compounds or compare structures during the development stages.</p>
+<p>This can be seen when comparing drugs in the dummy table below:</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-15T08:48:41.480812Z&quot;,&quot;start_time&quot;:&quot;2024-01-15T08:48:41.476005Z&quot;}" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dummy Data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 
@@ -225,65 +228,40 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">Value</th>
-<th data-quarto-table-cell-role="th">Scale</th>
-<th data-quarto-table-cell-role="th">Notes</th>
+<th data-quarto-table-cell-role="th">Drug</th>
+<th data-quarto-table-cell-role="th">IC50 (µM)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>3</td>
-<td>1 mM</td>
-<td>Fragment Based Discovery</td>
+<td>Drug 1</td>
+<td>30.000000</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>4</td>
-<td>0.1 mM</td>
-<td>Still needs work</td>
+<td>Drug 2</td>
+<td>60.000000</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
-<td>5</td>
-<td>10 µM</td>
-<td>Maybe</td>
+<td>Drug 3</td>
+<td>0.000345</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
-<td>6</td>
-<td>1 µM</td>
-<td>We have a hit!</td>
+<td>Drug 4</td>
+<td>0.099000</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
-<td>7</td>
-<td>100 nM</td>
-<td>Can do better</td>
+<td>Drug 5</td>
+<td>0.800000</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">5</td>
-<td>8</td>
-<td>10 nM</td>
-<td>Getting closer</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
-<td>9</td>
-<td>1 nM</td>
-<td>Your advisor should buy a steak dinner for eve...</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
-<td>10</td>
-<td>100 pM</td>
-<td>Picomolar? Let's check out those clinical results</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
-<td>11</td>
-<td>10 pM</td>
-<td>Why yes, this is where I keep all my Nobels</td>
+<td>Drug 6</td>
+<td>0.940000</td>
 </tr>
 </tbody>
 </table>
@@ -291,8 +269,215 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
+<p>Ew.</p>
+<p>All reported drugs are in the same units, microMolar (µM), but with varying results. Is Drug 1 50% more potent than Drug 2? Are Drug 5 and Drug 6 differ by 0.14 µM. Does that mean they are equally potent? Reporting results in this way has several issues: - A lot of digits! - Difference in 50% implies 50% increase in potency - <em>Implies linear scale</em></p>
+<p>The last point is the most important. Rarely are dose-response curves in the linear scale (though it can happen at times). Instead, dose-response curves are more commonly in logarithmic scale. Drugs can have a broad range of concentrations and a logarithmic scale better captures this for plotting. The logarithmic scale also allow curves to be plotted in a nice sigmoidal curve, which can automatically guide our eyes to the all important 50% response value on the curve.</p>
+<p>So there must be a better way, right?</p>
+</section>
+<section id="pic50---a-scale-that-makes-sense" class="level2">
+<h2 class="anchored" data-anchor-id="pic50---a-scale-that-makes-sense">pIC50 - A scale That Makes Sense</h2>
+<p>Enter pIC50. This is essentially the negative log of the IC50 in <strong>molar concentration</strong>:</p>
+<p><span class="math display">\[pIC50 = -log_{10}(IC50)\]</span></p>
+<p>This has the advantage of scaling results similar to other logarithmic scales, like the pH scale. This is a handy, because it allows us to quickly gauge a drugs potency. For example:</p>
+<ul>
+<li>IC50 of 1 µM is 10<sup>-6</sup> M = pIC50 of 6.0</li>
+<li>IC50 of 100 nM is 10<sup>-7</sup> M, which is pIC50 = 7.0</li>
+<li>IC50 of 10 nM is 10<sup>-8</sup> M, which is pIC50 = 8.0</li>
+<li>IC50 of 1 nM is 10<sup>-9</sup> M = pIC50 of 9.0</li>
+</ul>
+<p><strong>Hey, pIC50 is basically the negative exponent!</strong></p>
+<p>The pIC50 scales the results in a more reasonable manner. An IC50 of 100 nM is 10<sup>-7</sup> is equal to a pIC50 of 7.0. Likewise, an IC50 of 50 nM is 5 x10<sup>-8</sup> M, which is also 10<sup>-7.3</sup> M, which is pIC50 = 7.3</p>
+<p>Another way of thinking of the pIC50 scale is comparing it to another logarithmic scale - the pH scale. Remember that between each number, from 3 to 4, it is a difference of 10. So a pH of 3 is ten times more acidic than a pH of 4.</p>
+<p>This works the same way for pIC50. However, the pIC50 scale has the added benefit of moving in one direction, where the higher number represents greater potency.</p>
+<p>This can make a big difference in the reporting of a drug. Remember the first table above? We can quickly convert those values into the pIC50 scale.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-15T08:48:41.487130Z&quot;,&quot;start_time&quot;:&quot;2024-01-15T08:48:41.481403Z&quot;}" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Because units are already in µM, must convert log accordingly</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'pIC50'</span>] <span class="op">=</span> <span class="op">-</span>np.log10(df[<span class="st">'IC50 (µM)'</span>]<span class="op">*</span> <span class="fl">1e-6</span>).<span class="bu">round</span>(<span class="dv">2</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
 
 
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Drug</th>
+<th data-quarto-table-cell-role="th">IC50 (µM)</th>
+<th data-quarto-table-cell-role="th">pIC50</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Drug 1</td>
+<td>30.000000</td>
+<td>4.52</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Drug 2</td>
+<td>60.000000</td>
+<td>4.22</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Drug 3</td>
+<td>0.000345</td>
+<td>9.46</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Drug 4</td>
+<td>0.099000</td>
+<td>7.00</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Drug 5</td>
+<td>0.800000</td>
+<td>6.10</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Drug 6</td>
+<td>0.940000</td>
+<td>6.03</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Now that makes the drugs in the table make more sense! The drugs may vary wildly by units, but as pIC50s they are scaled in a manner that can make more intuitive sense. Using the pIC50 of 6.0 (or IC50 of 1,000 nM) as a cutoff, Drug 4, Drug 5, and Drug 6 are the only ones that appear potent. On the pI50 scale, Drug 1 and Drug 2 do not look as appealing.</p>
+</section>
+<section id="a-real-world-example" class="level1">
+<h1>A Real-World Example</h1>
+<p>Another example of how pIC50 can be used is demoed here through the development of Capivasertib (AZD5363). Capivasertib is an AKT kinase inhibitor recently approved in 2023. It is the 7th approved <a href="http://practicalfragments.blogspot.com/2023/11/capivasertib-seventh-approved-fragment.html">fragment-derived drug</a>. It was built around a 7-azaindole core and originally started with an IC50 &gt; 100 µM for AKT. That high IC50 is typical starting point for fragment-based drug design. Looking at the first report of Capivasertib, <a href="https://pubs.acs.org/doi/full/10.1021/jm301762v">published in 2013</a>, we can list the intermediate compound’s and their reported IC50. From there we can scale the results to pIC50 and get a better idea of the compounds potency as it moved through the drug optimization stages.</p>
+<p><strong>NOTE</strong> I did not follow the optimization linearly - the IC50 varied between compounds, with some more or less potent depending on the moiety substituted and explored. From the paper, we see that the chemists were able to generate many molecules with very high potency, however issues of selectivity were of great concern, leading to a lot of tweaking. A lot of work was put into the development of Capivasertib (not just potency but selectivity!) and should not be dismissed by my simple demo.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-15T08:48:41.494340Z&quot;,&quot;start_time&quot;:&quot;2024-01-15T08:48:41.487708Z&quot;}" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>demo_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Compound</th>
+<th data-quarto-table-cell-role="th">IC50 (µM)</th>
+<th data-quarto-table-cell-role="th">pIC50</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>7-azaindole</td>
+<td>100.000</td>
+<td>4.00</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Compound 33</td>
+<td>0.276</td>
+<td>6.56</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Compound 41</td>
+<td>1.313</td>
+<td>5.88</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Compound 53</td>
+<td>0.030</td>
+<td>7.52</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Capivasertib</td>
+<td>0.003</td>
+<td>8.52</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>The IC50 (µM) of the reported intermediates in the published article are, objectively, not good to look at. Especially in Table 3 as the IC50 jumped from 9 nM to almost 2,800 nM depending on the substituent. The above table shows how scaling the IC50 to pIC50 can make the information more intuitive. As the molecule becomes more potent, it will have a higher pIC50 number. Thus, there is a need to forever improve the compound to “achieve” a higher ranking on the pIC50 scale. For Capivarsertib’s case, it has a pIC50 of 8.52 for AKT1.</p>
+<section id="plugs-py50-can-scale-to-pic50" class="level2">
+<h2 class="anchored" data-anchor-id="plugs-py50-can-scale-to-pic50">🔌Plugs: py50 Can Scale to pIC50!</h2>
+<p>To aid in data representation, py50 comes equipped with a function to scale the IC50 into pIC50. This is performed using the calculate_pic50() function. It is built on top of the calculate_absolute_ic50() function. Thus both the relative and absolute pIC50 will be reported. Again, what you report depends on your dataset. <strong>Use your best judgement!</strong></p>
+<p>An example of how this works can be seen below:</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-01-15T08:48:41.573103Z&quot;,&quot;start_time&quot;:&quot;2024-01-15T08:48:41.509530Z&quot;}" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>calculation <span class="op">=</span> calc_data.calculate_pic50(name_col<span class="op">=</span><span class="st">'Compound Name'</span>, concentration_col<span class="op">=</span><span class="st">'Compound Conc'</span>, response_col<span class="op">=</span><span class="st">'% Inhibition Avg'</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># To keep IC50 columns</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>calculation <span class="op">=</span> calculation[[<span class="st">'compound_name'</span>, <span class="st">'relative ic50 (nM)'</span>, <span class="st">'absolute ic50 (nM)'</span>, <span class="st">'relative pIC50'</span>, <span class="st">'absolute pIC50'</span>]]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>calculation.<span class="bu">round</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">compound_name</th>
+<th data-quarto-table-cell-role="th">relative ic50 (nM)</th>
+<th data-quarto-table-cell-role="th">absolute ic50 (nM)</th>
+<th data-quarto-table-cell-role="th">relative pIC50</th>
+<th data-quarto-table-cell-role="th">absolute pIC50</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Drug 1</td>
+<td>429.96</td>
+<td>579.62</td>
+<td>6.37</td>
+<td>6.24</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Drug 2</td>
+<td>423.05</td>
+<td>660.69</td>
+<td>6.37</td>
+<td>6.18</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Drug 3</td>
+<td>644.38</td>
+<td>921.71</td>
+<td>6.19</td>
+<td>6.04</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Drug 4</td>
+<td>398.60</td>
+<td>422.45</td>
+<td>6.40</td>
+<td>6.37</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Now when using py50 to calculate IC50 values, anyone can quickly scale their results to pIC50. Hopefully this will bring a more convenient way to represent and display data to classmates, coworkers, advisors, etc.</p>
+<p>For anyone wanting to look further, the full notebook for this post can be found <a href="https://github.com/tlint101/practice-in-code/tree/main/notebooks">here</a>. A good post was has been written up by CDD Vault <a href="https://www.collaborativedrug.com/cdd-blog/why-using-pic50-instead-of-ic50-will-change-your-life">here</a></p>
+
+
+</section>
 </section>
 
 </main> <!-- /main -->

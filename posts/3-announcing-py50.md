@@ -2,7 +2,7 @@
 title: 'Announcing py50!'
 author: 'Tony E. Lin'
 date: '2023-12-05'
-categories: [Python, Streamlit, Coding, Informatics, Plotting]
+categories: [Python, Streamlit, py50, Coding, Informatics, Plotting]
 image: 'img/py50_logo_only.png'
 ---
 
