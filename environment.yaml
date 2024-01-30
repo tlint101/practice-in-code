@@ -8,8 +8,10 @@ dependencies:
   - rdkit=2023.09.2
   -
   - pip:
-    - py50==0.1.0
-    - notebook==7.0.6
-    - scikit-learn
-    - pingoin
-    - scikit-posthocs
+      - py50==0.1.0
+      - notebook==7.0.6
+      - scikit-learn
+      - pingoin
+      - scikit-posthocs
+      - black
+      -
