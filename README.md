@@ -9,6 +9,8 @@ My name is Tony and you have stumbled across my blog. There are a ton of blogs o
 in python. And I would like to pay it forward! This will serve as a place where I share what interests me, code that I 
 am currently testing or packages that I find interesting. 
 
-Any code that I use can be found in this repository under the 'notebooks/' directory. 
+You can find the rendered site here: https://tlint101.github.io/practice-in-code/
+
+Any code that I use can be found in this repository under the '[notebooks/](https://github.com/tlint101/practice-in-code/tree/main/notebooks)' directory. 
 
 As always, thanks for visiting! 
