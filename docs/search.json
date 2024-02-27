@@ -137,7 +137,7 @@
     "href": "posts/10-Draw-Molecules.html#conclusion",
     "title": "Drawing Molecules",
     "section": "Conclusion",
-    "text": "Conclusion\nJust know that there are a lot of additional drawing options. If you could not tell, I like drawing images and plan on writing more depending on my schedule. In the meantime, it is good to practice these and thinking about how to add more functionality to it.\nWith RDKit, there are some easy to use tools baked in. You just need to know the right ingredients!"
+    "text": "Conclusion\nJust know that there are a lot of additional drawing options. If you could not tell, I like drawing images and plan on writing more depending on my schedule. In the meantime, it is good to practice these and thinking about how to add more functionality to it.\nWith RDKit, there are some easy to use tools baked in. You just need to know the right ingredients!\nThe full notebook with the code can be found here."
   },
   {
     "objectID": "posts/7-py50-additional-features.html",
