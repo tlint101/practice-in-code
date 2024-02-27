@@ -116,7 +116,7 @@
     "href": "posts/10-Draw-Molecules.html#set-up-data",
     "title": "Drawing Molecules",
     "section": "Set Up Data",
-    "text": "Set Up Data\nIn this quick tutorial, we will draw 2 molecules. We’ll start small and get more complicated. I want to focus on drawing molecular structures for two drugs many of us may know - Acetylsalicylic Acid and Ibuprofen. Or for anyone well verse with the American market, aspirin and advil, respectively. The data is set up as follows:\n\ndata = {'name': ['Acetylsalicylic Acid', 'Ibuprofen'],\n        'smiles': ['O=C(C)Oc1ccccc1C(=O)O', 'CC(C)Cc1ccc(cc1)[C@@H](C)C(=O)O']}\ndf = pd.DataFrame(data=data)\ndf\n\n\n\n\n\n\n\n\nname\nsmiles\n\n\n\n\n0\nAcetylsalicylic Acid\nO=C(C)Oc1ccccc1C(=O)O\n\n\n1\nIbuprofen\nCC(C)Cc1ccc(cc1)[C@@H](C)C(=O)O"
+    "text": "Set Up Data\nIn this quick tutorial, we will draw 2 molecules. We’ll start small and get more complicated. I want to focus on drawing molecular structures for two drugs many of us may know - Acetylsalicylic Acid and Ibuprofen. Or for anyone well verse with the American market, aspirin and advil, respectively. The data is set up as follows:\n\nimport pandas as pd\nfrom rdkit import Chem\nfrom rdkit.Chem import Draw\nfrom rdkit.Chem.Draw import MolsToGridImage\n\ndata = {'name': ['Acetylsalicylic Acid', 'Ibuprofen'],\n        'smiles': ['O=C(C)Oc1ccccc1C(=O)O', 'CC(C)Cc1ccc(cc1)[C@@H](C)C(=O)O']}\ndf = pd.DataFrame(data=data)\ndf\n\n\n\n\n\n\n\n\nname\nsmiles\n\n\n\n\n0\nAcetylsalicylic Acid\nO=C(C)Oc1ccccc1C(=O)O\n\n\n1\nIbuprofen\nCC(C)Cc1ccc(cc1)[C@@H](C)C(=O)O"
   },
   {
     "objectID": "posts/10-Draw-Molecules.html#drawing-the-molecule",

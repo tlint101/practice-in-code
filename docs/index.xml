@@ -29,8 +29,29 @@
 <section id="set-up-data" class="level2">
 <h2 class="anchored" data-anchor-id="set-up-data">Set Up Data</h2>
 <p>In this quick tutorial, we will draw 2 molecules. We’ll start small and get more complicated. I want to focus on drawing molecular structures for two drugs many of us may know - Acetylsalicylic Acid and Ibuprofen. Or for anyone well verse with the American market, aspirin and advil, respectively. The data is set up as follows:</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-02-23T15:00:18.232667Z&quot;,&quot;start_time&quot;:&quot;2024-02-23T15:00:18.228057Z&quot;}" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">data <span class="op" style="color: #5E5E5E;
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-02-27T10:19:15.596122Z&quot;,&quot;start_time&quot;:&quot;2024-02-27T10:19:15.115058Z&quot;}" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> pandas <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> pd</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> rdkit <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Chem</span>
+<span id="cb1-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> rdkit.Chem <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Draw</span>
+<span id="cb1-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> rdkit.Chem.Draw <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> MolsToGridImage</span>
+<span id="cb1-5"></span>
+<span id="cb1-6">data <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> {<span class="st" style="color: #20794D;
 background-color: null;
@@ -39,20 +60,20 @@ background-color: null;
 font-style: inherit;">'Acetylsalicylic Acid'</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'Ibuprofen'</span>],</span>
-<span id="cb1-2">        <span class="st" style="color: #20794D;
+<span id="cb1-7">        <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'smiles'</span>: [<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'O=C(C)Oc1ccccc1C(=O)O'</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'CC(C)Cc1ccc(cc1)[C@@H](C)C(=O)O'</span>]}</span>
-<span id="cb1-3">df <span class="op" style="color: #5E5E5E;
+<span id="cb1-8">df <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> pd.DataFrame(data<span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span>data)</span>
-<span id="cb1-4">df</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
+<span id="cb1-9">df</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
 <div>
 
 
@@ -86,7 +107,7 @@ font-style: inherit;">=</span>data)</span>
 <h2 class="anchored" data-anchor-id="drawing-the-molecule">Drawing the Molecule</h2>
 <p>Because I loaded up my dataset as a DataFrame, I will need to “slice” the table into a format for drawing. In this case, the important information is the smiles string. My brain works in Tables, but if you prefer, you can write out the smiles string directly for drawing the molecule, i.e.&nbsp;aspirin = ‘O=C(C)Oc1ccccc1C(=O)O’</p>
 <p>Next, the smiles string will need to be converted an rdkit molecule object. This is done using <a href="https://www.rdkit.org/docs/GettingStartedInPython.html#reading-single-molecules">MolFromSmiles()</a> function.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-02-23T15:00:18.246999Z&quot;,&quot;start_time&quot;:&quot;2024-02-23T15:00:18.237599Z&quot;}" data-execution_count="3">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-02-27T10:19:15.630071Z&quot;,&quot;start_time&quot;:&quot;2024-02-27T10:19:15.611834Z&quot;}" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">aspirin <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> df.iloc[<span class="dv" style="color: #AD0000;
@@ -101,7 +122,7 @@ font-style: inherit;">=</span> Chem.MolFromSmiles(aspirin)</span>
 background-color: null;
 font-style: inherit;">=</span> Draw.MolToImage(mol)</span>
 <span id="cb2-4">img</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <p><img src="https://tlint101.github.io/practice-in-code/posts/10-Draw-Molecules_files/figure-html/cell-3-output-1.png" class="img-fluid"></p>
 </div>
 </div>
@@ -112,7 +133,7 @@ font-style: inherit;">print</span>(<span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">type</span>(image))</span></code></pre></div>
 <p>Another cool feature is that you can add a legend to the individual images. In this case we can test it out for aspirin.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-02-23T15:00:18.265162Z&quot;,&quot;start_time&quot;:&quot;2024-02-23T15:00:18.250650Z&quot;}" data-execution_count="4">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-02-27T10:19:15.665627Z&quot;,&quot;start_time&quot;:&quot;2024-02-27T10:19:15.623309Z&quot;}" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">img <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> Draw.MolToImage(mol, legend<span class="op" style="color: #5E5E5E;
@@ -121,7 +142,7 @@ font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'aspirin'</span>)</span>
 <span id="cb4-2">img</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <p><img src="https://tlint101.github.io/practice-in-code/posts/10-Draw-Molecules_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
 </div>
 </div>
@@ -132,7 +153,7 @@ font-style: inherit;">'aspirin'</span>)</span>
 <h2 class="anchored" data-anchor-id="drawing-molecules-in-a-grid">Drawing Molecules in a Grid</h2>
 <p>Those examples above are for single compounds. It is a great tool and, when we grasp more complex script, we can quickly draw multiple molecules by looping through a list of smiles strings. That is great, but depending on our aims, individual drawings might not cut it. Enter a neat tool by RDKit - drawing molecules in a grid!</p>
 <p>It is as simple as drawing the individual molecules. All that is needed is a list of smiles strings. Like the previous example, more extra information can be added to the image. Here I kept it simple and passed a list of molecule names.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-02-23T15:00:18.289599Z&quot;,&quot;start_time&quot;:&quot;2024-02-23T15:00:18.262418Z&quot;}" data-execution_count="5">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-02-27T10:19:15.666125Z&quot;,&quot;start_time&quot;:&quot;2024-02-27T10:19:15.640479Z&quot;}" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1">mols <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span> [Chem.MolFromSmiles(mol) <span class="cf" style="color: #003B4F;
@@ -149,7 +170,7 @@ background-color: null;
 font-style: inherit;">'aspirin'</span>, <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">'Ibuprofen'</span>])</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <p><img src="https://tlint101.github.io/practice-in-code/posts/10-Draw-Molecules_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
 </div>
 </div>
