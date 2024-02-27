@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Tony E. Lin">
+<meta name="dcterms.date" content="2024-02-27">
 
-<title>Practice in Code</title>
+<title>Practice in Code - Drawing Molecules</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,29 +22,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -63,35 +97,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-reading-time','listing-image','listing-image-height',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] }],
-      
-      searchColumns: ["listing-title","listing-date"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-DKY2WMQ374"></script>
 
 <script type="text/javascript">
@@ -101,11 +106,12 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="alternate" type="application/rss+xml" title="Practice in Code" href="index.xml"></head>
+</head>
 
 <body class="nav-fixed">
 
@@ -114,7 +120,7 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Practice in Code</span>
     </a>
   </div>
@@ -125,7 +131,7 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
+    <a class="nav-link" href="../about.html" rel="" target="">
  <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
@@ -134,7 +140,7 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="./index.xml" rel="" target=""><i class="bi bi-rss" role="img">
+    <a class="nav-link" href="../index.xml" rel="" target=""><i class="bi bi-rss" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -147,349 +153,151 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Practice in Code</h1>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(10)</span></div><div class="category" data-category="Coding">Coding <span class="quarto-category-count">(5)</span></div><div class="category" data-category="Drawing">Drawing <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Informatics">Informatics <span class="quarto-category-count">(6)</span></div><div class="category" data-category="Plotting">Plotting <span class="quarto-category-count">(5)</span></div><div class="category" data-category="Python">Python <span class="quarto-category-count">(6)</span></div><div class="category" data-category="RDKit">RDKit <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Streamlit">Streamlit <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Thoughts">Thoughts <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Updates">Updates <span class="quarto-category-count">(1)</span></div><div class="category" data-category="drug discovery">drug discovery <span class="quarto-category-count">(1)</span></div><div class="category" data-category="py50">py50 <span class="quarto-category-count">(6)</span></div><div class="category" data-category="small-molecules">small-molecules <span class="quarto-category-count">(1)</span></div></div></div>
-<!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
-
-
-
-
-<p><strong>🫣 Welcome to a blog on coding, cheminformatics, or other thoughts swimming in my head.💭</strong></p>
-<p><br></p>
-
-
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-       <option value="" disabled="" selected="" hidden="">Order By</option>
-       <option value="index" data-direction="asc">Default</option>
-         <option value="listing-title" data-direction="asc">
-          Title
-        </option>
-         <option value="listing-date-sort" data-direction="asc">
-          Date - Oldest
-        </option>
-         <option value="listing-date-sort" data-direction="desc">
-          Date - Newest
-        </option>
-     </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#starting-small" id="toc-starting-small" class="nav-link active" data-scroll-target="#starting-small">Starting Small</a></li>
+  <li><a href="#set-up-data" id="toc-set-up-data" class="nav-link" data-scroll-target="#set-up-data">Set Up Data</a></li>
+  <li><a href="#drawing-the-molecule" id="toc-drawing-the-molecule" class="nav-link" data-scroll-target="#drawing-the-molecule">Drawing the Molecule</a></li>
+  <li><a href="#drawing-molecules-in-a-grid" id="toc-drawing-molecules-in-a-grid" class="nav-link" data-scroll-target="#drawing-molecules-in-a-grid">Drawing Molecules in a Grid</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
     </div>
-</div>
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="RDKit,Drawing" data-listing-date-sort="1708963200000" data-listing-file-modified-sort="1708700660420" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
-<div class="thumbnail">
-<p><a href="./posts/10-Draw-Molecules.html"> <p class="card-img-top"><img src="posts/10-Draw-Molecules_files/figure-html/cell-3-output-1.png"  class="thumbnail-image card-img"/></p> </a></p>
-</div>
-<div class="body">
-<a href="./posts/10-Draw-Molecules.html">
-<h3 class="no-anchor listing-title">
-Drawing Molecules
-</h3>
-<div class="listing-subtitle">
-Where we talk basics
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/10-Draw-Molecules.html">
-<div class="listing-date">
-Feb 27, 2024
-</div>
-<div class="listing-author">
-Tony E. Lin
-</div>
-<div class="listing-reading-time">
-4 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="small-molecules,drug discovery,Informatics,Python,py50" data-listing-date-sort="1705507200000" data-listing-file-modified-sort="1705544005088" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
-<div class="thumbnail">
-<p><a href="./posts/9-IC50_or_pIC50.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
-</div>
-<div class="body">
-<a href="./posts/9-IC50_or_pIC50.html">
-<h3 class="no-anchor listing-title">
-IC50 or pIC50?
-</h3>
-<div class="listing-subtitle">
-Where we talk about scaling
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/9-IC50_or_pIC50.html">
-<div class="listing-date">
-Jan 18, 2024
-</div>
-<div class="listing-author">
-Tony E. Lin
-</div>
-<div class="listing-reading-time">
-6 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="Python,py50,Coding,Informatics,Plotting" data-listing-date-sort="1705334400000" data-listing-file-modified-sort="1705454356587" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9">
-<div class="thumbnail">
-<p><a href="./posts/8-absolute-ic50.html"> <p class="card-img-top"><img src="posts/img/graphpad_absolute.png" alt="graphpad_absolute.png"  class="thumbnail-image card-img"/></p> </a></p>
-</div>
-<div class="body">
-<a href="./posts/8-absolute-ic50.html">
-<h3 class="no-anchor listing-title">
-py50: Relative or Absolute IC50? 🤔
-</h3>
-<div class="listing-subtitle">
-Where I try to explain things I have read
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/8-absolute-ic50.html">
-<div class="listing-date">
-Jan 16, 2024
-</div>
-<div class="listing-author">
-Tony E. Lin
-</div>
-<div class="listing-reading-time">
-9 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="Python,py50,Coding,Informatics,Plotting" data-listing-date-sort="1704902400000" data-listing-file-modified-sort="1705454350144" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
-<div class="thumbnail">
-<p><a href="./posts/7-py50-additional-features.html"> <p class="card-img-top"><img src="posts/7-py50-additional-features_files/figure-html/cell-2-output-2.png"  class="thumbnail-image card-img"/></p> </a></p>
-</div>
-<div class="body">
-<a href="./posts/7-py50-additional-features.html">
-<h3 class="no-anchor listing-title">
-py50 - Showing off Color Features
-</h3>
-<div class="listing-subtitle">
-Where I add personality to figures
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/7-py50-additional-features.html">
-<div class="listing-date">
-Jan 11, 2024
-</div>
-<div class="listing-author">
-Tony E. Lin
-</div>
-<div class="listing-reading-time">
-5 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="Python,py50,Coding,Informatics,Plotting" data-listing-date-sort="1704729600000" data-listing-file-modified-sort="1705454350127" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
-<div class="thumbnail">
-<p><a href="./posts/6-py50-QuickStart.html"> <p class="card-img-top"><img src="posts/6-py50-QuickStart_files/figure-html/cell-6-output-1.png"  class="thumbnail-image card-img"/></p> </a></p>
-</div>
-<div class="body">
-<a href="./posts/6-py50-QuickStart.html">
-<h3 class="no-anchor listing-title">
-py50 - Now with Updates!
-</h3>
-<div class="listing-subtitle">
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Drawing Molecules</h1>
+<p class="subtitle lead">Where we talk basics</p>
+  <div class="quarto-categories">
+    <div class="quarto-category">RDKit</div>
+    <div class="quarto-category">Drawing</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Tony E. Lin </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 27, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="starting-small" class="level2">
+<h2 class="anchored" data-anchor-id="starting-small">Starting Small</h2>
+<p>When I was learning to code, I found it frustrating. My journey took me across different languages by what I wanted to do and by recommendations by others. I found it easy to follow tutorials, but when I tried my own things, nothing ever worked. I stopped and started at least three times and I could never finish anything. It took a while, but I realized what the problem was - <em>I needed to find my own project</em>. As a student in cheminformatics, I was lucky that I have plenty of topics to choose from that will allow me to get better. It helps that, at their core, the topics all use similar toolsets.</p>
+<p>But how does anyone start? Nothing complicated for sure. I started small and added complexity.</p>
+<p>What better way to start than by learning how to draw molecules? It may sound dumb, but this is one of the most important tools to have in your pocket. Drawing one molecule in a graphical GUI program is easy. Drawing 10? 30? 50? Now that is just torture. Don’t do that to yourself!</p>
+<p>So today I wanted to go over a basic skill - drawing molecules using RDKit.</p>
+</section>
+<section id="set-up-data" class="level2">
+<h2 class="anchored" data-anchor-id="set-up-data">Set Up Data</h2>
+<p>In this quick tutorial, we will draw 2 molecules. We’ll start small and get more complicated. I want to focus on drawing molecular structures for two drugs many of us may know - Acetylsalicylic Acid and Ibuprofen. Or for anyone well verse with the American market, aspirin and advil, respectively. The data is set up as follows:</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-02-23T15:00:18.232667Z&quot;,&quot;start_time&quot;:&quot;2024-02-23T15:00:18.228057Z&quot;}" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {<span class="st">'name'</span>: [<span class="st">'Acetylsalicylic Acid'</span>, <span class="st">'Ibuprofen'</span>],</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>        <span class="st">'smiles'</span>: [<span class="st">'O=C(C)Oc1ccccc1C(=O)O'</span>, <span class="st">'CC(C)Cc1ccc(cc1)[C@@H](C)C(=O)O'</span>]}</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data<span class="op">=</span>data)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">smiles</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Acetylsalicylic Acid</td>
+<td>O=C(C)Oc1ccccc1C(=O)O</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Ibuprofen</td>
+<td>CC(C)Cc1ccc(cc1)[C@@H](C)C(=O)O</td>
+</tr>
+</tbody>
+</table>
 
 </div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/6-py50-QuickStart.html">
-<div class="listing-date">
-Jan 9, 2024
-</div>
-<div class="listing-author">
-Tony E. Lin
-</div>
-<div class="listing-reading-time">
-5 min
-</div>
-</a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="Updates" data-listing-date-sort="1703001600000" data-listing-file-modified-sort="1702437364915" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
-<div class="thumbnail">
-<p><a href="./posts/5-egg-on-my-face.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
-</div>
-<div class="body">
-<a href="./posts/5-egg-on-my-face.html">
-<h3 class="no-anchor listing-title">
-Egg On My Face
-</h3>
-<div class="listing-subtitle">
-Where I scramble to fix my program
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/5-egg-on-my-face.html">
-<div class="listing-date">
-Dec 20, 2023
-</div>
-<div class="listing-author">
-Tony E. Lin
-</div>
-<div class="listing-reading-time">
-2 min
-</div>
-</a>
+</section>
+<section id="drawing-the-molecule" class="level2">
+<h2 class="anchored" data-anchor-id="drawing-the-molecule">Drawing the Molecule</h2>
+<p>Because I loaded up my dataset as a DataFrame, I will need to “slice” the table into a format for drawing. In this case, the important information is the smiles string. My brain works in Tables, but if you prefer, you can write out the smiles string directly for drawing the molecule, i.e.&nbsp;aspirin = ‘O=C(C)Oc1ccccc1C(=O)O’</p>
+<p>Next, the smiles string will need to be converted an rdkit molecule object. This is done using <a href="https://www.rdkit.org/docs/GettingStartedInPython.html#reading-single-molecules">MolFromSmiles()</a> function.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-02-23T15:00:18.246999Z&quot;,&quot;start_time&quot;:&quot;2024-02-23T15:00:18.237599Z&quot;}" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>aspirin <span class="op">=</span> df.iloc[<span class="dv">0</span>, <span class="dv">1</span>]</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>mol <span class="op">=</span> Chem.MolFromSmiles(aspirin)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> Draw.MolToImage(mol)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>img</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<p><img src="10-Draw-Molecules_files/figure-html/cell-3-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="Python,py50,Coding,Informatics,Plotting" data-listing-date-sort="1701878400000" data-listing-file-modified-sort="1705454324314" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
-<div class="thumbnail">
-<p><a href="./posts/4-py50-single-plot.html"> <p class="card-img-top"><img src="posts/4-py50-single-plot_files/figure-html/cell-7-output-2.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><strong>NOTE</strong> If you print out the type of the img object, you will see that it is a PIL object. As such, it can be manipulated using the <a href="https://pillow.readthedocs.io/en/stable/reference/Image.html">PIL Image module</a>. I do not have much experience with that as I am normally quite happy with the default outcomes.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(image))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Another cool feature is that you can add a legend to the individual images. In this case we can test it out for aspirin.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-02-23T15:00:18.265162Z&quot;,&quot;start_time&quot;:&quot;2024-02-23T15:00:18.250650Z&quot;}" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>img <span class="op">=</span> Draw.MolToImage(mol, legend<span class="op">=</span><span class="st">'aspirin'</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>img</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<p><img src="10-Draw-Molecules_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
 </div>
-<div class="body">
-<a href="./posts/4-py50-single-plot.html">
-<h3 class="no-anchor listing-title">
-py50: Single Curve Plot
-</h3>
-<div class="listing-subtitle">
+</div>
+<p>Drawing a single molecule is all well and good, but what if we wanted to draw multiple molecules? The good news is that RDKit allows this with a <a href="https://www.rdkit.org/docs/source/rdkit.Chem.Draw.html#rdkit.Chem.Draw.MolsToGridImage">MolsToGridImage()</a> function.</p>
+<p>To use this, pass a list of RDKit objects into function for drawing.</p>
+</section>
+<section id="drawing-molecules-in-a-grid" class="level2">
+<h2 class="anchored" data-anchor-id="drawing-molecules-in-a-grid">Drawing Molecules in a Grid</h2>
+<p>Those examples above are for single compounds. It is a great tool and, when we grasp more complex script, we can quickly draw multiple molecules by looping through a list of smiles strings. That is great, but depending on our aims, individual drawings might not cut it. Enter a neat tool by RDKit - drawing molecules in a grid!</p>
+<p>It is as simple as drawing the individual molecules. All that is needed is a list of smiles strings. Like the previous example, more extra information can be added to the image. Here I kept it simple and passed a list of molecule names.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-02-23T15:00:18.289599Z&quot;,&quot;start_time&quot;:&quot;2024-02-23T15:00:18.262418Z&quot;}" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mols <span class="op">=</span> [Chem.MolFromSmiles(mol) <span class="cf">for</span> mol <span class="kw">in</span> df[<span class="st">'smiles'</span>]]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>MolsToGridImage(mols, legends<span class="op">=</span>[<span class="st">'aspirin'</span>, <span class="st">'Ibuprofen'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<p><img src="10-Draw-Molecules_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Just know that there are a lot of additional drawing options. If you could not tell, I like drawing images and plan on writing more depending on my schedule. In the meantime, it is good to practice these and thinking about how to add more functionality to it.</p>
+<p>With RDKit, there are some easy to use tools baked in. You just need to know the right ingredients!</p>
 
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/4-py50-single-plot.html">
-<div class="listing-date">
-Dec 7, 2023
-</div>
-<div class="listing-author">
-Tony E. Lin
-</div>
-<div class="listing-reading-time">
-5 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="7" data-categories="Python,Streamlit,py50,Coding,Informatics,Plotting" data-listing-date-sort="1701705600000" data-listing-file-modified-sort="1705454339000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
-<div class="thumbnail">
-<p><a href="./posts/3-announcing-py50.html"> <img src="./posts/img/py50_logo_only.png" class="thumbnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/3-announcing-py50.html">
-<h3 class="no-anchor listing-title">
-Announcing py50!
-</h3>
-<div class="listing-subtitle">
 
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/3-announcing-py50.html">
-<div class="listing-date">
-Dec 5, 2023
-</div>
-<div class="listing-author">
-Tony E. Lin
-</div>
-<div class="listing-reading-time">
-3 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="8" data-categories="Thoughts" data-listing-date-sort="1701446400000" data-listing-file-modified-sort="1701483266260" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
-<div class="thumbnail">
-<p><a href="./posts/2-hello-world-goals.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
-</div>
-<div class="body">
-<a href="./posts/2-hello-world-goals.html">
-<h3 class="no-anchor listing-title">
-Hello World - Now With Goals!
-</h3>
-<div class="listing-subtitle">
+</section>
 
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/2-hello-world-goals.html">
-<div class="listing-date">
-Dec 2, 2023
-</div>
-<div class="listing-author">
-Tony E. Lin
-</div>
-<div class="listing-reading-time">
-3 min
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="9" data-categories="Thoughts" data-listing-date-sort="1701187200000" data-listing-file-modified-sort="1701338670608" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
-<div class="thumbnail">
-<p><a href="./posts/1-hello-world.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
-</div>
-<div class="body">
-<a href="./posts/1-hello-world.html">
-<h3 class="no-anchor listing-title">
-Hello World!
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/1-hello-world.html">
-<div class="listing-date">
-Nov 29, 2023
-</div>
-<div class="listing-author">
-Tony E. Lin
-</div>
-<div class="listing-reading-time">
-1 min
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

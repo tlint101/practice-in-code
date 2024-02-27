@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/10-Draw-Molecules.html",
       "/posts/9-IC50_or_pIC50.html",
       "/posts/8-absolute-ic50.html",
       "/posts/7-py50-additional-features.html",
