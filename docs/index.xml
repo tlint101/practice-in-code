@@ -10,7 +10,238 @@
 <atom:link href="https://tlint101.github.io/practice-in-code/index.xml" rel="self" type="application/rss+xml"/>
 <description>Practice in Code</description>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Mon, 26 Feb 2024 16:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 27 Mar 2024 16:00:00 GMT</lastBuildDate>
+<item>
+  <title>Drawing Molecules with Datamol</title>
+  <dc:creator>Tony E. Lin</dc:creator>
+  <link>https://tlint101.github.io/practice-in-code/posts/11-Draw-Molecules-Datamol.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="intro" class="level2">
+<h2 class="anchored" data-anchor-id="intro">Intro</h2>
+<p>In the <a href="https://tlint101.github.io/practice-in-code/posts/10-Draw-Molecules.html">last post</a> I talked about drawing molecules using RDKit. Anyone in cheminformatics knows about RDKit. It is an essential toolkit. But for anyone starting out, it can be frustrating. Think about the basic drawing steps explained in the last post - define the smiles string, convert it into an RDKit molecule (Chem.MolFromSmiles), and then draw the molecule (Draw.MolToImage). That requires three lines of code each time. Trying to find specific tools within RDKit’s documentation can be a day daunting and frustrating.</p>
+<p>Enter <a href="https://docs.datamol.io/stable/tutorials/The_Basics.html">Datamol</a>. This is a toolkit built on top of RDKit. It reduces the molecular drawing steps from three lines of code into one!</p>
+<p>That makes Datamol is a great tool to start out with. Datamol has a lot of functions ripped right from RDKit and reduces a lot of RDKit’s bulkiness into one or two lines of code. That makes Datamol perfect for beginners. But this comes with a caveat. Datamol lacks certain features, drawn molecules can be oriented differently compared to RDKit, and Datamol lacks more detailed tools found in RDKit tool. But for most of our needs, like drawing molecules, Datamol makes perfect sense to use.</p>
+<p>Here, we will go over the same drawing skills as the last post. Only this time we use Datamol to draw the molecules.</p>
+<center>
+<img src="https://tlint101.github.io/practice-in-code/posts/img/datamol_example.png">
+</center>
+</section>
+<section id="set-up-data" class="level2">
+<h2 class="anchored" data-anchor-id="set-up-data">Set Up Data</h2>
+<p>Again, we will focus on 2 molecules - Acetylsalicylic Acid and Ibuprofen. The data is set up as follows:</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-03-23T08:54:35.765935Z&quot;,&quot;start_time&quot;:&quot;2024-03-23T08:54:35.759943Z&quot;}" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'name'</span>: [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Acetylsalicylic Acid'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Ibuprofen'</span>],</span>
+<span id="cb1-2">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'smiles'</span>: [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'O=C(C)Oc1ccccc1C(=O)O'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'CC(C)Cc1ccc(cc1)[C@@H](C)C(=O)O'</span>]}</span>
+<span id="cb1-3">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pd.DataFrame(data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>data)</span>
+<span id="cb1-4">df</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">smiles</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Acetylsalicylic Acid</td>
+<td>O=C(C)Oc1ccccc1C(=O)O</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Ibuprofen</td>
+<td>CC(C)Cc1ccc(cc1)[C@@H](C)C(=O)O</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="drawing-the-molecule" class="level2">
+<h2 class="anchored" data-anchor-id="drawing-the-molecule">Drawing the Molecule</h2>
+<p>Like in the last post, the data is loaded in a DataFrame. It will need to be “sliced” for drawing. In this case, we will use Datamol’s to_mol() function. This works in one line of code, unlike RDKit which can take two lines.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-03-23T08:54:36.027393Z&quot;,&quot;start_time&quot;:&quot;2024-03-23T08:54:35.767329Z&quot;}" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Get smiles for 1 molecule smiles string</span></span>
+<span id="cb2-2">aspirin <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df.iloc[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb2-3"></span>
+<span id="cb2-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Draw molecule</span></span>
+<span id="cb2-5">mol <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> dm.to_mol(aspirin)</span>
+<span id="cb2-6">mol</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/11-Draw-Molecules-Datamol_files/figure-html/cell-3-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The above code is technically not a drawing. What it is is a representation of an RDKit molecule. You can try that yourself by using type(mol). You will get ‘rdkit.Chem.rdchem.Mol’. But the to_mol() is great because the molecule is essentially an RDKit molecule and can be processed using RDKit’s other functions or functions available in Datamol.</p>
+<p>Drawing a molecule in Datamol is as simple as using to_image() function. Again, this reads more like traditional English syntax. Here we will draw the molecule as an image. To top it off, we will also add a figure legend for the image.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-03-23T08:54:36.037084Z&quot;,&quot;start_time&quot;:&quot;2024-03-23T08:54:36.028055Z&quot;}" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Input smiles string and figure legend</span></span>
+<span id="cb3-2">mol <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> dm.to_image(aspirin, legends<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Drawing Aspirin with Datamol!'</span>, use_svg<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>, outfile<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'img/datamol_example.png'</span>, mol_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">250</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">250</span>))</span>
+<span id="cb3-3">mol</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/11-Draw-Molecules-Datamol_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-03-23T08:54:36.042383Z&quot;,&quot;start_time&quot;:&quot;2024-03-23T08:54:36.037805Z&quot;}" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Input smiles string and figure legend</span></span>
+<span id="cb4-2">mol <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> dm.to_image(aspirin, legends<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Aspirin'</span>)</span>
+<span id="cb4-3">mol</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/11-Draw-Molecules-Datamol_files/figure-html/cell-5-output-1.svg" class="img-fluid"></p>
+</div>
+</div>
+<p>That looks great! You can also save the image by adding the “outfile” argument. By default, the image will be in .svg format and if you prefer .png, you should also include “useSVG=False” in the parameters too. There are a lot of options and you can dive into them <a href="https://docs.datamol.io/stable/api/datamol.viz.html#datamol.viz.to_image">here</a>.</p>
+</section>
+<section id="drawing-molecules-in-a-grid" class="level2">
+<h2 class="anchored" data-anchor-id="drawing-molecules-in-a-grid">Drawing Molecules in a Grid</h2>
+<p>That is all well and good, but what if you want to draw multiple molecules in a grid? Again, that can be accomplished in a single line of code! Even easier, it is done using the same to_image() function!</p>
+<p>The main thing to keep in mind is that the to_image() function requires the inputs to be in a list. That is easy to do from our DataFrame. Here we will draw the two molecules with their figure legend in a grid by converting their respective columns into a list.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2024-03-23T08:54:36.049235Z&quot;,&quot;start_time&quot;:&quot;2024-03-23T08:54:36.043286Z&quot;}" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Convert the smiles column and name columns into a list</span></span>
+<span id="cb5-2">mols <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'smiles'</span>].tolist()</span>
+<span id="cb5-3">legends <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'name'</span>].to_list()</span>
+<span id="cb5-4"></span>
+<span id="cb5-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Draw the molecules!</span></span>
+<span id="cb5-6">dm.to_image(mols<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>mols, legends<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>legends, n_cols<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, mol_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">200</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">200</span>))</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/11-Draw-Molecules-Datamol_files/figure-html/cell-6-output-1.svg" class="img-fluid"></p>
+</div>
+</div>
+<p>This is subjective, but I think that code reads a lot smoother, especially if you are a native English speaker. Compare that to the way I drew molecules from a list from the previous post:</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1">mols <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [Chem.MolFromSmiles(mol) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> mol <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> df[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'smiles'</span>]]</span>
+<span id="cb6-2">MolsToGridImage(mols, legends<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'aspirin'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Ibuprofen'</span>])</span></code></pre></div>
+<p>I am used to it now, but starting out, that read like a whole different langauge to me! Drawing in Datamol makes more sense, especially with their to_image() script.</p>
+</section>
+<section id="additional-tools" class="level2">
+<h2 class="anchored" data-anchor-id="additional-tools">Additional Tools</h2>
+<p>These are simple drawing examples. If you dive deeper into their <a href="https://docs.datamol.io/stable/api/datamol.align.html">API</a>, you will find that Datamol contains a ton of other useful features. Importantly, they are written in a way that makes a little more sense. Some other things that are important for the cheminformatic toolkit include molecular fingerprints or converting drawn molecules into other 1D formats. Again, Datamol offers a syntax that follows the “to_xxx” format. A lot easier for early coders!</p>
+<p><strong>At least for the simple things.</strong> If you need more rigorous tools, then you’ll have to continue diving into RDKit or other toolkits available.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Just know that there are a lot of additional drawing options. If you could not tell, I like drawing images and plan on writing more depending on my schedule. In the meantime, it is good to practice these and thinking about how to add more functionality to it.</p>
+<p>With RDKit, there are some easy to use tools baked in. You just need to know the right ingredients!</p>
+<p>The full notebook with the code can be found <a href="https://github.com/tlint101/practice-in-code/blob/main/notebooks/10-Draw-Molecules.ipynb">here</a>.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>RDKit</category>
+  <category>Datamol</category>
+  <category>Drawing</category>
+  <guid>https://tlint101.github.io/practice-in-code/posts/11-Draw-Molecules-Datamol.html</guid>
+  <pubDate>Wed, 27 Mar 2024 16:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Drawing Molecules</title>
   <dc:creator>Tony E. Lin</dc:creator>

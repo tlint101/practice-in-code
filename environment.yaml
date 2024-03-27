@@ -14,4 +14,4 @@ dependencies:
       - pingoin
       - scikit-posthocs
       - black
-      -
+      - datamol

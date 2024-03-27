@@ -5,7 +5,7 @@
 ## Introduction
 Hello there! 
 
-My name is Tony and you have stumbled across my blog. There are a ton of blogs online that has taught me how do things 
+My name is Tony and you have stumbled across my blog. There are a ton of blogs online that have taught me how do things 
 in python. And I would like to pay it forward! This will serve as a place where I share what interests me, code that I 
 am currently testing or packages that I find interesting. 
 
