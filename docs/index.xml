@@ -10,7 +10,117 @@
 <atom:link href="https://tlint101.github.io/practice-in-code/index.xml" rel="self" type="application/rss+xml"/>
 <description>Practice in Code</description>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Wed, 27 Mar 2024 16:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 24 Jun 2025 16:00:00 GMT</lastBuildDate>
+<item>
+  <title>Learning Git</title>
+  <dc:creator>Tony E. Lin</dc:creator>
+  <link>https://tlint101.github.io/practice-in-code/posts/12-Learning Git.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="learning" class="level2">
+<h2 class="anchored" data-anchor-id="learning">Learning</h2>
+<p>It has been a good while since I last posted. Time has gotten away from me. Thankfully, I can also fall back on the “I’ve been busy” shtick. I’ll lean on that. A quick glance on my GitHub profile shows that I have been “fairly” busy. So my “excuse” isn’t far off.</p>
+<section id="housekeeping" class="level3">
+<h3 class="anchored" data-anchor-id="housekeeping">Housekeeping</h3>
+<p>Since my last post, I have hit a lot of personal milestones. I’ve become a little more comfortable with coding. As someone who is self-taught, it feels like a huge accomplishment to be able to say that. However, there is always more to learn, to improve, and skills to develop. One of the most important ones is <a href="https://en.wikipedia.org/wiki/Version_control">Version Control</a>.</p>
+<p>For those in academia, GitHub is the repository host of choice. Though, I think Codeberg is a good one too and I have begun mirroring many of my projects. Hopefully I can wean myself from Github in the future, since the projects on GitHub is used to train Microsoft’s Copilot, and <a href="https://www.developer-tech.com/news/microsoft-copilot-continues-to-expose-private-github-repositories/">potentially exposing private GitHub repositories</a>. Codeberg, as far as I know, cannot be used to train LLMs.</p>
+<p>All of that is for another post or venue. For now, I wanted to share how I use Git and some basic commands I use.</p>
+</section>
+<section id="how-i-started-using-git" class="level3">
+<h3 class="anchored" data-anchor-id="how-i-started-using-git">How I Started Using Git</h3>
+<p>As my projects have become bigger and ambitious, it has become vital to record and track the changes to my code. This is a natural progression for any developer.</p>
+<p>I started writing my projects in Jupyter Notebooks. I love the ability to write in distinct code blocks and to immediately get results printed on script. It helps that each code block can be run out of order, which allows testing and learning of code or custom API. Importantly, with the mix of code and markdown blocks, Jupyter Notebooks are great ways to communicate, share, and teach others your code.</p>
+<p>My original interaction with Jupyter Notebooks was through the traditional portal - the localhost connection. It was simple and easy.</p>
+<p>As I got comfortable with simple command scripts, I began making more complicated functions, which requires better organization skills. On the advice of a friend, I began using <a href="https://en.wikipedia.org/wiki/Integrated_development_environment">Integrated Development Environment</a> (IDE)s. There are plenty out there, like <a href="https://code.visualstudio.com">VSCode</a> and <a href="https://www.spyder-ide.org">Spyder</a>. But I gravitated toward the <a href="https://www.jetbrains.com/?var=1">JetBrains</a> software suite - particularly <a href="https://www.jetbrains.com/pycharm/">PyCharm</a> and <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a>.</p>
+<p>I like the JetBrains software because of the look of the interface and the ability to customize how it looks. I am an insane person and will change my IDE theme each day depending on my mood. Everyone is different, so play around with each one and find one that you like.</p>
+<p>A main advantage with PyCharm is its integration with Git. It is there from the get go and ready for set up. Plugin with your GitHub account and users are ready to commit, push, or pull their projects. The GUI made it easy peasy! My workflow became:</p>
+<ul>
+<li>Create repository on GitHub</li>
+<li>Clone repository through PyCharm onto my machine</li>
+<li>Code</li>
+<li>Commit/Push/Pull as needed</li>
+</ul>
+<p>It was simple and I got comfortable with that for a long time.</p>
+<p>However, PyCharm is mainly “connected” to GitHub. As I begin to transition/mirror projects to Codeberg, I found that the GUI becomes unfriendly and clunky. That has caused me to learn a few command line codes that I found useful.</p>
+</section>
+<section id="git-commands-i-use" class="level3">
+<h3 class="anchored" data-anchor-id="git-commands-i-use">Git Commands I Use</h3>
+<p>These command line tools are easy ways to connect a project to Git protocols. Importantly, they do not need a specific IDE to be used. All you need is a terminal/command line interface. It is a step up in my coding abilities!</p>
+<p>My main machine is a MacOS. Thus, these commands are used in the Terminal. Depending on your machine, you should be able to copy/paste these commands to get things working too.</p>
+<p>Check if git is installed:</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--version</span></span></code></pre></div>
+<p>Initialize Git in project folder:</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> init</span></code></pre></div>
+<p>Confirm git tracking:</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> status</span></code></pre></div>
+<p>If a git repository is made on your GitHub/Codeberg account:</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> remote add origin https://github.com/your-username/repo.git</span></code></pre></div>
+<p>If you want to add multiple repositories/remotes to your project or want to check which ones are connected to your project:</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> remote <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-v</span></span></code></pre></div>
+<p>If you want to rename your remotes:</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> remote rename original_name new_name</span></code></pre></div>
+<p>Stage all changes in project:</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> add .</span></code></pre></div>
+<p>or if you want to stage specific files:</p>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> add name_of_file</span></code></pre></div>
+<p>Commit changes:</p>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> commit <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-m</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"message"</span></span></code></pre></div>
+<p>Push to repository (first time):</p>
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> push u- origin main</span></code></pre></div>
+<p>Push to repository (subsequent times)</p>
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> push</span></code></pre></div>
+<p>Pull changes:</p>
+<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">git</span> pull</span></code></pre></div>
+<p>Those are the main commands that I have learned to use. There are a ton of others that may come in handy to users. I found a nice <a href="https://education.github.com/git-cheat-sheet-education.pdf">cheatsheet here</a>. For my main uses though, I still have the GUI to use. If things break, I hope I can figure things out in the future!</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>Python</category>
+  <category>Bash</category>
+  <category>Git</category>
+  <category>Coding</category>
+  <category>GitHub</category>
+  <category>Codeberg</category>
+  <guid>https://tlint101.github.io/practice-in-code/posts/12-Learning Git.html</guid>
+  <pubDate>Tue, 24 Jun 2025 16:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Drawing Molecules with Datamol</title>
   <dc:creator>Tony E. Lin</dc:creator>
