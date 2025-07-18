@@ -10,7 +10,311 @@
 <atom:link href="https://tlint101.github.io/practice-in-code/index.xml" rel="self" type="application/rss+xml"/>
 <description>Practice in Code</description>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Tue, 24 Jun 2025 16:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 22 Jul 2025 16:00:00 GMT</lastBuildDate>
+<item>
+  <title>Announcing the pharmacophore-toolkit!</title>
+  <dc:creator>Tony E. Lin</dc:creator>
+  <link>https://tlint101.github.io/practice-in-code/posts/13-Announcing-pharmacophore-toolkit.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="introducing-pharmacophore-toolkit" class="level1">
+<h1>Introducing pharmacophore-toolkit</h1>
+<p>For the past year, I have been absent from this space. That doesn’t mean I haven’t been busy! Lately my interests have shifted to making apps targeting cheminformatics and drug discovery. My target audience is my lab members, but I have also released the tools for the wider public. One that I am happy to have recently created is the <a href="https://github.com/tlint101/pharmacophore-toolkit">pharmacophore-toolkit</a>.</p>
+<section id="motivation" class="level2">
+<h2 class="anchored" data-anchor-id="motivation">Motivation</h2>
+<p>There are plenty of tools available to model Structure-Activity Relationship (SAR). Famous software suites include <a href="https://cresset-group.com">Cresset Flare</a> or <a href="https://www.schrodinger.com/platform/products/maestro/">Schrödinger Maestro</a> (<a href="https://youtu.be/0MbUtgoX3Ys">video tutorial here</a>). I particularly like Flare for their <a href="https://cresset-group.com/software/activityminer/">Activity Miner</a> tool. Schrödinger has a great docking module, but is also equipped with additional computational tools that support molecular designs. The aforementioned programs, and other computational pieces of software that support drug design, are great in their own right.</p>
+<p>Nonetheless, many of these tools require a subscription. Depending on your goals, paying for a subscription and not utilizing all of the tools can be a downer. Some software suites may offer an academic license, but with a severe lock on the “fancier” tools. Luckily, there are plenty of open source tools that you can combine, along with some elbow grease, to create a tool that works in a similar way.</p>
+<p>Thus, pharmacophore-toolkit was born. I wanted to make a script that is, hopefully, easy to use and can generate informative images for analysis and communication between lab groups.</p>
+<p>The below is a short demo adapted from the pharmacophore-toolkit tutorial <a href="https://github.com/tlint101/pharmacophore-toolkit/blob/main/tutorials/pharmacophore_tutorial.ipynb">here</a>.</p>
+</section>
+<section id="demo" class="level2">
+<h2 class="anchored" data-anchor-id="demo">Demo</h2>
+<section id="import-modules" class="level3">
+<h3 class="anchored" data-anchor-id="import-modules">Import Modules</h3>
+<p>In this project, we will import rdkit and the pharmacophore-toolkit (pharmacophore) and their associated modules.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-07-17T11:08:08.938422Z&quot;,&quot;start_time&quot;:&quot;2025-07-17T11:08:08.092943Z&quot;}" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> rdkit <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Chem</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> rdkit.Chem <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> AllChem, rdMolAlign</span>
+<span id="cb1-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> rdkit.Chem.Draw <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> MolsToGridImage</span>
+<span id="cb1-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> pharmacophore <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Pharmacophore, Draw, View</span></code></pre></div>
+</div>
+</section>
+<section id="dataset" class="level3">
+<h3 class="anchored" data-anchor-id="dataset">Dataset</h3>
+<p>The example compounds include three molecules that binds to the serotonin receptor <a href="https://en.wikipedia.org/wiki/5-HT2A_receptor">5HT-2A</a>. This protein belongs to the larger GPCR family of proteins and is famous for having a central role in psychedelic drugs such as LSD and psylocibin mushrooms. Fun stuff! The three molecules in this example will include serotonin (duh!), <a href="https://en.wikipedia.org/wiki/Psilocin">psilocin</a> (🍄), and <a href="https://en.wikipedia.org/wiki/Mescaline">mescaline</a>(🌵).</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-07-17T11:08:09.020359Z&quot;,&quot;start_time&quot;:&quot;2025-07-17T11:08:09.007817Z&quot;}" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">molecules <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> {<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"serotonin"</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"C1=CC2=C(C=C1O)C(=CN2)CCN"</span>,</span>
+<span id="cb2-2">             <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"psilocin"</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"CN(C)CCc1c[nH]c2cccc(O)c12"</span>,</span>
+<span id="cb2-3">             <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mescaline"</span>: <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"O(c1cc(cc(OC)c1OC)CCN)C"</span>}</span>
+<span id="cb2-4"></span>
+<span id="cb2-5">mol_smi <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [x <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> x <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> molecules.values()]</span>
+<span id="cb2-6">mol_name <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [x <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> x <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> molecules.keys()]</span>
+<span id="cb2-7">mols <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [Chem.MolFromSmiles(x) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> x <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> mol_smi]</span>
+<span id="cb2-8"></span>
+<span id="cb2-9">MolsToGridImage(mols<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>mols, legends<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>mol_name)</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/13-Announcing-pharmacophore-toolkit_files/figure-html/cell-3-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="compound-preparation" class="level3">
+<h3 class="anchored" data-anchor-id="compound-preparation">Compound Preparation</h3>
+<p>For effective pharmacophore modeling, the molecules need to be rendered with their 3D conformation. This can come from a variety of ways. To keep things simple, the 3D conformation of the molecules in this demo will be generated using RDKit.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-07-17T11:08:09.066524Z&quot;,&quot;start_time&quot;:&quot;2025-07-17T11:08:09.032531Z&quot;}" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># generating 3D conformation</span></span>
+<span id="cb3-2">mols <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [Chem.AddHs(m) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> m <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> mols]</span>
+<span id="cb3-3">ps <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> AllChem.ETKDGv3()</span>
+<span id="cb3-4">ps.randomSeed <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">42</span></span>
+<span id="cb3-5"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> m <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> mols:</span>
+<span id="cb3-6">    AllChem.EmbedMolecule(m,ps)</span>
+<span id="cb3-7"></span>
+<span id="cb3-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># aligning the molecules</span></span>
+<span id="cb3-9">aligned <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb3-10"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> x <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> mols:</span>
+<span id="cb3-11">    mol_aligned <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> rdMolAlign.GetO3A(x,mols[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>])</span>
+<span id="cb3-12">    aligned.append(mol_aligned.Align())</span></code></pre></div>
+</div>
+<p>The molecules should now be drawn with 3D coordinates. This can be visualized by drawing the molecules. Notice that the molecules are drawn differently on a 2D plane.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-07-17T11:08:09.082700Z&quot;,&quot;start_time&quot;:&quot;2025-07-17T11:08:09.073722Z&quot;}" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">mols_noH <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [Chem.RemoveHs(m) <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> m <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> mols]  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># remove hydrogens for clarity.</span></span>
+<span id="cb4-2"></span>
+<span id="cb4-3">MolsToGridImage(mols<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>mols_noH, legends<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>mol_name)</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/13-Announcing-pharmacophore-toolkit_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="pharmacophore" class="level3">
+<h3 class="anchored" data-anchor-id="pharmacophore">Pharmacophore</h3>
+<p>There are three ways to generate pharmacophores - an interactive 3D widget using py3Dmol, as a .xyz file for use in PyMOL, and as a 2D image as a .png file.</p>
+<section id="genearte-pharmacophore-features" class="level4">
+<h4 class="anchored" data-anchor-id="genearte-pharmacophore-features">Genearte Pharmacophore Features</h4>
+<p>First, the pharmacophore features will need to be generated. As of this version, only one pharmacophore can be generated at a time. In this example, pharmacophores for the first molecule, serotonin, will be generated. this will produce a list of lists, with each list containing the pharmacophore label, its atom position, and XYZ coordinates. Once calculated, this data will be used to render the pharmacophores for the images.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-07-17T11:08:09.109613Z&quot;,&quot;start_time&quot;:&quot;2025-07-17T11:08:09.093253Z&quot;}" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># default</span></span>
+<span id="cb5-2">pharm <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Pharmacophore()</span>
+<span id="cb5-3">pharma <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pharm.calc_pharm(mols_noH[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>])</span>
+<span id="cb5-4">pharma</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>[['Donor', (9,), -0.9046174520168838, -2.235699615827842, 0.13645934200480056],
+ ['Donor', (12,), 2.949925200279259, -0.15648413497184238, 1.2254205073233995],
+ ['Donor', (6,), -2.5995394084260526, 2.931207478597561, -0.5905278269049035],
+ ['Aromatic',
+  (0, 1, 2, 3, 4, 5),
+  -1.8583650464904398,
+  0.2926900071440297,
+  -0.1871054571985934],
+ ['Aromatic',
+  (2, 3, 7, 8, 9),
+  -0.384216675975982,
+  -1.2654866328983938,
+  -0.21240652662909393]]</code></pre>
+</div>
+</div>
+</section>
+<section id="py3dmol" class="level4">
+<h4 class="anchored" data-anchor-id="py3dmol">py3DMol</h4>
+<p>The pharmacophores generated above are now ready to be used for generating pharmacophores. Each pharmacophore is represented as a sphere with the centroid located on the atom. Currently, the pharmacophores were only generated once for the first molecule. So while the <strong>view()</strong> method contains a dropdown menu to select from list of molecules, the drawn pharmacophores will only correspond to the pharmacophore list generated from the code block above. In this case, serotonin.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-07-17T11:08:09.178729Z&quot;,&quot;start_time&quot;:&quot;2025-07-17T11:08:09.123859Z&quot;}" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1">v <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> View()</span>
+<span id="cb7-2">v.view(mols_noH, pharma, labels<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">True</span>, window<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">500</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">500</span>))</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"version_major":2,"version_minor":0,"model_id":"1e2c656cfc0b4051bce1e95f93c568ae","quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+</div>
+<p><img src="https://tlint101.github.io/practice-in-code/posts/img/pharmacophore-toolkit-serotonin.png" alt="serotoning-pharmacophore-toolkit" width="35%"></p>
+<p><strong>NOTE:</strong> This code block generates an interactive window and is intended for use in Jupyter Notebooks only. It cannot be rendered for this blog post (static webpage). Instead, an image of the window is included.</p>
+<p>The <strong>view()</strong> method can also handle a list of pharmacophores. This has the benefit of changing the pharmacophore spheres with each rendered molecule. This is done by generating multiple pharmacophores and including the results ina list. An example of this is as follows:</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-07-17T11:08:09.232768Z&quot;,&quot;start_time&quot;:&quot;2025-07-17T11:08:09.194962Z&quot;}" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">pharma <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> []</span>
+<span id="cb8-2"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> x <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> mols_noH:</span>
+<span id="cb8-3">    calc <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> pharm.calc_pharm(x)</span>
+<span id="cb8-4">    pharma.append(calc)</span></code></pre></div>
+</div>
+</section>
+<section id="xyz-file-for-pymol" class="level4">
+<h4 class="anchored" data-anchor-id="xyz-file-for-pymol">.xyz file for PyMol</h4>
+<p>The pharmacophores-toolkit can generate a .xyz file to be used with PyMOL. This contains information for the pharmacophores - 3D coordinates, sphere color, sphere size, etc. Once this is generated, users can drag and drop this file into their PyMOL application to render the pharmacophore with their molecule. The resulting images should generate pharmacophore spheres superimposed on the molecule. The output will give a message describing the number of pharmacophore features generated.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-07-17T11:08:09.240927Z&quot;,&quot;start_time&quot;:&quot;2025-07-17T11:08:09.238741Z&quot;}" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1">pharm.output_features(savepath<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'pharma.pml'</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of features: 8
+Feature visualization script written to pharma.pml.</code></pre>
+</div>
+</div>
+<p>In this case, the pharmacophore features for the last item in the list is generated. This should correspond with mescalin.</p>
+<p><img src="https://tlint101.github.io/practice-in-code/posts/img/pharmacophore-pymol-example.png" alt="pharmacophore-pymol-example" width="50%"></p>
+<p><strong>NOTE:</strong> A sample image of what this would look like in pymol is given here. Like the interactive module above, the pharmacophores will need to be rendered for each molecule separately. In this example, the pharmacophores for serotonin were generated. The psilocin and mescaline molecules were drawn with the serotonin pharmacophore spheres to highlight their structural differences.</p>
+</section>
+<section id="a-2d-image" class="level4">
+<h4 class="anchored" data-anchor-id="a-2d-image">A 2D Image</h4>
+<p>Finally, a 2D image can be generated with spheres highlighting the pharmacophores. Images were drawn using RDKit and colored by their respective pharmacophores.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-07-17T11:08:09.390074Z&quot;,&quot;start_time&quot;:&quot;2025-07-17T11:08:09.262726Z&quot;}" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1">draw <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Draw()</span>
+<span id="cb11-2">draw.draw_pharm(mols_noH[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>])</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/13-Announcing-pharmacophore-toolkit_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>And that’s it! The final results don’t look that bad. I’ve used it for a side project and, depending on how others go, I may use it for others. I find this a quick and easy way to generate analysis of interesting compounds and it helps explain my ideas to collaborators. Pretty neat!</p>
+<p>The final results, as of this writing, only highlights the pharmacophore spheres for a specific molecule. No activity cliffs are considered. Activity cliffs are handy as it more illustrates areas for modification - a common “next step” for drug design. That said, I believe an experienced computational chemist should be able to gauge these design tricks by the images generated using the pharmacophore-toolkit. I would still like to add activity cliffs or something similar in the future. Or if others know how, please set up a pull request!</p>
+<p>Thanks for reading!</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Small-Molecules</category>
+  <category>Python</category>
+  <category>Python Project</category>
+  <category>Pharmacophore</category>
+  <category>RDKit</category>
+  <category>PyMOL</category>
+  <category>Drawing</category>
+  <guid>https://tlint101.github.io/practice-in-code/posts/13-Announcing-pharmacophore-toolkit.html</guid>
+  <pubDate>Tue, 22 Jul 2025 16:00:00 GMT</pubDate>
+  <media:content url="https://tlint101.github.io/practice-in-code/posts/img/pharmacophore-pymol-example.png" medium="image" type="image/png" height="95" width="144"/>
+</item>
 <item>
   <title>Learning Git</title>
   <dc:creator>Tony E. Lin</dc:creator>
