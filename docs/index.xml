@@ -240,8 +240,8 @@ font-style: inherit;">500</span>))</span></code></pre></div>
 </script>
 </div>
 </div>
-<p><img src="https://tlint101.github.io/practice-in-code/posts/img/pharmacophore-toolkit-serotonin.png" alt="serotoning-pharmacophore-toolkit" width="35%"></p>
-<p><strong>NOTE:</strong> This code block generates an interactive window and is intended for use in Jupyter Notebooks only. It cannot be rendered for this blog post (static webpage). Instead, an image of the window is included.</p>
+<p><img src="https://tlint101.github.io/practice-in-code/posts/img/pharmacophore-demo.gif" alt="serotoning-pharmacophore-toolkit" width="35%"></p>
+<p><strong>NOTE:</strong> This code block generates an interactive window and is intended for use in Jupyter Notebooks only. It cannot be rendered for this blog post (static webpage). Instead, a gif of the window is included.</p>
 <p>The <strong>view()</strong> method can also handle a list of pharmacophores. This has the benefit of changing the pharmacophore spheres with each rendered molecule. This is done by generating multiple pharmacophores and including the results ina list. An example of this is as follows:</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-07-17T11:08:09.232768Z&quot;,&quot;start_time&quot;:&quot;2025-07-17T11:08:09.194962Z&quot;}" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1">pharma <span class="op" style="color: #5E5E5E;
@@ -313,7 +313,7 @@ font-style: inherit;">0</span>])</span></code></pre></div>
   <category>Drawing</category>
   <guid>https://tlint101.github.io/practice-in-code/posts/13-Announcing-pharmacophore-toolkit.html</guid>
   <pubDate>Tue, 22 Jul 2025 16:00:00 GMT</pubDate>
-  <media:content url="https://tlint101.github.io/practice-in-code/posts/img/pharmacophore-pymol-example.png" medium="image" type="image/png" height="95" width="144"/>
+  <media:content url="https://tlint101.github.io/practice-in-code/posts/img/pharmacophore-demo.gif" medium="image" type="image/gif"/>
 </item>
 <item>
   <title>Learning Git</title>
