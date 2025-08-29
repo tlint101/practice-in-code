@@ -2,62 +2,66 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://tlint101.github.io/practice-in-code/posts/9-IC50_or_pIC50.html</loc>
-    <lastmod>2025-07-23T10:28:18.985Z</lastmod>
+    <lastmod>2025-08-29T09:43:01.310Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/posts/11-Draw-Molecules-Datamol.html</loc>
-    <lastmod>2025-07-23T10:28:18.197Z</lastmod>
+    <lastmod>2025-08-29T09:43:00.536Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/posts/8-absolute-ic50.html</loc>
-    <lastmod>2025-07-23T10:28:17.540Z</lastmod>
+    <lastmod>2025-08-29T09:42:59.880Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/posts/13-Announcing-pharmacophore-toolkit.html</loc>
-    <lastmod>2025-07-23T10:28:16.421Z</lastmod>
+    <lastmod>2025-08-29T09:42:58.759Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/posts/10-Draw-Molecules.html</loc>
-    <lastmod>2025-07-23T10:28:15.746Z</lastmod>
-  </url>
-  <url>
-    <loc>https://tlint101.github.io/practice-in-code/posts/7-py50-additional-features.html</loc>
-    <lastmod>2025-07-23T10:28:15.132Z</lastmod>
-  </url>
-  <url>
-    <loc>https://tlint101.github.io/practice-in-code/posts/12-Learning Git.html</loc>
-    <lastmod>2025-07-23T10:28:13.897Z</lastmod>
-  </url>
-  <url>
-    <loc>https://tlint101.github.io/practice-in-code/about.html</loc>
-    <lastmod>2025-07-23T10:28:12.771Z</lastmod>
-  </url>
-  <url>
-    <loc>https://tlint101.github.io/practice-in-code/index.html</loc>
-    <lastmod>2025-07-23T10:28:13.508Z</lastmod>
-  </url>
-  <url>
-    <loc>https://tlint101.github.io/practice-in-code/posts/4-py50-single-plot.html</loc>
-    <lastmod>2025-07-23T10:28:14.730Z</lastmod>
+    <lastmod>2025-08-29T09:42:58.047Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/posts/1-hello-world.html</loc>
-    <lastmod>2025-07-23T10:28:15.379Z</lastmod>
+    <lastmod>2025-08-29T09:42:56.910Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tlint101.github.io/practice-in-code/posts/4-py50-single-plot.html</loc>
+    <lastmod>2025-08-29T09:42:56.205Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tlint101.github.io/practice-in-code/index.html</loc>
+    <lastmod>2025-08-29T09:42:55.237Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tlint101.github.io/practice-in-code/about.html</loc>
+    <lastmod>2025-08-29T09:42:54.482Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tlint101.github.io/practice-in-code/posts/12-Learning Git.html</loc>
+    <lastmod>2025-08-29T09:42:55.645Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tlint101.github.io/practice-in-code/posts/7-py50-additional-features.html</loc>
+    <lastmod>2025-08-29T09:42:56.614Z</lastmod>
+  </url>
+  <url>
+    <loc>https://tlint101.github.io/practice-in-code/posts/14-Learning-R.html</loc>
+    <lastmod>2025-08-29T09:42:57.673Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/posts/5-egg-on-my-face.html</loc>
-    <lastmod>2025-07-23T10:28:16.021Z</lastmod>
+    <lastmod>2025-08-29T09:42:58.342Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/posts/6-py50-QuickStart.html</loc>
-    <lastmod>2025-07-23T10:28:16.907Z</lastmod>
+    <lastmod>2025-08-29T09:42:59.233Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/posts/3-announcing-py50.html</loc>
-    <lastmod>2025-07-23T10:28:17.826Z</lastmod>
+    <lastmod>2025-08-29T09:43:00.170Z</lastmod>
   </url>
   <url>
     <loc>https://tlint101.github.io/practice-in-code/posts/2-hello-world-goals.html</loc>
-    <lastmod>2025-07-23T10:28:18.483Z</lastmod>
+    <lastmod>2025-08-29T09:43:00.825Z</lastmod>
   </url>
 </urlset>

@@ -10,7 +10,218 @@
 <atom:link href="https://tlint101.github.io/practice-in-code/index.xml" rel="self" type="application/rss+xml"/>
 <description>Practice in Code</description>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Tue, 22 Jul 2025 16:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 02 Sep 2025 16:00:00 GMT</lastBuildDate>
+<item>
+  <title>Learning R</title>
+  <dc:creator>Tony E. Lin</dc:creator>
+  <link>https://tlint101.github.io/practice-in-code/posts/14-Learning-R.html</link>
+  <description><![CDATA[ 
+
+
+
+<p>I always heard that once you grasp one programming language, it is quick to learn to another. The first one is the hardest. I’ve tried learning a bit of Java, but to no avail. During the early years of the iPhone, I had dreams of building an app, only to never get started with Swift. To be fair, I did not put in as much effort in those endeavors as I should have. Mostly, it is down to not having a workable project/goal in mind. That was different when I was learning Python, with the simple programs I have been able to make and post freely on GitHub. Now as I’ve become comfortable with Python, I have begun exploring other languages to see if they can fit into my workflow. That adage is true - learning a new language is easier once you already know another.</p>
+<p>I have known about R for a while. It has always come across as a magical skill. I’ve come across R as figures in many papers. Take this <a href="https://jcheminf.biomedcentral.com/articles/10.1186/s13321-018-0309-4#Fig1">article</a>, where machine learning models and plots were coded using R. Neat stuff! I find many figures produced in R visually pop with easily digestible information. It is true that many figures in R can be produced in Python. That is why I put in a lot of effort in finding or making equivalent(ish) in Python (see Py50). But in the end, they are never exactly right. There are some things that are limiting in Python. Lucky for me, there is a package that makes it easy to combine R plotting with Python.</p>
+<section id="plotting-in-python" class="level2">
+<h2 class="anchored" data-anchor-id="plotting-in-python">Plotting in Python</h2>
+<p>For a comparison, here is a plot in Python. Here I used the popular seaborn pacakge and used the iris dataset. This scatterplot looks pretty good.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-08-29T09:35:33.232968Z&quot;,&quot;start_time&quot;:&quot;2025-08-29T09:35:33.101484Z&quot;}" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> seaborn <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> sns</span>
+<span id="cb1-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> matplotlib.pyplot <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> plt</span>
+<span id="cb1-3"></span>
+<span id="cb1-4">iris <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> sns.load_dataset(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'iris'</span>)</span>
+<span id="cb1-5">sns.scatterplot(data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>iris, x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sepal_length'</span>, y<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sepal_width'</span>, hue<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'species'</span>)</span>
+<span id="cb1-6">plt.title(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Sepal Length vs. Sepal Width by Species'</span>)</span>
+<span id="cb1-7">plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/14-Learning-R_files/figure-html/cell-2-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="making-r-plots-in-python" class="level2">
+<h2 class="anchored" data-anchor-id="making-r-plots-in-python">Making R Plots in Python</h2>
+<p>During my searches, I came across this package, rpy2, which is an interface to run R scripts in Python. It is easy to install:</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">pip install rpy2</span></code></pre></div>
+<p>Then, for users in Jupyter Notebook, the rpy2 can be run at the top of with all the imports using:</p>
+<pre><code>%load_ext rpy2.ipython</code></pre>
+<p>To get R scripts working in Jupyter Notebook, the “<a href="https://github.com/IRkernel/IRkernel">IRkernel</a>” will need to be installed first. This is done by manually downloading R (<a href="https://cran.r-project.org/mirrors.html">here</a>) and then in the terminal or an IDE, install it as:</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install.packages</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"IRkernel"</span>)</span></code></pre></div>
+<p>After that, Jupyter Notebooks should be ready to go. The main thing is making sure that the R extension is used. I imagine using this at the top of the notebook, like when you import Python modules.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-08-29T09:35:34.320181Z&quot;,&quot;start_time&quot;:&quot;2025-08-29T09:35:33.247063Z&quot;}" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># load the R extension</span></span>
+<span id="cb5-2"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span>load_ext rpy2.ipython</span></code></pre></div>
+</div>
+<p>For the subsequent cell with R script, users would type ‘%%R’ at the top of the cell. Everything else should be the same. here is a code that was copied from the <a href="https://r-graph-gallery.com/package/ggthemes.html">r-graph gallery</a>.</p>
+<p>There are some similarities with python, in that you need to import libraries. What most sticks out to me is <strong>&lt;-</strong> used instead of <strong>=</strong> when declaring variables. Otherwise, it is about learning the individual functions, in this case ggplot2 and ggthemes, and layering them in. Running the tutorial script gives you a nice looking scatterplot.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-08-29T09:35:35.608167Z&quot;,&quot;start_time&quot;:&quot;2025-08-29T09:35:34.361494Z&quot;}" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%%</span>R</span>
+<span id="cb6-2">library(ggplot2)</span>
+<span id="cb6-3">library(ggthemes)</span>
+<span id="cb6-4"></span>
+<span id="cb6-5">p <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> ggplot(iris, aes(x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Sepal.Length, y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Sepal.Width, color <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Species, shape <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Species)) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb6-6">  geom_point(size <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb6-7">  labs(</span>
+<span id="cb6-8">    title <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sepal Length vs Sepal Width by Species"</span>,</span>
+<span id="cb6-9">    x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sepal Length (cm)"</span>,</span>
+<span id="cb6-10">    y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sepal Width (cm)"</span>,</span>
+<span id="cb6-11">    caption <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Data source: Iris dataset"</span></span>
+<span id="cb6-12">  )</span>
+<span id="cb6-13"></span>
+<span id="cb6-14">p</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/14-Learning-R_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The figure looks good! It takes a little while to think about, but I think the “layering” of the plot makes more intuitive sense to me in R than in Python. However, that simple plot can also be made in python. I think the default figure looks better than the one produced in Seaborn. Of course, everything could be “touched up”. I have a preference for no grids, and different color palettes. But that doesn’t take away from how good teh plots look with default settings.</p>
+</section>
+<section id="special-themes" class="level2">
+<h2 class="anchored" data-anchor-id="special-themes">Special Themes</h2>
+<p>But what makes R special, in my eyes, are the special themes available. One of the gold standard figures for any plot enthusiast are the ones produced by the Economist. Lucky for R coders, ggplot2 has a nice theme that can easily replicate the Economist style plots. it is as simple as layering in <strong>theme_economist()</strong> on the plot. Oh, and importing the ggthemes package.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2025-08-29T09:35:35.740234Z&quot;,&quot;start_time&quot;:&quot;2025-08-29T09:35:35.624500Z&quot;}" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%%</span>R</span>
+<span id="cb7-2">library(ggplot2)</span>
+<span id="cb7-3">library(ggthemes)</span>
+<span id="cb7-4"></span>
+<span id="cb7-5">p <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> ggplot(iris, aes(x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Sepal.Length, y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Sepal.Width, color <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Species, shape <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Species)) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb7-6">  geom_point(size <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb7-7">  labs(</span>
+<span id="cb7-8">    title <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sepal Length vs Sepal Width by Species"</span>,</span>
+<span id="cb7-9">    x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sepal Length (cm)"</span>,</span>
+<span id="cb7-10">    y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sepal Width (cm)"</span>,</span>
+<span id="cb7-11">    caption <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Data source: Iris dataset"</span></span>
+<span id="cb7-12">  )</span>
+<span id="cb7-13"></span>
+<span id="cb7-14">p <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> theme_economist()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/14-Learning-R_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>For my workflow, Python reigns supreme. However, knowing a little R gives me more options for visualizing my data. As I play around with R, I find that I prefer the R method of “layering” in different elements on top of one another. It makes it organized and it seems to follow the way my brain things better. I always found Python to be a hodgepodge of variables slammed together.</p>
+<p>This opens up a whole new world of themes and different visualization methods. I”m excited to see what I can do with the min the future!</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Data Analysis</category>
+  <category>Plots</category>
+  <category>R</category>
+  <guid>https://tlint101.github.io/practice-in-code/posts/14-Learning-R.html</guid>
+  <pubDate>Tue, 02 Sep 2025 16:00:00 GMT</pubDate>
+  <media:content url="https://tlint101.github.io/practice-in-code/posts/img/r-economist.png" medium="image" type="image/png" height="144" width="144"/>
+</item>
 <item>
   <title>Announcing the pharmacophore-toolkit!</title>
   <dc:creator>Tony E. Lin</dc:creator>
