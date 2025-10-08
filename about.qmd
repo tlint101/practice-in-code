@@ -16,7 +16,7 @@ about:
 Hi! 👋
 
 My name is Tony and I write this blog. I am currently in a Ph.D. program for drug discovery in
-Taiwan. Why Taiwan? Well, a series of life choices fresh from university led me there, but I did not start the program until
+Taiwan. Why Taiwan? Well, a series of life choices fresh from university led me here. I did not start the program until
 late. I am, what you would call, a late bloomer. And still learning!
 
 I will treat this as a place to practice code and share my thinking and thought processes.
