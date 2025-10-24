@@ -12,7 +12,7 @@ website:
   title: 'Practice in Code'
   site-url: https://tlint101.github.io/practice-in-code/
   description: 'Practice in Code'
-  page-footer: 'Website made with [Quarto](https://quarto.org/) by Tony E. Lin© 2023 - 2024'
+  page-footer: 'Website made with [Quarto](https://quarto.org/) by Tony E. Lin'
   navbar:
     right:
       - about.qmd
