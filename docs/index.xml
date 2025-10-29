@@ -10,7 +10,84 @@
 <atom:link href="https://tlint101.github.io/practice-in-code/index.xml" rel="self" type="application/rss+xml"/>
 <description>Practice in Code</description>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Tue, 07 Oct 2025 16:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 28 Oct 2025 16:00:00 GMT</lastBuildDate>
+<item>
+  <title>Applying for the Google PhD Fellowship</title>
+  <dc:creator>Tony E. Lin</dc:creator>
+  <link>https://tlint101.github.io/practice-in-code/posts/16-Google-PhD-Fellowship.html</link>
+  <description><![CDATA[ 
+
+
+
+<section id="applying-for-the-google-phd-fellowship" class="level1">
+<h1>Applying for the Google PhD Fellowship</h1>
+<p>I am happy to announce that I am the recipient of the 2025 Google PhD Fellowship in East Asia. It is a tremendous honor.</p>
+<p>Normally on this space, I write about interesting code or what I am currently working on (as well as plugs to my stuff). For this post I wanted to discuss how I prepared my application.</p>
+<p>Google does not announce data, but as an international award, the competition must be fierce. That should not discourage anyone from trying. As any sports fan knows, “<a href="https://en.wiktionary.org/wiki/you_miss_100%25_of_the_shots_you_don%27t_take">you miss 100% of the shots you don’t take”</a>.</p>
+<p>As a recipient, I like to think that I stand out. Previous awardees in the country of my institution have been computer scientists or computer security researchers. I am in the field of computational chemistry/biology. That is an area that Google at large does not typically dabble in (though they have related subsidiaries).</p>
+<p>Importantly, I learned a lot preparing for this application. This is my first “big boy” test. As a recipient, I passed. For those who applied and did not get awarded, it is not a loss. <strong>You learn a lot about yourself when preparing the application</strong>. It is good experience that will teach you crucial skills.</p>
+<p><strong>NOTE:</strong> My application and this post was prepared without the aid of AI. No matter how terrible my writing skills may be, I enjoy writing without the crutch of AI. That may be evident in my application and this blog post (excessive rambling <em>is</em> my style).</p>
+<section id="application-contents" class="level2">
+<h2 class="anchored" data-anchor-id="application-contents">Application Contents</h2>
+<p>First, some <em>background of what I know</em>.</p>
+<p>The application is separated by regions. Unfortunately for me, my region, East Asia, is lumped in with the United States and Canada. Of the regions, these are the most rigorous. Extra materials I needed included letters of recommendation, transcripts, a 1-page CV of my advisor, and two personal essays (topics given by Google)</p>
+<p>Those requirements aren’t the worst. What was the hardest was the required materials for all nominated students - a student CV and a research/dissertation proposal (3 pages max excluding references). The proposal is perhaps the hardest part to prepare.</p>
+</section>
+<section id="nomination-process" class="level2">
+<h2 class="anchored" data-anchor-id="nomination-process">Nomination Process</h2>
+<p>Before the application can be submitted, applicants must be nominated by their institution/university. Google has strict rules for this. This process will vary by where you study. The bureaucracy of the school will determine how smooth your application process will be.</p>
+<p>There are schools in Taiwan that have regularly nominated students. As far as I can tell, they have a dedicated representative to deal with this process, i.e.&nbsp;selecting the most promising candidate from their school before submitting an application.</p>
+<p>For my case, I was the only student nominated by my institution. I am also, as far as I know, the first from my institution to be nominated and to apply for an international fellowship for Google. That meant my institute lacked a dedicated pathway or service to handle nominations. I was able to secure my nomination by leaning on my advisor to navigate the bureaucratic aspects. This is good and bad. It meant my nomination and application was sent out without issues, but receiving the fellowship (which we were not expecting) raised internal issues that I will not get into.</p>
+<p>How smoothly your institute/university handles the nomination process will vary.</p>
+</section>
+<section id="preparing-my-application" class="level2">
+<h2 class="anchored" data-anchor-id="preparing-my-application">Preparing My Application</h2>
+<p>After the nomination comes the most difficult part - preparing the application. I am lucky to work in a lab with a professor who involves me in grant writing. I find this crucial experience building. Many of my classmates do not get this chance. That is a shame. It leaves many without the skills or know how to prepare their applications for future opportunities.</p>
+<p>I approached my application as if I was applying for a grant. There are plenty of blog posts about grant writing. A recent one I found by <a href="https://blog.genesmindsmachines.com/p/how-to-write-an-nsf-grfp-research?r=2ygcy&amp;utm_medium=ios">Dr.&nbsp;Claus Wilke</a> is particularly insightful. Because I had some experience in grant writing, that put me in the right mindset in prepping my application.</p>
+<p>Throughout my preparation, I kept the following thoughts in mind:</p>
+<section id="dont-worry-about-novelty" class="level3">
+<h3 class="anchored" data-anchor-id="dont-worry-about-novelty">Don’t Worry About Novelty</h3>
+<p>For many early researchers, it is easy to dream as if their project/research will shake the foundations of science. I too have fallen into this egoistic trap.</p>
+<p>The truth is the novel ideas, the ones that truly shake science to its core, is but a wall built on tiny ideas (relevant <a href="https://xkcd.com/3155/">XKCD comic</a>). How we persevere, how our interests guide us, and how rigorous we are in our research will determine how that wall is built.</p>
+<p>Your project then does not need to be “novel”. Or at least, it likely won’t be “earth shattering”. In fact, that isn’t - or shouldn’t be - a requirement for a PhD degree either. As nice as it would be to be associated with a genius, the truth is that <strong>most funders want a workable and reasonable plan with potential to move our collective scientific ideas forward</strong>.</p>
+</section>
+<section id="know-your-audience" class="level3">
+<h3 class="anchored" data-anchor-id="know-your-audience">Know Your Audience</h3>
+<p>I do not know the reviewers. Is their specialty biology or chemistry? Or are they evolutionary biologists? Since this is Google, more likely the reviewers have a computer science background.</p>
+<p>I am not a computer scientist. I am a computational chemist/biologist. I straddle that middle road, building programs for chemistry/biology. It made sense for me to focus less on technical chemistry/biology aspects and more on how my program could augment my research.</p>
+<p>That is the trickiest part. <strong>You cannot assume the reviewers will know your research area</strong>. This is especially true when the proposal portion is constrained to 3 pages. Adding images, which I encourage wherever possible, will quickly eat up precious white space. <strong>Knowing what to focus on and what to omit is crucial</strong>.</p>
+<p>Likewise, <strong>how you describe your research will be different depending on which fellowship you apply to</strong>. All the big tech companies have a PhD fellowship of some sort. Each should be tailored towards the funder’s focus. For example, NVIDIA would favor a project heavily utilizing their GPUs and CUDA code. Likewise, if applying for a pharmaceutical industry fellowship, then the biochemistry should be stressed.</p>
+<p>As this award is from Google, and judging from past winners, I decided to focus more on the computational portion of my work. The strengths, weaknesses, and early results related to my program were more heavily featured in my application.</p>
+</section>
+<section id="share-preliminary-results" class="level3">
+<h3 class="anchored" data-anchor-id="share-preliminary-results">Share Preliminary Results</h3>
+<p>When writing a grant for my lab, we always present preliminary findings. This not only <strong>highlights the feasibility of the project</strong>, but also <strong>highlights our technical ability</strong>.</p>
+<p>As much as I tried to avoid the most technical chemistry/biology aspects of my project, the results I did share served as an anchor for my arguments and represented my next steps and future work. <strong>The results must be used to back up your project goals</strong>. My results always highlighted how, computationally, it would service my chemistry/biology ideas.</p>
+</section>
+<section id="be-clear" class="level3">
+<h3 class="anchored" data-anchor-id="be-clear">Be Clear</h3>
+<p>Remember, the research/dissertation proposal is 3 pages max. Writing is unique. There are many ways to say one thing. When it comes to writing, I am a rambler. I spent a lot of time thinking about the placement of my paragraphs or if my images best convey my ideas. My first draft came in at a hefty 6 pages. Way over the page limit.</p>
+<p>I quickly realized that short, simple sentences were better than larger technical sentences. <strong>Read your words out loud</strong>. If they clump in your mouth like marbles, then it probably needs a rewrite.</p>
+<p>My final draft came in at just under 3 pages. It was a tight fit and, looking back, I should have cut more. But what I did end with was an application much clearer than when I had started.</p>
+</section>
+</section>
+<section id="final-thoughts" class="level2">
+<h2 class="anchored" data-anchor-id="final-thoughts">Final Thoughts</h2>
+<p>In the end, there is also a bit of luck and help sprinkled throughout the process. The main enemies I faced was time and my own self doubt. I would not have gotten this fellowship without the help of my advisor and collaborators.</p>
+<p>As nice as it is to be granted this fellowship, the main thing should be improving yourself. <strong>Finishing and submitting the application is an achievement in and of itself.</strong> As an international award, thousands apply. There is no shame in getting a rejection. The best we can do is try again.</p>
+<p>Most importantly, the application process teaches you about yourself, your research, and how to communicate better. That is the most important skill of any PhD holder. Applying to the fellowship - any fellowships - is a worthwhile exercise. You will be better for it, no matter the outcome.</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>Writing</category>
+  <category>Google</category>
+  <guid>https://tlint101.github.io/practice-in-code/posts/16-Google-PhD-Fellowship.html</guid>
+  <pubDate>Tue, 28 Oct 2025 16:00:00 GMT</pubDate>
+  <media:content url="https://tlint101.github.io/practice-in-code/posts/img/logo_Google.org_Support_FullColor_rgb_stacked.png" medium="image" type="image/png" height="53" width="144"/>
+</item>
 <item>
   <title>More Colors and Themes</title>
   <dc:creator>Tony E. Lin</dc:creator>
