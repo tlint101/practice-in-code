@@ -10,7 +10,7 @@ project:
 
 website:
   title: 'Practice in Code'
-  site-url: https://tlint101.github.io/practice-in-code/
+  site-url: "https://tlint101.github.io/practice-in-code/"
   description: 'Practice in Code'
   page-footer: 'Website made with [Quarto](https://quarto.org/) by Tony E. Lin'
   navbar:
@@ -21,6 +21,7 @@ website:
       - icon: rss
         href: index.xml
   google-analytics: "G-DKY2WMQ374"
+  search: true
 format:
   html:
     theme:
