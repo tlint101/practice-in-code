@@ -12,7 +12,7 @@ website:
   title: 'Practice in Code'
   site-url: "https://tlint101.github.io/practice-in-code/"
   description: 'Practice in Code'
-  page-footer: 'Website made with [Quarto](https://quarto.org/) by Tony E. Lin'
+  page-footer: 'Website made with [Quarto](https://quarto.org/) and a teeny bit of ❤️ by Tony E. Lin'
   navbar:
     right:
       - about.qmd
@@ -24,6 +24,9 @@ website:
   search: true
 format:
   html:
+    toc: true
+    toc-depth: 3      # ensures H3 headers are included
+    toc-expand: 3     # ensures the menu expands
     theme:
       light: [flatly, css/light.css]
       dark: [darkly, css/dark.css]
