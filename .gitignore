@@ -2,3 +2,5 @@
 /notes/
 /working/
 /util_scripts/
+
+**/*.quarto_ipynb

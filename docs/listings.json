@@ -2,13 +2,14 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/18-Clustering wiht Bitbirch.html",
-      "/posts/17-Using SemVer.html",
+      "/posts/19-Talking-About-Erooms-Law.html",
+      "/posts/18-Clustering-with-Bitbirch.html",
+      "/posts/17-Using-SemVer.html",
       "/posts/16-Google-PhD-Fellowship.html",
       "/posts/15-More-Colors-and-Themes.html",
       "/posts/14-Learning-R.html",
       "/posts/13-Announcing-pharmacophore-toolkit.html",
-      "/posts/12-Learning Git.html",
+      "/posts/12-Learning-Git.html",
       "/posts/11-Draw-Molecules-Datamol.html",
       "/posts/10-Draw-Molecules.html",
       "/posts/9-IC50_or_pIC50.html",
