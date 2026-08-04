@@ -9,8 +9,186 @@
 <link>https://tlint101.github.io/practice-in-code/</link>
 <atom:link href="https://tlint101.github.io/practice-in-code/index.xml" rel="self" type="application/rss+xml"/>
 <description>Practice in Code</description>
-<generator>quarto-1.8.27</generator>
-<lastBuildDate>Mon, 13 Apr 2026 16:00:00 GMT</lastBuildDate>
+<generator>quarto-1.9.37</generator>
+<lastBuildDate>Tue, 04 Aug 2026 16:00:00 GMT</lastBuildDate>
+<item>
+  <title>Introducing drug-nme</title>
+  <dc:creator>Tony E. Lin</dc:creator>
+  <link>https://tlint101.github.io/practice-in-code/posts/21-Introducing-drug-nme.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>The last two posts were on Eroom’s Law and how I was able to draw that figure. I guess now is a good a time as any to introduce a Python package I wrote that pulls FDA approved drugs. I would like to introduce <strong>drug-nme</strong> for all your drug approval pulling needs!</p>
+<section id="reasons" class="level2">
+<h2 class="anchored" data-anchor-id="reasons">Reasons</h2>
+<p>This is something that I have worked on and off over the past year or so. Pulling information of FDA drug approvals is important for many projects, analysis, and for gauging trends of the current drug developemnt pipeline. Each year, Nature Reviews Drug Discovery releases a short write-up of the FDA drug approvals the previous year. The figures are standard. A single stacked barplot showing New Molecular Entities (NMEs) and Biologics License Applications (BLAs). This figure can be seen as Figure 1 <a href="https://www.nature.com/articles/d41573-026-00001-z">here</a>.</p>
+<p>Stacked bar plots aren’t a problem. The problem is pulling the information. I had bookmarked a great <a href="https://drzinph.com/how-to-scrape-fda-drug-approval-data-with-python/#:~:text=In%20this%20tutorial%2C%20we%20will,drug%20approval%20data%20with%20Python.&amp;text=©2026%20Phyo%20Phyo%20Kyaw%20Zin,%7C%20Theme%20by%20SuperbThemes.Com">blog post</a> by Dr.&nbsp;Phyo Phyo Zin for just this occasion. At that point I was not families with web scraping.</p>
+<p>I had come across the blog post a couple of months to a year after it was published. Running the code, I quickly realized that there was an issue - the information pulled from the FDA regularly changes. Some sites are archived, giving it a whole new link. This broke Dr.&nbsp;Zin’s post. It is an easy fix, but it would be annoying to constantly make these tweaks.</p>
+</section>
+<section id="writing-drug-nme" class="level2">
+<h2 class="anchored" data-anchor-id="writing-drug-nme">Writing drug-nme</h2>
+<p>My original workaround to the issues with the FDA dataset was to use a different dataset - The <a href="https://www.guidetopharmacology.org">Guide to Pharmacology</a>. This is a great resource that plugs into larger sources, like ChEMBL, but collects specific datasets regarding drug approvals. Finding this site, and using their handy API, I originally abandoned the FDA dataset in favor to GtP. With the information from GtP, I was able to make a pretty handy chart. The downsides are that it lacked information that I wanted, NME and BLA labels. But that could be forgiven as I was able to get informaiton to classify drug approvals by targets. overall, the figure looked decent.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/img/21-GtP.png" class="img-fluid figure-img"></p>
+<figcaption>Bar plot vesion 1</figcaption>
+</figure>
+</div>
+<p><strong>NOTE:</strong> At the end of August, Guide to Pharmacology will require users to access the website. Additional details can be found on their <a href="https://blog.guidetopharmacology.org/2026/07/29/user-registration-is-coming-to-gtopdb/">blog here</a>. Updates will to drug-nme will be forthcoming.</p>
+<p>But I quickly realized a huge mistake with this figure. The information from GtP does not update as quickly as I thought. That was okay at the beginning of 2056, but I pulled the information again towards the end of 2025 and the information was still lacking approvals for the year. That was when I sat down and spent a time trying to figure out pulling data from the U.S. FDA.</p>
+<p>The results look pretty decent. I will be honest, I had some trouble figuring out how to pull information from the CDER site. I found that only a couple of years are kept available as websites, while the rest are archived or converted to downloadable PDFs. It took a while to figure this out and, full transparency, I used AI to help me wtih that. I did not have exprience or know where to start to tackle the problem. It was intersting to see the solution and I have a better understanding of how to appraoch this problem in the future (with how to pull previous years that become archived). All of this lead me to being able to pull information for FDA drug approvals.</p>
+</section>
+<section id="pulling-fda-approvals" class="level2">
+<h2 class="anchored" data-anchor-id="pulling-fda-approvals">Pulling FDA Approvals</h2>
+<p>First, we can extract the information. It comes back as a Pandas table.</p>
+<div id="f895aacc2ecf371c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2026-08-04T05:14:37.331095Z&quot;,&quot;start_time&quot;:&quot;2026-08-04T05:14:36.580927Z&quot;}}" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> drug_nme <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> FDADataFetcher, FDAPlot</span>
+<span id="cb1-2">extract <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> FDADataFetcher()</span>
+<span id="cb1-3">df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> extract.get_data()  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># to get all data</span></span>
+<span id="cb1-4"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Column X Row = </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>df<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>shape<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb1-5">df.head()</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Column X Row = (1416, 7)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Drug Name</th>
+<th data-quarto-table-cell-role="th">Active Ingredient</th>
+<th data-quarto-table-cell-role="th">Approval Date</th>
+<th data-quarto-table-cell-role="th">Approval Year</th>
+<th data-quarto-table-cell-role="th">NME/BLA</th>
+<th data-quarto-table-cell-role="th">Route of Administration(1)</th>
+<th data-quarto-table-cell-role="th">Orphan Drug Designation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>Simtriyo</td>
+<td>centanafadine</td>
+<td>07/24/2026</td>
+<td>2026</td>
+<td>NME</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>Lytenava</td>
+<td>bevacizumab-vikg</td>
+<td>07/24/2026</td>
+<td>2026</td>
+<td>BLA</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>Jideytro</td>
+<td>zidesamtinib</td>
+<td>07/22/2026</td>
+<td>2026</td>
+<td>NME</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>Lipfendra</td>
+<td>enlicitide decanoate</td>
+<td>07/15/2026</td>
+<td>2026</td>
+<td>NME</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>Revtorpyk</td>
+<td>gedatolisib</td>
+<td>07/14/2026</td>
+<td>2026</td>
+<td>NME</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Since the information is already in a Pandas table, users can use their own custom method to generate a plot. But I’ve also inlcuded a few handy functions for plotting as well. Here is an example of the stacked plot to mimic the plots from the Nature Drug Reviews.</p>
+<div id="a1e2dcc619847545" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2026-08-04T05:13:29.848410Z&quot;,&quot;start_time&quot;:&quot;2026-08-04T05:13:29.611668Z&quot;}}" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">plot <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> FDAPlot(df)</span>
+<span id="cb3-2">plot.stacked(palette<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#97B3AE'</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'#F2C3B9'</span>], legend_loc<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'out right upper'</span>)</span></code></pre></div></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://tlint101.github.io/practice-in-code/posts/21-Introducing-drug-nme_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Full tutorials can be found at the <a href="https://github.com/tlint101/drug_nme/tree/main">drug-nme repository</a>.</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>Data Analysis</category>
+  <category>Python</category>
+  <category>Plots</category>
+  <category>Writing</category>
+  <guid>https://tlint101.github.io/practice-in-code/posts/21-Introducing-drug-nme.html</guid>
+  <pubDate>Tue, 04 Aug 2026 16:00:00 GMT</pubDate>
+</item>
 <item>
   <title>How I Prepared the Eroom’s Law Figure</title>
   <dc:creator>Tony E. Lin</dc:creator>
@@ -5329,27 +5507,6 @@ font-style: inherit;">'tutorial_figure_001.png'</span>)</span></code></pre></div
   <category>Thoughts</category>
   <guid>https://tlint101.github.io/practice-in-code/posts/2-hello-world-goals.html</guid>
   <pubDate>Fri, 01 Dec 2023 16:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Hello World!</title>
-  <dc:creator>Tony E. Lin</dc:creator>
-  <link>https://tlint101.github.io/practice-in-code/posts/1-hello-world.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="hello-world" class="level1">
-
-
-
-</section>
-
- ]]></description>
-  <category>Thoughts</category>
-  <guid>https://tlint101.github.io/practice-in-code/posts/1-hello-world.html</guid>
-  <pubDate>Tue, 28 Nov 2023 16:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
