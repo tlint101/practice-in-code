@@ -1,17 +1,15 @@
 name: blog
-
 channels:
   - conda-forge
-
 dependencies:
-  - python=3.10
-  - rdkit=2023.09.2
-  -
+  - python=3.11
+  - rdkit
   - pip:
       - py50==0.1.0
       - notebook==7.0.6
       - scikit-learn
-      - pingoin
+      - pingouin
       - scikit-posthocs
-      - black
       - datamol
+      - marimo
+      - marimo-chem-utils
