@@ -4,7 +4,7 @@ listing:
   contents: posts
   sort: "date desc"
   type: default
-  fields: [date, title, author, reading-time, image, image-height]
+  fields: [date, title, author, reading-time, subtitle, image, image-height]
   categories: true
   sort-ui: [title, date]
   filter-ui: [title, date]
