@@ -10,7 +10,55 @@
 <atom:link href="https://tlint101.github.io/practice-in-code/index.xml" rel="self" type="application/rss+xml"/>
 <description>Practice in Code</description>
 <generator>quarto-1.9.37</generator>
-<lastBuildDate>Tue, 04 Aug 2026 16:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 23 Aug 2026 16:00:00 GMT</lastBuildDate>
+<item>
+  <title>Busy, Busy!</title>
+  <dc:creator>Tony E. Lin</dc:creator>
+  <link>https://tlint101.github.io/practice-in-code/posts/22-Busy-Busy.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="explaining-my-absence" class="level1">
+<h1>Explaining My Absence</h1>
+<p>For anyone wondering, the post I made on <a href="https://tlint101.github.io/practice-in-code/posts/21-Introducing-drug-nme.html">2026.08.05</a> is the first I made in four months. That’s a long time! I could sit here and write a listicle of reasons for the long break, but none of it would explain the real reason - <strong>I got lazy</strong>.</p>
+<p>Making content is hard. I know many young kids these days (obligatory old man shouting at the sky) want to be YouTubers. But the truth is that job is tough. You <em>have</em> to make content constantly. And it cannot be crap. People can see that. Each content put out consumes time and energy, all to ensure something fun and engaging is released for the core audience.</p>
+<p>Writing a blog is the same. Keeping it up to date is hard. Writing is hard. Time management is hard, especially now as I gain more and more responsibilities in my post PhD schooling (something has to pay the bills!).</p>
+<p>So please spare me a few moments to try to explain.</p>
+<section id="my-valid-excuse" class="level2">
+<h2 class="anchored" data-anchor-id="my-valid-excuse">My Valid Excuse</h2>
+<p>I think I do have a valid excuse besides being “lazy”. Don’t get me wrong, I can be incredibly lazy. But the past four months I have had a valid excuse - completing my written thesis and preparing for my oral defense.</p>
+<p>I’m happy to say that I passed and, as of this writing, picked up that piece of paper denoting my doctorate. Hazzah!</p>
+</section>
+<section id="getting-back-to-in-line" class="level2">
+<h2 class="anchored" data-anchor-id="getting-back-to-in-line">Getting Back to in Line</h2>
+<p>As I transition into the next stage of my professional life, I am hoping that things slow down. The chances of that are slim, I know. What is going to happen is that I <em>have</em> to set aside time to continue the mission of my blog: practice new code and to share my thoughts and ideas.</p>
+<p>To do that, I will need to carve out time to write. Maybe 15 minutes, maybe 30 minutes, to jot down my thoughts or summarize code I have been working on. 15 minutes a day sounds doable?</p>
+</section>
+<section id="my-llm-usage" class="level2">
+<h2 class="anchored" data-anchor-id="my-llm-usage">My LLM Usage</h2>
+<p>But what about LLMs? Can’t they help alleviate some of the pressures on me?</p>
+<p><strong>Let me be clear - I do not, and will not, use LLMs to write my posts.</strong></p>
+<p>The standout feature here will be my many typoos (Ha!). I don’t get a lot of visitors, but I feel anyone who makes the effort are here to experience my regurgitated thoughts and embarrassing typos in full 4K glory. Writing is how I think. Most importantly, <em>I enjoy writing</em>. The day an LLM writes a post for this blog it would either be A) distinctly labeled, or B) with a keyboard pried from my cold dead hands.</p>
+<p>That is not to say I do not use LLMs. An explanation of how I use LLMs (<em>I</em> being key because everyone is different) in my workflow would be helpful. Perhaps the next post.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>That is where things are now. I got my PhD. I have more responsibilities. But I’m learning how to carve out <em>me</em> time, with a goal for one post a month minimum.</p>
+<p>Let’s see how far I get before I fall off the wagon.</p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>Thoughts</category>
+  <category>Writing</category>
+  <guid>https://tlint101.github.io/practice-in-code/posts/22-Busy-Busy.html</guid>
+  <pubDate>Sun, 23 Aug 2026 16:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Introducing drug-nme</title>
   <dc:creator>Tony E. Lin</dc:creator>
@@ -304,7 +352,7 @@ font-style: inherit;">'out right upper'</span>)</span></code></pre></div></div>
 <section id="tldr" class="level3">
 <h3 class="anchored" data-anchor-id="tldr">TL;DR</h3>
 <p>I tested BitBIRCH and Butina clustering on a set of 1000 molecules. The speeds on my machine, M2 Pro, are:</p>
-<ul class="incremental">
+<ul>
 <li>BitBIRCH: 0.02 Seconds</li>
 <li>Butina: 0.11 Seconds</li>
 </ul>
@@ -707,7 +755,7 @@ font-style: inherit;">-</span> start)</span></code></pre></div></div>
 <section id="conclusion" class="level1">
 <h1>Conclusion</h1>
 <p>So the speeds for 1000 molecules are:</p>
-<ul class="incremental">
+<ul>
 <li>BitBIRCH: 0.02 Seconds</li>
 <li>Butina: 0.11 Seconds</li>
 </ul>
@@ -745,7 +793,7 @@ font-style: inherit;">-</span> start)</span></code></pre></div></div>
 <section id="semver" class="level2">
 <h2 class="anchored" data-anchor-id="semver">SemVer</h2>
 <p>A quick Google search led me to <a href="https://semver.org">Semantic Versioning (SemVer)</a>. This technique offers a few tips for setting versions to your projects. It is in short three points as follows:</p>
-<ol class="incremental" type="1">
+<ol type="1">
 <li>MAJOR version when you make incompatible API changes</li>
 <li>MINOR version when you add functionality in a backward compatible manner</li>
 <li>PATCH version when you make backward compatible bug fixes</li>
@@ -1690,7 +1738,7 @@ font-style: inherit;">0</span>])</span></code></pre></div></div>
 <p>As I got comfortable with simple command scripts, I began making more complicated functions, which requires better organization skills. On the advice of a friend, I began using <a href="https://en.wikipedia.org/wiki/Integrated_development_environment">Integrated Development Environment</a> (IDE)s. There are plenty out there, like <a href="https://code.visualstudio.com">VSCode</a> and <a href="https://www.spyder-ide.org">Spyder</a>. But I gravitated toward the <a href="https://www.jetbrains.com/?var=1">JetBrains</a> software suite - particularly <a href="https://www.jetbrains.com/pycharm/">PyCharm</a> and <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a>.</p>
 <p>I like the JetBrains software because of the look of the interface and the ability to customize how it looks. I am an insane person and will change my IDE theme each day depending on my mood. Everyone is different, so play around with each one and find one that you like.</p>
 <p>A main advantage with PyCharm is its integration with Git. It is there from the get go and ready for set up. Plugin with your GitHub account and users are ready to commit, push, or pull their projects. The GUI made it easy peasy! My workflow became:</p>
-<ul class="incremental">
+<ul>
 <li>Create repository on GitHub</li>
 <li>Clone repository through PyCharm onto my machine</li>
 <li>Code</li>
@@ -2300,7 +2348,7 @@ font-style: inherit;"># Dummy Data</span></span>
 <p>Enter pIC50. This is essentially the negative log of the IC50 in <strong>molar concentration</strong>:</p>
 <p><img src="https://latex.codecogs.com/png.latex?pIC50%20=%20-log_%7B10%7D(IC50)"></p>
 <p>This has the advantage of scaling results similar to other logarithmic scales, like the pH scale. This is a handy, because it allows us to quickly gauge a drugs potency. For example:</p>
-<ul class="incremental">
+<ul>
 <li>IC50 of 1 µM is 10<sup>-6</sup> M = pIC50 of 6.0</li>
 <li>IC50 of 100 nM is 10<sup>-7</sup> M, which is pIC50 = 7.0</li>
 <li>IC50 of 10 nM is 10<sup>-8</sup> M, which is pIC50 = 8.0</li>
@@ -5477,36 +5525,6 @@ font-style: inherit;">'tutorial_figure_001.png'</span>)</span></code></pre></div
   <guid>https://tlint101.github.io/practice-in-code/posts/3-announcing-py50.html</guid>
   <pubDate>Mon, 04 Dec 2023 16:00:00 GMT</pubDate>
   <media:content url="https://tlint101.github.io/practice-in-code/posts/img/py50_logo_only.png" medium="image" type="image/png" height="113" width="144"/>
-</item>
-<item>
-  <title>Hello World - Now With Goals!</title>
-  <dc:creator>Tony E. Lin</dc:creator>
-  <link>https://tlint101.github.io/practice-in-code/posts/2-hello-world-goals.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="hello-world---now-with-goals" class="level3">
-<h3 class="anchored" data-anchor-id="hello-world---now-with-goals">Hello World - Now with Goals</h3>
-<p>Hello everyone. My name is Tony. I am currently in a Ph.D.&nbsp;program for drug discovery in Taiwan. Why Taiwan? Well, a series of life choices fresh from university led me there. I did not get a start into my field of study overnight. I am a late bloomer. And still learning. Or at least trying to!</p>
-<p>I specialize in cheminformatics - using computers to sort and categorize molecules. There’s a lot of good software out there that can help anyone interested into getting into the field. That includes both paid versions, such as <a href="https://www.schrodinger.com/products/maestro">Schrodiner’s Maestro</a>, or open source software such as the wonderful suite available from the <a href="https://www.zbh.uni-hamburg.de/en/forschung/software-server-spgl.html">University of Hamburg</a>. Those tools are great! But I quickly realized that relying on software, as good as they can be, can be very limiting. What if I have an idea that does not fit the available software? What if I want to make modifications to the figures I make? What if I want to try a new screening protocol? There is only one way to do these things - coding! And learning to code requires a lot of practice.</p>
-<p>I know that with experience. I have tried learning ot code multiple times in my life. Each time I have failed. There is a whole host of reasons. Maybe the language I chose was not for me. Java, is great, but at the time I can barely wrap my head around it. I tried making a small iOS app in the early days of the iPhone, which used UIKit. No dice. When Apple transitioned into Swift UI, I thought “Great! A new start!” Only to fail horribly.</p>
-<p>It was not until I got into the Ph.D.&nbsp;program (and again, I started late!) that I finally tried and… well I did not succeed, but I got way further than before.</p>
-<p>What helped was having a project and actually sticking with it. Well, what really helped is that I found a lot of examples online tackling similar problems I had. People writing about their code, sharing new tools and packages, and how to solve them. All of this helped make things simple enough for me to at least get started.</p>
-<p>For that, I am forever grateful.</p>
-<p><strong>That brings me to this blog. I will use it as a place to practice coding, my thinking and thought processes, what I am interested in, and hopefully, as a way to share with others.</strong></p>
-<p>This will be my way of paying it forward.</p>
-<p>And barring that, it will be a good place to showcase my failures to the world. I’m ok with that too.</p>
-
-
-</section>
-
- ]]></description>
-  <category>Thoughts</category>
-  <guid>https://tlint101.github.io/practice-in-code/posts/2-hello-world-goals.html</guid>
-  <pubDate>Fri, 01 Dec 2023 16:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
