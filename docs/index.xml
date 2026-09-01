@@ -9,8 +9,82 @@
 <link>https://tlint101.github.io/practice-in-code/</link>
 <atom:link href="https://tlint101.github.io/practice-in-code/index.xml" rel="self" type="application/rss+xml"/>
 <description>Practice in Code</description>
-<generator>quarto-1.9.37</generator>
-<lastBuildDate>Sun, 23 Aug 2026 16:00:00 GMT</lastBuildDate>
+<generator>quarto-1.10.18</generator>
+<lastBuildDate>Mon, 31 Aug 2026 16:00:00 GMT</lastBuildDate>
+<item>
+  <title>How I use LLMs</title>
+  <dc:creator>Tony E. Lin</dc:creator>
+  <link>https://tlint101.github.io/practice-in-code/posts/23-How I use LLMs.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="how-i-use-llms" class="level1">
+<h1>How I Use LLMs</h1>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>OpenAI made a splash in the fall of 2022 with the release of their GPT model. It was a monumental moment. Almost five years on and the intelligence of the state of the art (SOTA) models have made a drastic leap, changing how we use computers.</p>
+<p>To be clear, when I say “we” I mean computer nerds and coders. Because there are now tons and tons of LLM models to download and use offline on your own GPU servers - that is, if you can afford a good GPU. Each model gives varied results.</p>
+<p>Instead, I expect many are still using the popular offerings, which is ChatGPT, Claude, or Gemini, as chatbots. I don’t think a large population of users are connecting apps or have set up agents.</p>
+<p>Yet.</p>
+<p>But the changes are coming for everyone. And it’s important to draw a line and explain how we use these AI models in our professional and personal lives.</p>
+</section>
+<section id="models-that-i-use" class="level2">
+<h2 class="anchored" data-anchor-id="models-that-i-use">Models That I Use</h2>
+<p>I was lucky to nab an M4 Mac Mini with 32GB of RAM back in January before the Apple price hike (last month’s updates have my head turned, but my wallet is empty…). In these six months I have discovered and experimented with local LLM models and agentic harnesses. There are several reasons why I prefer local LLM models.</p>
+<ol class="incremental" type="1">
+<li>Running LLM models locally means that the information stays on my machines.</li>
+<li>Costs of running models through providers have been expensive.</li>
+<li>I wanted to learn, first hand, how LLMs work, how to fine-tune them, and how to deploy them. The goal would be to expand this to a larger workstation, allowing lab members access to their own local LLMs.</li>
+</ol>
+</section>
+<section id="do-models-help-me" class="level2">
+<h2 class="anchored" data-anchor-id="do-models-help-me">Do Models Help Me?</h2>
+<p>This is the trillion dollar question. My work is strictly dry lab. I code and analyze data, and build projects to explain my work to collaborators. Do the these models help me with that?</p>
+<p>Yes and no.</p>
+<p>Despite being able to run local LLM models, the ones I can run on my (puny) machine are <strong>not SOTA</strong> level. I cannot “one-shot” my projects. I cannot even get it to write a proper script to generate molecular fingerprints and compare Tanimoto similarity scores between two molecules on the first try. It is important to remember that the LLMs I use can write a bunch of code that <em>looks right</em>, but <em>does not run right</em>.</p>
+<p>That does not mean they are not useful. It means that I can get started “faster”. It means that if I have an idea, I can launch my local LLMs to write the skeleton for my idea. I can dress it up later. I can ask the LLM/Agent that I am running to correct the code to get the output I’m looking for. That requires a couple of iterations and rarely is anything done in “one-shot”.</p>
+<p>Where these models shine for me is debugging my projects. I treat it as a documentation tool. While I still visit a module documentation page, I no longer need to hunt for specifics. I can query the LLM. Or I can feed it the entire documentation and my project before querying my model directly. It has changed the way I troubleshoot my works. I would argue, for the better.</p>
+<p>And it has also changed the way I ingest information. I’ve been following Karpathy’s LLM-Wiki model (<a href="https://github.com/SamurAIGPT/llm-wiki-agent/tree/main">I recommend this tool</a>) to build personal knowledge bases. I can tailor that for specific topics and build on them as I find new papers or blog posts. It is very neat and I find the information helpful as research in our field moves faster and faster.</p>
+</section>
+<section id="still-writing" class="level2">
+<h2 class="anchored" data-anchor-id="still-writing">Still Writing</h2>
+<p>I still find myself writing a lot of my code, but the way I debug my issues have changed. The way I start a project has changed. The way I approach my projects have changed. But most important, I still put a heavy emphasis on my project structure.</p>
+<p><strong>That last point is important to me</strong>. SOTA models have obviously changed programming. There are countless blogs and posts about a programmer setting up agents to talk to each other throughout the day, or a whole team now run by a single programmer with unlimited tokens building who can build custom tools to solve a problem at their company. A recent post by Pat Walters has a short discussion on how he benchmarked different models using Claude on his own linux system (<a href="https://patwalters.github.io/Let-the-Agents-Do-the-Benchmarking/">read here</a>). More power to them.</p>
+<p>I’ve not experienced that yet. Maybe the models I’m using are too dumb. Maybe I’m not as imaginative as I thought, and I’m limited by my hardware. Maybe I am in denial. I am self-taught after all.</p>
+<p>As impressed as I am about LLMs, and local LLMs in particular, none of my experience has shown me that I am fully 100% replaceable. Not yet. More than ever, fundamentals remain just as important now as it did back in the 1950s. <strong><em>A project must remain manageable</em></strong>. I don’t think fully passing a project for an LLM to build is wise. At least with this current model generation. I find that they continue to build large scripts and functions that lack proper organization in class structures. Worse, they often break or run incorrectly. Relying on LLMs for this will only increase <a href="https://en.wikipedia.org/wiki/Technical_debt">technical debt</a>. And I hate technical debt…</p>
+<p>That means for now, if given the opportunity to mentor junior members, <strong>I will continue stressing project structure</strong>. I will query why they used a list instead of a dictionary, or why a script contains a series of functions instead of a class. I cannot have them pass off project structure to LLMs. Cause if they do that, then why even get into our field in the first place?</p>
+<p>Many in academia, at least in the country I am in, are forgetting that. It’s a shame. New students need someone to guide them. Now, more than ever. In the search for grants and funding, many have that.</p>
+<section id="a-small-rant" class="level4">
+<h4 class="anchored" data-anchor-id="a-small-rant">A Small Rant</h4>
+<p>As I was writing this post, I noticed it turning into a long rant. What I kept does not touch on my feelings 100%, but it’s a start. I felt it is important to air out some of my personal grievances first.</p>
+<p>Like everywhere, the country I do my research in is looking to build and incorporate AI tools throughout. It is a double-edged sword. The powers at be put pressure on fast buildout and results. Unfortunately, the advancement of LLMs and agentic coding is happening so fast that academia in the country I am in lack experts in the field. Without proper training and knowledge of the algorithms, how does one gauge model performance? This results in review committee members with a simple mindset. All they want to see are simple Accuracy, Precision, or R<sup>2</sup> results. While important, rarely do these metrics tell the full picture of a model’s performance.</p>
+<p>All of this results in students/trainees without the skills to build a solid project. Little emphasis is on modules, the project buildout, or the future maintenance of the project. Instead, “benchmaxing” a favorable Accuracy or R<sup>2</sup> value is all that is needed to get grants, awards, or praise. Explaining the project production is a waste of time to many.</p>
+<p>The truth is that it is incredibly difficult that a coding project in academia can be converted and deployed to production level. But review committee members, and others in my country’s academia, think this can be waved away like magic using LLMs and agents.</p>
+<p>I cannot, and will not, work that way. To me, it is important to understand the structure of my projects. Only then does it make deployment easier - easier to add features, easier to write, easier to maintain. Building a model with good Accuracy, Precision, or R<sup>2</sup> values is not that difficult (depending on the target dataset). <strong><em>Building a project</em></strong> that you can use <strong><em>over and over</em></strong> and maintain over time is the wall everyone has to scale. That is key.</p>
+<p>This idea is what has influenced my workflow. For better or worse, it is a hill I am willing to die on. And for any junior members I mentor, I will always stress this to them. Whether I last long enough in this country’s academia will be a question for another time.</p>
+</section>
+</section>
+</section>
+<section id="final-thoughts" class="level1">
+<h1>Final Thoughts</h1>
+<p>What LLMs have done is given tools to more people. We can build custom programs to solve our personal problems. That is great! Unfortunately, as our programs scale, then things start to fall apart. LLMs do not understand project structure. We have to instruct it. We have to guide it. <strong><em>We have to know what we want</em></strong>. Or at least, we need to know what problem we are trying to solve</p>
+<p>Maybe one day we will get a local LLM model, or even a SOTA model, that can “one-shot” an entire Design–Make–Test–Analyze/Decide (DMTA) cycle for drug development. Perhaps we are close. But not today.</p>
+<p>All of this to say that one thing will always remain constant - <em><strong>Know the Fundamentals</strong></em>! It is important. It will always remain important.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Thoughts</category>
+  <category>Writing</category>
+  <category>Coding</category>
+  <category>Rants</category>
+  <guid>https://tlint101.github.io/practice-in-code/posts/23-How I use LLMs.html</guid>
+  <pubDate>Mon, 31 Aug 2026 16:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Busy, Busy!</title>
   <dc:creator>Tony E. Lin</dc:creator>
@@ -352,7 +426,7 @@ font-style: inherit;">'out right upper'</span>)</span></code></pre></div></div>
 <section id="tldr" class="level3">
 <h3 class="anchored" data-anchor-id="tldr">TL;DR</h3>
 <p>I tested BitBIRCH and Butina clustering on a set of 1000 molecules. The speeds on my machine, M2 Pro, are:</p>
-<ul>
+<ul class="incremental">
 <li>BitBIRCH: 0.02 Seconds</li>
 <li>Butina: 0.11 Seconds</li>
 </ul>
@@ -755,7 +829,7 @@ font-style: inherit;">-</span> start)</span></code></pre></div></div>
 <section id="conclusion" class="level1">
 <h1>Conclusion</h1>
 <p>So the speeds for 1000 molecules are:</p>
-<ul>
+<ul class="incremental">
 <li>BitBIRCH: 0.02 Seconds</li>
 <li>Butina: 0.11 Seconds</li>
 </ul>
@@ -793,7 +867,7 @@ font-style: inherit;">-</span> start)</span></code></pre></div></div>
 <section id="semver" class="level2">
 <h2 class="anchored" data-anchor-id="semver">SemVer</h2>
 <p>A quick Google search led me to <a href="https://semver.org">Semantic Versioning (SemVer)</a>. This technique offers a few tips for setting versions to your projects. It is in short three points as follows:</p>
-<ol type="1">
+<ol class="incremental" type="1">
 <li>MAJOR version when you make incompatible API changes</li>
 <li>MINOR version when you add functionality in a backward compatible manner</li>
 <li>PATCH version when you make backward compatible bug fixes</li>
@@ -1738,7 +1812,7 @@ font-style: inherit;">0</span>])</span></code></pre></div></div>
 <p>As I got comfortable with simple command scripts, I began making more complicated functions, which requires better organization skills. On the advice of a friend, I began using <a href="https://en.wikipedia.org/wiki/Integrated_development_environment">Integrated Development Environment</a> (IDE)s. There are plenty out there, like <a href="https://code.visualstudio.com">VSCode</a> and <a href="https://www.spyder-ide.org">Spyder</a>. But I gravitated toward the <a href="https://www.jetbrains.com/?var=1">JetBrains</a> software suite - particularly <a href="https://www.jetbrains.com/pycharm/">PyCharm</a> and <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a>.</p>
 <p>I like the JetBrains software because of the look of the interface and the ability to customize how it looks. I am an insane person and will change my IDE theme each day depending on my mood. Everyone is different, so play around with each one and find one that you like.</p>
 <p>A main advantage with PyCharm is its integration with Git. It is there from the get go and ready for set up. Plugin with your GitHub account and users are ready to commit, push, or pull their projects. The GUI made it easy peasy! My workflow became:</p>
-<ul>
+<ul class="incremental">
 <li>Create repository on GitHub</li>
 <li>Clone repository through PyCharm onto my machine</li>
 <li>Code</li>
@@ -2348,7 +2422,7 @@ font-style: inherit;"># Dummy Data</span></span>
 <p>Enter pIC50. This is essentially the negative log of the IC50 in <strong>molar concentration</strong>:</p>
 <p><img src="https://latex.codecogs.com/png.latex?pIC50%20=%20-log_%7B10%7D(IC50)"></p>
 <p>This has the advantage of scaling results similar to other logarithmic scales, like the pH scale. This is a handy, because it allows us to quickly gauge a drugs potency. For example:</p>
-<ul>
+<ul class="incremental">
 <li>IC50 of 1 µM is 10<sup>-6</sup> M = pIC50 of 6.0</li>
 <li>IC50 of 100 nM is 10<sup>-7</sup> M, which is pIC50 = 7.0</li>
 <li>IC50 of 10 nM is 10<sup>-8</sup> M, which is pIC50 = 8.0</li>
@@ -5488,43 +5562,6 @@ font-style: inherit;">'tutorial_figure_001.png'</span>)</span></code></pre></div
   <category>Plotting</category>
   <guid>https://tlint101.github.io/practice-in-code/posts/4-py50-single-plot.html</guid>
   <pubDate>Wed, 06 Dec 2023 16:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Announcing py50!</title>
-  <dc:creator>Tony E. Lin</dc:creator>
-  <link>https://tlint101.github.io/practice-in-code/posts/3-announcing-py50.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="py50-generate-dose-response-curves" class="level3">
-<h3 class="anchored" data-anchor-id="py50-generate-dose-response-curves">py50: Generate Dose-Response Curves</h3>
-<p>I would like to announce a new project I have been working on: <a href="https://github.com/tlint101/py50">py50: Generate Dose-Response Curves</a>. It is the first “big” python project that I have worked on. This package will calculate IC50 (py50, get it? … Anyone?) and will plot the dose-response curves. And for anyone who does not know how to code, I created a Streamlit web application(<a href="https://py50-app.streamlit.app">click here</a>). I hope others will be able to find this useful for their own work.</p>
-<section id="why-did-i-make-py50" class="level4">
-<h4 class="anchored" data-anchor-id="why-did-i-make-py50">Why did I make py50?</h4>
-<p>Well, this was mostly for myself. I am lucky to be in a lab that has close collaborations with other labs, meaning that my work can quickly be shared with experts in other areas. They will generate the dose-response curves for me. But sometimes when I organize my figures, I realized that the curves do not fit my style. The color does not match my docking pose, or my protein, or the font could be bigger, etc. Now, I could ask them to change it, but I do not like to be a burden on people. They spent a lot of time doing this work, the least I could do is learn the program they used to generate plot, right?</p>
-<p>Well, the truth is I hate using their program (which I will not name here)!</p>
-<p>So I went about creating my own. As a python module, it can be customizable to anyone’s workflow. The outcome is perfect for me. After I showed this to my advisor, he made the comment that it would be good for others to use. And I realized that I could easily convert the code for this purpose.</p>
-<p>For py50, I have a KNIME workflow. That is available upon request. It is not as elegant, as they are not custom KNIME nodes, so I am a little more reserved in sharing that workflow. Another issue with KNIME is that it would require the user to have python installed on their machine. I realized that could be a hassle. So I also created a Streamlit web application. Using Streamlit has been on my list of things to try for a very long time, and I am glad that with my py50 project, I was able to do that.</p>
-<p>The code is not perfect. There is a lot that I need to clean up on the backend. But for what I have, it works and I learned a lot. I am very surprised I got a decent package up and running. The plan is to maintain this for the foreseeable future. And, if the inspiration is right, I will add some extra features over the coming years.</p>
-<p>The next few posts will dive into details about py50, the functions, and concepts of IC50 that I ran into.</p>
-
-
-</section>
-</section>
-
- ]]></description>
-  <category>Python</category>
-  <category>Streamlit</category>
-  <category>py50</category>
-  <category>Coding</category>
-  <category>Informatics</category>
-  <category>Plotting</category>
-  <guid>https://tlint101.github.io/practice-in-code/posts/3-announcing-py50.html</guid>
-  <pubDate>Mon, 04 Dec 2023 16:00:00 GMT</pubDate>
-  <media:content url="https://tlint101.github.io/practice-in-code/posts/img/py50_logo_only.png" medium="image" type="image/png" height="113" width="144"/>
 </item>
 </channel>
 </rss>

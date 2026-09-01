@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Tony E. Lin">
-<meta name="dcterms.date" content="2026-02-13">
+<meta name="dcterms.date" content="2026-09-01">
 
-<title>Talking About Eroom’s Law – Practice in Code</title>
+<title>How I use LLMs – Practice in Code</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -302,16 +302,17 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul class="incremental">
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <li><a href="#how-i-use-llms" id="toc-how-i-use-llms" class="nav-link active" data-scroll-target="#how-i-use-llms">How I Use LLMs</a>
   <ul class="incremental">
-  <li><a href="#does-erooms-law-hold-true-today" id="toc-does-erooms-law-hold-true-today" class="nav-link" data-scroll-target="#does-erooms-law-hold-true-today">Does Eroom’s Law Hold True Today?</a></li>
-  <li><a href="#trends-today" id="toc-trends-today" class="nav-link" data-scroll-target="#trends-today">Trend’s Today</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#models-that-i-use" id="toc-models-that-i-use" class="nav-link" data-scroll-target="#models-that-i-use">Models That I Use</a></li>
+  <li><a href="#do-models-help-me" id="toc-do-models-help-me" class="nav-link" data-scroll-target="#do-models-help-me">Do Models Help Me?</a></li>
+  <li><a href="#still-writing" id="toc-still-writing" class="nav-link" data-scroll-target="#still-writing">Still Writing</a>
   <ul class="incremental">
-  <li><a href="#will-ai-increase-drug-slop" id="toc-will-ai-increase-drug-slop" class="nav-link" data-scroll-target="#will-ai-increase-drug-slop">Will AI Increase ‘Drug Slop’?</a></li>
-  <li><a href="#will-ai-help-us-focus-on-better-candidates" id="toc-will-ai-help-us-focus-on-better-candidates" class="nav-link" data-scroll-target="#will-ai-help-us-focus-on-better-candidates">Will AI Help Us Focus on Better Candidates?</a></li>
+  <li><a href="#a-small-rant" id="toc-a-small-rant" class="nav-link" data-scroll-target="#a-small-rant">A Small Rant</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul></li>
+  <li><a href="#final-thoughts" id="toc-final-thoughts" class="nav-link" data-scroll-target="#final-thoughts">Final Thoughts</a></li>
   </ul>
 </nav>
     </div>
@@ -321,12 +322,13 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Talking About Eroom’s Law</h1>
-<p class="subtitle lead">Where I Learn to Version My Projects</p>
+<h1 class="title">How I use LLMs</h1>
+<p class="subtitle lead">Where I Fear for My Job?</p>
   <div class="quarto-categories">
-    <div class="quarto-category">Data Analysis</div>
     <div class="quarto-category">Thoughts</div>
     <div class="quarto-category">Writing</div>
+    <div class="quarto-category">Coding</div>
+    <div class="quarto-category">Rants</div>
   </div>
   </div>
 
@@ -344,7 +346,7 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 13, 2026</p>
+      <p class="date">September 1, 2026</p>
     </div>
   </div>
   
@@ -356,45 +358,60 @@ gtag('config', 'G-DKY2WMQ374', { 'anonymize_ip': true});
 </header>
 
 
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
-<p>Computer nerds know about Moore’s Law. Coined by Intel co-founder Gordon Moore in 1965, Moore’s Law states that the number of transistors in an integrated circuit will double roughly every two years with little increase in costs. For consumers, that means we will have access to better computers at reasonable (hopefully) prices (<a href="https://www.investopedia.com/terms/m/mooreslaw.asp">Investopedia for Moore info</a> (see what I did?)). Moore’s law has been an important idea underpinning technology, business, and the world at large.</p>
-<p>Why mention Moore’s Law at all?</p>
-<p>Well, for the drug development space, there is a term, coined by Dr.&nbsp;Jack Scannell in 2012 (<a href="https://www.nature.com/articles/nrd3681">Nature Reviews Drug Discovery</a>), that states drug discovery has become slower and more expensive over time. He and his co-authors coined this phenomenon Eroom’s Law (Moore’s Law spelled backwards) to describe this trend. Many researchers in the field has had a sense of this. The R&amp;D of drugs can be astronomical. It is estimated that the costs for a U.S. FDA approved drug takes roughly 10 years and upward of $2 Billion USD or more (<a href="https://en.wikipedia.org/wiki/Cost_of_drug_development">wiki here</a>). And these metrics are obviously ‘best case’ scenarios.</p>
-<section id="does-erooms-law-hold-true-today" class="level2">
-<h2 class="anchored" data-anchor-id="does-erooms-law-hold-true-today">Does Eroom’s Law Hold True Today?</h2>
-<p>Recently, there has been discussion of Eroom’s Law on my social media feed. A quick google search will show several interesting articles on the topic. There is one by Scientific American in 2019 wondering if human organs on chip could combat increasing R&amp;D costs (<a href="https://www.scientificamerican.com/blog/observations/how-to-fight-erooms-law/">here</a>). A few years ago I read an analysis on ‘breaking’ Eroom’s Law, published in Nature Reviews Discovery (<a href="https://www.nature.com/articles/d41573-020-00059-3">here</a>).</p>
-<p>This is especially of note as AI has become all the rage over recent years. AI has been touted as a method of reducing the time and cost of drug development. Popular AI focused companies, such as <a href="https://insilico.com/pipeline">Insilico</a> and <a href="https://www.ukri.org/who-we-are/how-we-are-doing/research-outcomes-and-impact/bbsrc/exscientia-a-clinical-pipeline-for-ai-designed-drug-candidates/">Exscientia</a>, were one of the first in the drug discovery space and now have many drug candidates in the pipeline. Plus, other technologies have become cheaper. Genome sequencing has rapidly decreased from $100 Million USD to below $1,000 USD today (or possibly below $100 USD according to this article <a href="https://frontlinegenomics.com/the-100-genome-wheres-the-limit/">here</a>). Will Eroom’s Law hold true in the future?</p>
+<section id="how-i-use-llms" class="level1">
+<h1>How I Use LLMs</h1>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>OpenAI made a splash in the fall of 2022 with the release of their GPT model. It was a monumental moment. Almost five years on and the intelligence of the state of the art (SOTA) models have made a drastic leap, changing how we use computers.</p>
+<p>To be clear, when I say “we” I mean computer nerds and coders. Because there are now tons and tons of LLM models to download and use offline on your own GPU servers - that is, if you can afford a good GPU. Each model gives varied results.</p>
+<p>Instead, I expect many are still using the popular offerings, which is ChatGPT, Claude, or Gemini, as chatbots. I don’t think a large population of users are connecting apps or have set up agents.</p>
+<p>Yet.</p>
+<p>But the changes are coming for everyone. And it’s important to draw a line and explain how we use these AI models in our professional and personal lives.</p>
 </section>
-<section id="trends-today" class="level2">
-<h2 class="anchored" data-anchor-id="trends-today">Trend’s Today</h2>
-<p>To look at this, I scraped together information from public resources to piece together my own Eroom’s Law graph. The information came from the US FDA CDER New Molecular Entities (<a href="https://www.fda.gov/drugs/drug-approvals-and-databases/compilation-cder-new-molecular-entity-nme-drug-and-new-biologic-approvals">here</a>) and from the 2025 PhRMA Annual Membership Survey (<a href="https://phrma.org/resources/2025-phrma-annual-membership-survey">here</a>). The former was used to obtain the number of novel drugs approved from 1987 to 2024, while the latter was used to obtain estimates of the amount spent on R&amp;D. The information was collected and processed in python (a future post).</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img/19-erooms_law.png" class="img-fluid figure-img"></p>
-<figcaption>Information from US FDA CDER and the 2025 PhRMA Annual Membership Survey</figcaption>
-</figure>
-</div>
-<p>The figure is striking to me in many ways. In the period between 2012 - 2015, it seems that Eroom’s Law was holding, with a rough return of 0.4 approved drug per $1 Billion USD spent. However, this is a short timeframe. More drugs have been approved since. True, they are still expensive compared to the late 80’s and 90’s, but we see a small curve upwards beginning in the late 2010s.</p>
-<p>Now there is a crucial technology permeating through our lives - AI. Would AI break Eroom’s Law in the near future? Personally, I have two conflicting viewpoints on this.</p>
-<section id="will-ai-increase-drug-slop" class="level3">
-<h3 class="anchored" data-anchor-id="will-ai-increase-drug-slop">Will AI Increase ‘Drug Slop’?</h3>
-<p>In my opinion, AI will not solve everything. We see that now in the current economy, with AI tools being pedaled by companies and ‘AI slop’ constantly invading our screens. This phenomenon is also happening in the scientific sphere. Already we have seen bad actors use AI to clog up scientific journals (<a href="https://www.science.org/content/blog-post/what-literature-filling">a discussion here</a>).</p>
-<p>In drug discovery, AI can vastly reduce the time it takes to identify drug candidates. But does is it truly the best candidate or is it ‘AI drug slop’? Identifying and selecting a compound is made easier with AI, but if the practitioner does not understand the basics, does the AI program truly help?</p>
-<p>A crucial bottleneck in drug discovery remains - actually testing the drug. AI cannot do that. And many models are imperfect. With the increase in ‘AI drug slop’, researchers may be spending more time trying to prase out which drug to test. This can have financial implications, with many of the ‘AI drug slop’ taking up a share of the testing budget.</p>
+<section id="models-that-i-use" class="level2">
+<h2 class="anchored" data-anchor-id="models-that-i-use">Models That I Use</h2>
+<p>I was lucky to nab an M4 Mac Mini with 32GB of RAM back in January before the Apple price hike (last month’s updates have my head turned, but my wallet is empty…). In these six months I have discovered and experimented with local LLM models and agentic harnesses. There are several reasons why I prefer local LLM models.</p>
+<ol class="incremental" type="1">
+<li>Running LLM models locally means that the information stays on my machines.</li>
+<li>Costs of running models through providers have been expensive.</li>
+<li>I wanted to learn, first hand, how LLMs work, how to fine-tune them, and how to deploy them. The goal would be to expand this to a larger workstation, allowing lab members access to their own local LLMs.</li>
+</ol>
 </section>
-<section id="will-ai-help-us-focus-on-better-candidates" class="level3">
-<h3 class="anchored" data-anchor-id="will-ai-help-us-focus-on-better-candidates">Will AI Help Us Focus on Better Candidates?</h3>
-<p>On the flip side, AI can help us focus on better drug candidates. A few years ago, it was unreasonable to scan through Billions of molecules. AI allows researchers to do that. Combine this technology with researchers experience with previous drug development campaigns and someone with good business decision making skills, and I can truly see AI revolutionizing drug development.</p>
-<p>It isn’t easy. It would require a retooling of our current drug development pipeline. But like many things, perhaps it is time for an overhaul. Since the late 2010s, the Eroom’s Law trend seems to be holding steady. I can see, if AI is integrated properly, the trend to finally bend upwards.</p>
+<section id="do-models-help-me" class="level2">
+<h2 class="anchored" data-anchor-id="do-models-help-me">Do Models Help Me?</h2>
+<p>This is the trillion dollar question. My work is strictly dry lab. I code and analyze data, and build projects to explain my work to collaborators. Do the these models help me with that?</p>
+<p>Yes and no.</p>
+<p>Despite being able to run local LLM models, the ones I can run on my (puny) machine are <strong>not SOTA</strong> level. I cannot “one-shot” my projects. I cannot even get it to write a proper script to generate molecular fingerprints and compare Tanimoto similarity scores between two molecules on the first try. It is important to remember that the LLMs I use can write a bunch of code that <em>looks right</em>, but <em>does not run right</em>.</p>
+<p>That does not mean they are not useful. It means that I can get started “faster”. It means that if I have an idea, I can launch my local LLMs to write the skeleton for my idea. I can dress it up later. I can ask the LLM/Agent that I am running to correct the code to get the output I’m looking for. That requires a couple of iterations and rarely is anything done in “one-shot”.</p>
+<p>Where these models shine for me is debugging my projects. I treat it as a documentation tool. While I still visit a module documentation page, I no longer need to hunt for specifics. I can query the LLM. Or I can feed it the entire documentation and my project before querying my model directly. It has changed the way I troubleshoot my works. I would argue, for the better.</p>
+<p>And it has also changed the way I ingest information. I’ve been following Karpathy’s LLM-Wiki model (<a href="https://github.com/SamurAIGPT/llm-wiki-agent/tree/main">I recommend this tool</a>) to build personal knowledge bases. I can tailor that for specific topics and build on them as I find new papers or blog posts. It is very neat and I find the information helpful as research in our field moves faster and faster.</p>
+</section>
+<section id="still-writing" class="level2">
+<h2 class="anchored" data-anchor-id="still-writing">Still Writing</h2>
+<p>I still find myself writing a lot of my code, but the way I debug my issues have changed. The way I start a project has changed. The way I approach my projects have changed. But most important, I still put a heavy emphasis on my project structure.</p>
+<p><strong>That last point is important to me</strong>. SOTA models have obviously changed programming. There are countless blogs and posts about a programmer setting up agents to talk to each other throughout the day, or a whole team now run by a single programmer with unlimited tokens building who can build custom tools to solve a problem at their company. A recent post by Pat Walters has a short discussion on how he benchmarked different models using Claude on his own linux system (<a href="https://patwalters.github.io/Let-the-Agents-Do-the-Benchmarking/">read here</a>). More power to them.</p>
+<p>I’ve not experienced that yet. Maybe the models I’m using are too dumb. Maybe I’m not as imaginative as I thought, and I’m limited by my hardware. Maybe I am in denial. I am self-taught after all.</p>
+<p>As impressed as I am about LLMs, and local LLMs in particular, none of my experience has shown me that I am fully 100% replaceable. Not yet. More than ever, fundamentals remain just as important now as it did back in the 1950s. <strong><em>A project must remain manageable</em></strong>. I don’t think fully passing a project for an LLM to build is wise. At least with this current model generation. I find that they continue to build large scripts and functions that lack proper organization in class structures. Worse, they often break or run incorrectly. Relying on LLMs for this will only increase <a href="https://en.wikipedia.org/wiki/Technical_debt">technical debt</a>. And I hate technical debt…</p>
+<p>That means for now, if given the opportunity to mentor junior members, <strong>I will continue stressing project structure</strong>. I will query why they used a list instead of a dictionary, or why a script contains a series of functions instead of a class. I cannot have them pass off project structure to LLMs. Cause if they do that, then why even get into our field in the first place?</p>
+<p>Many in academia, at least in the country I am in, are forgetting that. It’s a shame. New students need someone to guide them. Now, more than ever. In the search for grants and funding, many have that.</p>
+<section id="a-small-rant" class="level4">
+<h4 class="anchored" data-anchor-id="a-small-rant">A Small Rant</h4>
+<p>As I was writing this post, I noticed it turning into a long rant. What I kept does not touch on my feelings 100%, but it’s a start. I felt it is important to air out some of my personal grievances first.</p>
+<p>Like everywhere, the country I do my research in is looking to build and incorporate AI tools throughout. It is a double-edged sword. The powers at be put pressure on fast buildout and results. Unfortunately, the advancement of LLMs and agentic coding is happening so fast that academia in the country I am in lack experts in the field. Without proper training and knowledge of the algorithms, how does one gauge model performance? This results in review committee members with a simple mindset. All they want to see are simple Accuracy, Precision, or R<sup>2</sup> results. While important, rarely do these metrics tell the full picture of a model’s performance.</p>
+<p>All of this results in students/trainees without the skills to build a solid project. Little emphasis is on modules, the project buildout, or the future maintenance of the project. Instead, “benchmaxing” a favorable Accuracy or R<sup>2</sup> value is all that is needed to get grants, awards, or praise. Explaining the project production is a waste of time to many.</p>
+<p>The truth is that it is incredibly difficult that a coding project in academia can be converted and deployed to production level. But review committee members, and others in my country’s academia, think this can be waved away like magic using LLMs and agents.</p>
+<p>I cannot, and will not, work that way. To me, it is important to understand the structure of my projects. Only then does it make deployment easier - easier to add features, easier to write, easier to maintain. Building a model with good Accuracy, Precision, or R<sup>2</sup> values is not that difficult (depending on the target dataset). <strong><em>Building a project</em></strong> that you can use <strong><em>over and over</em></strong> and maintain over time is the wall everyone has to scale. That is key.</p>
+<p>This idea is what has influenced my workflow. For better or worse, it is a hill I am willing to die on. And for any junior members I mentor, I will always stress this to them. Whether I last long enough in this country’s academia will be a question for another time.</p>
 </section>
 </section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>It will be interesting to see what this figure looks like in another 10 years. By then we should have a more mature AI developers in drug discovery. To me, that means better computers, better algorithms, better operating procedures to compare models. It is an exciting time to be in the drug discovery space.</p>
+</section>
+<section id="final-thoughts" class="level1">
+<h1>Final Thoughts</h1>
+<p>What LLMs have done is given tools to more people. We can build custom programs to solve our personal problems. That is great! Unfortunately, as our programs scale, then things start to fall apart. LLMs do not understand project structure. We have to instruct it. We have to guide it. <strong><em>We have to know what we want</em></strong>. Or at least, we need to know what problem we are trying to solve</p>
+<p>Maybe one day we will get a local LLM model, or even a SOTA model, that can “one-shot” an entire Design–Make–Test–Analyze/Decide (DMTA) cycle for drug development. Perhaps we are close. But not today.</p>
+<p>All of this to say that one thing will always remain constant - <em><strong>Know the Fundamentals</strong></em>! It is important. It will always remain important.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
