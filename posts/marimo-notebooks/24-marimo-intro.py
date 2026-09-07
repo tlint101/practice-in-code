@@ -1,0 +1,88 @@
+import marimo
+
+__generated_with = "0.24.0"
+app = marimo.App(width="full")
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ---
+    title: Marimo Testing
+    subtitle: "Where I try to get Marimo working"
+    date: "2026-09-08"
+    categories: [Coding, Writing, Python]
+    engine: marimo
+    execute:
+      echo: true
+    ---
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    # Introduction
+    A couple of months back, I saw on my social Marimo. It looked really interesting. As much as I like Jupyter Notebooks for sharing code - blocks for writing and for documentation - it can be clunky. It is also incredibly hard to read. Try opening a .ipynb in a text editor and behold the unreadable wall of text. Not that that is bad, it just is what it is. There are several disadvanages. The main one for me is that it is not "future-proofed", meaning the script is difficult for LLMs to read if, for whatever reason, I want to feed my posts into an LLM for some reason.
+
+    Marimo looks to solve that problem. It is, at its core, a .py file. That is easier to read and more organized for LLMs. Plus, marimo notebooks save space as they do not hold the "states" from a Jupyter notebook that has been executed. And for me, as someone who is comfortable with Python compared to other languages.
+
+    Another advantage are the interactive outputs generated in Marimo. Yes, jupyter notebooks can render them too. Marimo's advantage is that its codeblocks are reactive. Meaning if you change something in one block, it changes in all the blocks. a really intersting take running a notebook.
+
+    Here I would like to show a simple demo.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Code
+    Rendering the plost on my machine gave the post an interactive output. We'll see if it also renders when I push out this post on my repo!
+
+    Marimo is built to support [Altair charts](https://altair-viz.github.io/index.html). A simple altair scatter plot can be made as follows:
+    """)
+    return
+
+
+@app.cell
+def _():
+    import marimo as mo
+    import altair as alt
+    from vega_datasets import data
+
+    return alt, data, mo
+
+
+@app.cell
+def _(alt, data, mo):
+    # load default dataset
+    cars = data.cars()
+
+    # Altair chart data
+    chart_data = alt.Chart(cars).mark_point().encode(x='Horsepower',y='Miles_per_Gallon',color='Origin',).properties(height=500, width=500)
+
+    # convert Altair chart into interactive marimo widget
+    chart = mo.ui.altair_chart(chart_data)
+    return (chart,)
+
+
+@app.cell
+def _(chart):
+    # Display the chart
+    chart
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Final Thoughts
+    There you have it. Pretty easy to get up and running! The main thing I had to get used to is Altair charts. I've mostly stayed with Matplotlib and Seaborn. But Altair is great for their interactivity. Importnatly, I can see my self using Altair more and more in future collaborations. Marimo will be a great toolset for this case.
+    """)
+    return
+
+
+if __name__ == "__main__":
+    app.run()
