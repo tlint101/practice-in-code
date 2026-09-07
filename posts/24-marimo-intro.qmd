@@ -6,6 +6,9 @@ categories: [Coding, Writing, Python]
 engine: marimo
 execute:
   echo: true
+pyproject: |
+  requires-python = ">=3.10"
+  dependencies = ["altair", "vega-datasets", "pandas"]
 ---
 <!---->
 # Introduction
