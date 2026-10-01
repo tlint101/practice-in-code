@@ -8,7 +8,7 @@ execute:
   echo: true
 pyproject: |
   requires-python = ">=3.10"
-  dependencies = ["marimo-chem-utils", "pandas"]
+  dependencies = ["marimo-chem-utils", "pandas", "rdkit", "scikit-learn", "altair", "useful-rdkit-utils"]
 ---
 <!---->
 # Introduction
