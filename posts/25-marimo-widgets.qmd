@@ -2,7 +2,7 @@
 title: Marimo Widgets
 subtitle: "Where I interact with my data"
 date: "2026-10-02"
-categories: [Coding, Python]
+categories: [Coding, Python, Marimo]
 engine: marimo
 execute:
   echo: true

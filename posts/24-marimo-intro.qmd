@@ -2,7 +2,7 @@
 title: Marimo Testing
 subtitle: "Where I try to get Marimo working"
 date: "2026-09-08"
-categories: [Coding, Writing, Python]
+categories: [Coding, Writing, Python, Marimo]
 engine: marimo
 execute:
   echo: true
